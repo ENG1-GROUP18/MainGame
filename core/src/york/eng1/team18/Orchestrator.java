@@ -35,8 +35,8 @@ public class Orchestrator extends Game {
 			case MENU:
 				if(menuScreen == null) {
 					menuScreen = new MenuScreen(this);
-					this.setScreen(menuScreen);
 				}
+				this.setScreen(menuScreen);
 				break;
 			case APPLICATION:
 				if(mainScreen == null) {
@@ -53,8 +53,8 @@ public class Orchestrator extends Game {
 			case LEADERBOARD:
 				if(leaderBoardScreen == null) {
 					leaderBoardScreen = new LeaderBoardScreen(this);
-					this.setScreen(leaderBoardScreen);
 				}
+				this.setScreen(leaderBoardScreen);
 				break;
 		}
 	}

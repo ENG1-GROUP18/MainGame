@@ -31,8 +31,6 @@ public class MenuScreen implements Screen {
     public MenuScreen(Orchestrator orchestrator) {
         parent = orchestrator;
         stage = new Stage(new ScreenViewport());
-        Gdx.input.setInputProcessor(stage);
-
 
         Table table = new Table();
         table.setFillParent(true);
@@ -62,6 +60,8 @@ public class MenuScreen implements Screen {
 
     @Override
     public void show() {
+
+        Gdx.input.setInputProcessor(stage);
 
         // PLAY BUTTON
         playBtn.addListener(new ClickListener() {
@@ -101,7 +101,8 @@ public class MenuScreen implements Screen {
         leaderboardBtn.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                Gdx.app.exit();
+                parent.changeScreen(Orchestrator.LEADERBOARD);
+                dispose();
             }
         });
 
