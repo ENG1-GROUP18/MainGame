@@ -1,0 +1,72 @@
+{
+com.badlogic.gdx.graphics.g2d.BitmapFont: {
+	ASSISTANT: {
+		file: Assistant-ExtraBold.fnt
+	}
+}
+com.badlogic.gdx.graphics.Color: {
+	ALMOST-BLACK: {
+		r: 0.11764706
+		g: 0.11764706
+		b: 0.11764706
+		a: 1
+	}
+	LIGHTER-BLACK: {
+		r: 0.16862746
+		g: 0.16862746
+		b: 0.16862746
+		a: 1
+	}
+	OFF-WHITE: {
+		r: 0.8117647
+		g: 0.8117647
+		b: 0.8117647
+		a: 1
+	}
+	RED-BASE: {
+		r: 0.63529414
+		g: 0.15294118
+		b: 0.2784314
+		a: 1
+	}
+	RED-LIGHTER: {
+		r: 0.7529412
+		g: 0.40392157
+		b: 0.49411765
+		a: 1
+	}
+	WHITE: {
+		r: 1
+		g: 1
+		b: 1
+		a: 1
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
+	default: {
+		up: RoundedUp
+		down: RoundedDown
+		over: RoundedOver
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
+	default: {
+		font: ASSISTANT
+		fontColor: WHITE
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
+	default: {
+		parent: default
+		font: ASSISTANT
+		fontColor: OFF-WHITE
+		downFontColor: WHITE
+		overFontColor: WHITE
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle: {
+	default: {
+		label: default
+	}
+}
+}

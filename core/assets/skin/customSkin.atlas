@@ -1,0 +1,44 @@
+
+customSkin.png
+size: 2048, 2048
+format: RGBA8888
+filter: Linear, Linear
+repeat: none
+Assistant-ExtraBold_0
+  rotate: false
+  xy: 1, 541
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+Assistant-ExtraBold_1
+  rotate: false
+  xy: 1, 27
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+RoundedDown
+  rotate: false
+  xy: 515, 1003
+  size: 24, 24
+  split: 11, 11, 11, 11
+  orig: 24, 24
+  offset: 0, 0
+  index: -1
+RoundedOver
+  rotate: false
+  xy: 515, 1029
+  size: 24, 24
+  split: 11, 11, 11, 11
+  orig: 24, 24
+  offset: 0, 0
+  index: -1
+RoundedUp
+  rotate: false
+  xy: 1, 1
+  size: 24, 24
+  split: 11, 11, 11, 11
+  orig: 24, 24
+  offset: 0, 0
+  index: -1
