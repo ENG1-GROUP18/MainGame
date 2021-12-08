@@ -26,18 +26,12 @@ public class MenuScreen implements Screen {
     TextButton playBtn;
     TextButton leaderboardBtn;
     TextButton quitBtn;
-    Cursor cursorPointer;
-    Cursor cursorHand;
 
 
     public MenuScreen(Orchestrator orchestrator) {
         parent = orchestrator;
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
-        cursorPointer = Gdx.graphics.newCursor(
-                new Pixmap(Gdx.files.internal("cursorPointer.png")), 0, 0);
-        cursorHand = Gdx.graphics.newCursor(
-                new Pixmap(Gdx.files.internal("cursorHand.png")), 7, 0);
 
 
         Table table = new Table();
