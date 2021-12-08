@@ -54,8 +54,9 @@ public class SplashScreen implements Screen {
 
         } else {
             // dispose screen
-            parent.changeScreen(Orchestrator.MENU);
             dispose();
+            parent.changeScreen(Orchestrator.MENU);
+
             return;
         }
 

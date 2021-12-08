@@ -23,52 +23,53 @@ public class LeaderBoardScreen implements Screen {
     private Stage stage;
     private Skin skin;
 
-    TextButton backToMenuBtn;
-
 
     public LeaderBoardScreen(Orchestrator orchestrator) {
         parent = orchestrator;
         stage = new Stage(new ScreenViewport());
-
-        Table table = new Table();
-        table.setFillParent(true);
-        table.setDebug(true);
-        stage.addActor(table);
-
-        skin = new Skin(Gdx.files.internal("skin/customSkin.json"));
-
-        backToMenuBtn = new TextButton("BACK", skin);
-        table.add(backToMenuBtn).row();
-
-        addListeners();
-
     }
 
     @Override
     public void show() {
-        System.out.println("SHOW RUN");
+        Table table = new Table();
+        table.setFillParent(true);
+        table.setDebug(parent.DEBUG_TABLES);
+        stage.addActor(table);
+
+        skin = new Skin(Gdx.files.internal("skin/customSkin.json"));
+
+        TextButton backToMenuBtn = new TextButton("BACK", skin);
+        table.add(backToMenuBtn).row();
+
+        // BACK BUTTON
+        backToMenuBtn.addListener(new ClickListener() {
+            @Override
+            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                super.enter(event, x, y, pointer, fromActor);
+                Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Hand);
+            }
+            @Override
+            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                super.exit(event, x, y, pointer, toActor);
+                Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Arrow);
+            }
+
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                System.out.println("back button clicked");
+                parent.changeScreen(Orchestrator.MENU);
+                hide();
+            }
+        });
+
         Gdx.input.setInputProcessor(stage);
-
-
-        backToMenuBtn.setStyle(backToMenuBtn.getStyle());
-//        if(backToMenuBtn.isOver()) {
-//            System.out.println("IS OVER");
-//            InputEvent event = new InputEvent();
-//            event.setType(InputEvent.Type.enter);
-//            event.setPointer(-1);
-//            backToMenuBtn.fire(event);
-//            Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Hand);
-//
-//        }
-
-
     }
 
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(30/255f, 30/255f, 30/255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+        stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
     }
 
@@ -94,28 +95,6 @@ public class LeaderBoardScreen implements Screen {
 
     @Override
     public void dispose() {
-
-    }
-
-    private void addListeners(){
-        backToMenuBtn.addListener(new ClickListener() {
-            @Override
-            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                super.enter(event, x, y, pointer, fromActor);
-                Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Hand);
-            }
-            @Override
-            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
-                super.exit(event, x, y, pointer, toActor);
-                Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Arrow);
-            }
-
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                System.out.println("back button clicked");
-                parent.changeScreen(Orchestrator.MENU);
-                hide();
-            }
-        });
+        stage.dispose();
     }
 }

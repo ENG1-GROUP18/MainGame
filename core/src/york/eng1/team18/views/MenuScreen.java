@@ -15,37 +15,35 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import org.w3c.dom.Text;
 import york.eng1.team18.Orchestrator;
 
 public class MenuScreen implements Screen {
 
-    //----------------------------------
-    private boolean TABLE_DEBUG = true;
-    //----------------------------------
-
     private Orchestrator parent;
     private Stage stage;
-
-    Label title;
-    TextButton playBtn;
-    TextButton leaderboardBtn;
-    TextButton quitBtn;
 
     public MenuScreen(Orchestrator orchestrator) {
         parent = orchestrator;
         stage = new Stage(new ScreenViewport());
+    }
 
+    @Override
+    public void show() {
         Table table = new Table();
         table.setFillParent(true);
-        table.setDebug(TABLE_DEBUG);
+        table.setDebug(parent.DEBUG_TABLES);
         stage.addActor(table);
 
+        // temp
         Skin skin = new Skin(Gdx.files.internal("skin/customSkin.json"));
 
-        playBtn = new TextButton("PLAY", skin);
-        leaderboardBtn = new TextButton("LEADERBOARD", skin);
-        quitBtn = new TextButton("QUIT", skin);
+        // Create button objects
+        TextButton playBtn = new TextButton("PLAY", skin);
+        TextButton leaderboardBtn = new TextButton("LEADERBOARD", skin);
+        TextButton quitBtn = new TextButton("QUIT", skin);
 
+        // Add button objects to table
         table.add(playBtn).size(playBtn.getWidth(), playBtn.getHeight() -20).row();
         table.add(leaderboardBtn).size(leaderboardBtn.getWidth(), leaderboardBtn.getHeight()-20).row();
         table.add(quitBtn).size(quitBtn.getWidth(), quitBtn.getHeight()-20).row();
@@ -110,24 +108,18 @@ public class MenuScreen implements Screen {
 
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                super.clicked(event, x, y);
                 Gdx.app.exit();
             }
         });
-    }
 
-    @Override
-    public void show() {
         Gdx.input.setInputProcessor(stage);
-        stage.mouseMoved(1,1);
-        stage.mouseMoved(Gdx.input.getX(), Gdx.input.getY());
     }
 
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(30/255f, 30/255f, 30/255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+        stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
     }
 
@@ -153,6 +145,6 @@ public class MenuScreen implements Screen {
 
     @Override
     public void dispose() {
-
+        stage.dispose();
     }
 }

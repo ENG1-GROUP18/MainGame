@@ -7,6 +7,7 @@ public class Orchestrator extends Game {
 
 	//----------------------------------
 	private boolean SPLASH_ENABLED = false;
+	public boolean DEBUG_TABLES = true;
 	//----------------------------------
 
 	private SplashScreen splashScreen;
