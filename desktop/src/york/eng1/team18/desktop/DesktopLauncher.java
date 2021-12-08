@@ -12,7 +12,7 @@ public class DesktopLauncher {
 
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 		config.setTitle("Sea Dogs Game");
-		config.setWindowSizeLimits(720, 480, 1080, 720);
+		config.setWindowSizeLimits(720, 480, 1920,1080);
 		config.setWindowedMode(1080, 720);
 		//config.setFullscreenMode(desktopMode);
 		new Lwjgl3Application(new Orchestrator(), config);

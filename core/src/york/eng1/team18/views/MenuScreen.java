@@ -19,6 +19,10 @@ import york.eng1.team18.Orchestrator;
 
 public class MenuScreen implements Screen {
 
+    //----------------------------------
+    private boolean TABLE_DEBUG = true;
+    //----------------------------------
+
     private Orchestrator parent;
     private Stage stage;
 
@@ -27,41 +31,25 @@ public class MenuScreen implements Screen {
     TextButton leaderboardBtn;
     TextButton quitBtn;
 
-
     public MenuScreen(Orchestrator orchestrator) {
         parent = orchestrator;
         stage = new Stage(new ScreenViewport());
 
         Table table = new Table();
         table.setFillParent(true);
-        //table.setDebug(true);
+        table.setDebug(TABLE_DEBUG);
         stage.addActor(table);
 
         Skin skin = new Skin(Gdx.files.internal("skin/customSkin.json"));
-
-//        title = new Label("TEAM-18", skin);
-//        title.setAlignment(Align.center);
 
         playBtn = new TextButton("PLAY", skin);
         leaderboardBtn = new TextButton("LEADERBOARD", skin);
         quitBtn = new TextButton("QUIT", skin);
 
-//        table.add(title).height(60).padBottom(50).row();
         table.add(playBtn).size(playBtn.getWidth(), playBtn.getHeight() -20).row();
         table.add(leaderboardBtn).size(leaderboardBtn.getWidth(), leaderboardBtn.getHeight()-20).row();
         table.add(quitBtn).size(quitBtn.getWidth(), quitBtn.getHeight()-20).row();
 
-
-//        table.add(newGame).width(newGame.getWidth() + 40).height(80).fillX().pad(10);
-//        table.add(preferences).width(preferences.getWidth() + 40).height(80).fillX().pad(10);
-//        table.add(exit).fillX().width(exit.getWidth() + 40).height(80).fillX().pad(10);
-
-    }
-
-    @Override
-    public void show() {
-
-        Gdx.input.setInputProcessor(stage);
 
         // PLAY BUTTON
         playBtn.addListener(new ClickListener() {
@@ -70,16 +58,19 @@ public class MenuScreen implements Screen {
                 Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Hand);
                 super.enter(event, x, y, pointer, fromActor);
             }
-        });
 
-        playBtn.addListener(new ClickListener() {
             @Override
             public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
                 Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Arrow);
                 super.exit(event, x, y, pointer, toActor);
             }
-        });
 
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                parent.changeScreen(Orchestrator.APPLICATION);
+                super.clicked(event, x, y);
+            }
+        });
 
         // LEADERBOARD BUTTON
         leaderboardBtn.addListener(new ClickListener() {
@@ -88,24 +79,20 @@ public class MenuScreen implements Screen {
                 Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Hand);
                 super.enter(event, x, y, pointer, fromActor);
             }
-        });
 
-        leaderboardBtn.addListener(new ClickListener() {
             @Override
             public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
                 Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Arrow);
                 super.exit(event, x, y, pointer, toActor);
             }
-        });
 
-        leaderboardBtn.addListener(new ChangeListener() {
             @Override
-            public void changed(ChangeEvent event, Actor actor) {
+            public void clicked(InputEvent event, float x, float y) {
+                System.out.println("Leaderboard button clicked");
                 parent.changeScreen(Orchestrator.LEADERBOARD);
-                dispose();
+                super.clicked(event, x, y);
             }
         });
-
 
         // QUIT BUTTON
         quitBtn.addListener(new ClickListener() {
@@ -114,22 +101,26 @@ public class MenuScreen implements Screen {
                 Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Hand);
                 super.enter(event, x, y, pointer, fromActor);
             }
-        });
 
-        quitBtn.addListener(new ClickListener() {
             @Override
             public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
                 Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Arrow);
                 super.exit(event, x, y, pointer, toActor);
             }
-        });
 
-        quitBtn.addListener(new ChangeListener() {
             @Override
-            public void changed(ChangeEvent event, Actor actor) {
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
                 Gdx.app.exit();
             }
         });
+    }
+
+    @Override
+    public void show() {
+        Gdx.input.setInputProcessor(stage);
+        stage.mouseMoved(1,1);
+        stage.mouseMoved(Gdx.input.getX(), Gdx.input.getY());
     }
 
     @Override

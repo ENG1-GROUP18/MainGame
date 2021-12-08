@@ -4,8 +4,10 @@ import com.badlogic.gdx.Game;
 import york.eng1.team18.views.*;
 
 public class Orchestrator extends Game {
-	// TOGGLE TO DISABLE SPLASH SCREEN FOR DEBUGGING
-	boolean splashScreenEnabled = false;
+
+	//----------------------------------
+	private boolean SPLASH_ENABLED = false;
+	//----------------------------------
 
 	private SplashScreen splashScreen;
 	private MenuScreen menuScreen;
@@ -21,7 +23,7 @@ public class Orchestrator extends Game {
 	@Override
 	public void create() {
 
-		if (splashScreenEnabled) {
+		if (SPLASH_ENABLED) {
 			splashScreen = new SplashScreen(this);
 			this.setScreen(splashScreen);
 		} else {

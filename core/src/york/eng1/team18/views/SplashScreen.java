@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.TimeUtils;
 import york.eng1.team18.Orchestrator;
 
 public class SplashScreen implements Screen {
+
     private Orchestrator parent;
     SpriteBatch batch;
     Texture logoTexture;

@@ -1,10 +1,12 @@
 package york.eng1.team18.views;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Cursor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -19,6 +21,7 @@ public class LeaderBoardScreen implements Screen {
 
     private Orchestrator parent;
     private Stage stage;
+    private Skin skin;
 
     TextButton backToMenuBtn;
 
@@ -29,46 +32,36 @@ public class LeaderBoardScreen implements Screen {
 
         Table table = new Table();
         table.setFillParent(true);
-        //table.setDebug(true);
+        table.setDebug(true);
         stage.addActor(table);
 
-        Skin skin = new Skin(Gdx.files.internal("skin/customSkin.json"));
+        skin = new Skin(Gdx.files.internal("skin/customSkin.json"));
 
         backToMenuBtn = new TextButton("BACK", skin);
         table.add(backToMenuBtn).row();
+
+        addListeners();
 
     }
 
     @Override
     public void show() {
-
+        System.out.println("SHOW RUN");
         Gdx.input.setInputProcessor(stage);
 
-        // LEADERBOARD BUTTON
-//        backToMenuBtn.addListener(new ClickListener() {
-//            @Override
-//            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-//                Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Hand);
-//                super.enter(event, x, y, pointer, fromActor);
-//            }
-//        });
-//
-//        backToMenuBtn.addListener(new ClickListener() {
-//            @Override
-//            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
-//                Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Arrow);
-//                super.exit(event, x, y, pointer, toActor);
-//            }
-//        });
 
-        backToMenuBtn.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                System.out.println("Back button clicked");
-                parent.changeScreen(Orchestrator.MENU);
-                dispose();
-            }
-        });
+        backToMenuBtn.setStyle(backToMenuBtn.getStyle());
+//        if(backToMenuBtn.isOver()) {
+//            System.out.println("IS OVER");
+//            InputEvent event = new InputEvent();
+//            event.setType(InputEvent.Type.enter);
+//            event.setPointer(-1);
+//            backToMenuBtn.fire(event);
+//            Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Hand);
+//
+//        }
+
+
     }
 
     @Override
@@ -102,5 +95,27 @@ public class LeaderBoardScreen implements Screen {
     @Override
     public void dispose() {
 
+    }
+
+    private void addListeners(){
+        backToMenuBtn.addListener(new ClickListener() {
+            @Override
+            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                super.enter(event, x, y, pointer, fromActor);
+                Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Hand);
+            }
+            @Override
+            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                super.exit(event, x, y, pointer, toActor);
+                Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Arrow);
+            }
+
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                System.out.println("back button clicked");
+                parent.changeScreen(Orchestrator.MENU);
+                hide();
+            }
+        });
     }
 }
