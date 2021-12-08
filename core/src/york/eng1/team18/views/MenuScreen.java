@@ -49,9 +49,9 @@ public class MenuScreen implements Screen {
         quitBtn = new TextButton("QUIT", skin);
 
 //        table.add(title).height(60).padBottom(50).row();
-        table.add(playBtn).size(playBtn.getWidth() + 60, playBtn.getHeight() -20).row();
-        table.add(leaderboardBtn).size(leaderboardBtn.getWidth() + 60, leaderboardBtn.getHeight()-20).row();
-        table.add(quitBtn).size(quitBtn.getWidth() + 60, quitBtn.getHeight()-20).row();
+        table.add(playBtn).size(playBtn.getWidth(), playBtn.getHeight() -20).row();
+        table.add(leaderboardBtn).size(leaderboardBtn.getWidth(), leaderboardBtn.getHeight()-20).row();
+        table.add(quitBtn).size(quitBtn.getWidth(), quitBtn.getHeight()-20).row();
 
 
 //        table.add(newGame).width(newGame.getWidth() + 40).height(80).fillX().pad(10);
@@ -62,6 +62,8 @@ public class MenuScreen implements Screen {
 
     @Override
     public void show() {
+
+        // PLAY BUTTON
         playBtn.addListener(new ClickListener() {
             @Override
             public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
@@ -78,6 +80,8 @@ public class MenuScreen implements Screen {
             }
         });
 
+
+        // LEADERBOARD BUTTON
         leaderboardBtn.addListener(new ClickListener() {
             @Override
             public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
@@ -94,6 +98,15 @@ public class MenuScreen implements Screen {
             }
         });
 
+        leaderboardBtn.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                Gdx.app.exit();
+            }
+        });
+
+
+        // QUIT BUTTON
         quitBtn.addListener(new ClickListener() {
             @Override
             public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {

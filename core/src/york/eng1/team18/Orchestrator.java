@@ -1,38 +1,29 @@
 package york.eng1.team18;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.ScreenUtils;
-import com.badlogic.gdx.utils.TimeUtils;
-import york.eng1.team18.views.EndScreen;
-import york.eng1.team18.views.MainScreen;
-import york.eng1.team18.views.MenuScreen;
-import york.eng1.team18.views.SplashScreen;
+import york.eng1.team18.views.*;
 
 public class Orchestrator extends Game {
 	// TOGGLE TO DISABLE SPLASH SCREEN FOR DEBUGGING
-	boolean splashScreenEnabled = true;
+	boolean splashScreenEnabled = false;
 
-	private SplashScreen loadingScreen;
+	private SplashScreen splashScreen;
 	private MenuScreen menuScreen;
+	private LeaderBoardScreen leaderBoardScreen;
 	private MainScreen mainScreen;
 	private EndScreen endScreen;
 
 	public final static int MENU = 0;
 	public final static int APPLICATION = 1;
 	public final static int ENDGAME = 2;
+	public final static int LEADERBOARD = 3;
 
 	@Override
 	public void create() {
 
 		if (splashScreenEnabled) {
-			loadingScreen = new SplashScreen(this);
-			this.setScreen(loadingScreen);
+			splashScreen = new SplashScreen(this);
+			this.setScreen(splashScreen);
 		} else {
 			menuScreen = new MenuScreen(this);
 			this.setScreen(menuScreen);
@@ -57,6 +48,12 @@ public class Orchestrator extends Game {
 				if(endScreen == null) {
 					endScreen = new EndScreen(this);
 					this.setScreen(endScreen);
+				}
+				break;
+			case LEADERBOARD:
+				if(leaderBoardScreen == null) {
+					leaderBoardScreen = new LeaderBoardScreen(this);
+					this.setScreen(leaderBoardScreen);
 				}
 				break;
 		}
