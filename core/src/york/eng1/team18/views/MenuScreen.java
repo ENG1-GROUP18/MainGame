@@ -44,9 +44,9 @@ public class MenuScreen implements Screen {
         TextButton quitBtn = new TextButton("QUIT", skin);
 
         // Add button objects to table
-        table.add(playBtn).size(playBtn.getWidth(), playBtn.getHeight() -20).row();
-        table.add(leaderboardBtn).size(leaderboardBtn.getWidth(), leaderboardBtn.getHeight()-20).row();
-        table.add(quitBtn).size(quitBtn.getWidth(), quitBtn.getHeight()-20).row();
+        table.add(playBtn).height(playBtn.getHeight() -20).row();
+        table.add(leaderboardBtn).height(leaderboardBtn.getHeight()-20).row();
+        table.add(quitBtn).height(quitBtn.getHeight()-20).row();
 
 
         // PLAY BUTTON
