@@ -20,7 +20,8 @@ public class DesktopLauncher {
 		if(FULLSCREEN) {
 			config.setFullscreenMode(desktopMode);
 		} else {
-			config.setWindowedMode(1080, 720);
+			// config.setResizable(false);
+			config.setWindowedMode(1280, 720);
 			config.setWindowSizeLimits(720, 480, 1920,1080);
 		}
 

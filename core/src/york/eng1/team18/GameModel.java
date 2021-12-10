@@ -14,101 +14,56 @@ public class GameModel {
     private Body bodyk;
 
 
-
     public GameModel(){
         world = new World(new Vector2(0, -10f), true);
         createFloor();
         createObject();
         createMovingObject();
-
-
     }
 
     public void logicStep(float delta){
-
         // Game logic goes here
         world.step(delta, 3, 3);
-
     }
 
     private void createFloor() {
-
-        // create a new body definition (type and location)
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;
-        bodyDef.position.set(0, -10);
-
-        // add it to the world
+        bodyDef.position.set(0, -5);
         bodyd = world.createBody(bodyDef);
-
-        // set the shape (here we use a box 50 meters wide, 1 meter tall )
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(50, 1);
-
-        // create the physical object in our body)
-        // without this our body would just be data in the world
+        shape.setAsBox(10f, 1);
         bodyd.createFixture(shape, 0.0f);
-
-        // we no longer use the shape object here so dispose of it.
         shape.dispose();
     }
 
 
     private void createObject(){
-
-        //create a new body definition (type and location)
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         bodyDef.position.set(0,0);
-
-
-        // add it to the world
         bodyd = world.createBody(bodyDef);
-
-        // set the shape (here we use a box 50 meters wide, 1 meter tall )
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(1,1);
-
-        // set the properties of the object ( shape, weight, restitution(bouncyness)
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
         fixtureDef.density = 1f;
-
-        // create the physical object in our body)
-        // without this our body would just be data in the world
         bodyd.createFixture(shape, 0.0f);
-
-        // we no longer use the shape object here so dispose of it.
         shape.dispose();
     }
 
     private void createMovingObject(){
-
-        //create a new body definition (type and location)
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.KinematicBody;
-        bodyDef.position.set(0,-12);
-
-
-        // add it to the world
+        bodyDef.position.set(0,-7);
         bodyk = world.createBody(bodyDef);
-
-        // set the shape (here we use a box 50 meters wide, 1 meter tall )
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(1,1);
-
-        // set the properties of the object ( shape, weight, restitution(bouncyness)
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
         fixtureDef.density = 1f;
-
-        // create the physical object in our body)
-        // without this our body would just be data in the world
         bodyk.createFixture(shape, 0.0f);
-
-        // we no longer use the shape object here so dispose of it.
         shape.dispose();
-
         bodyk.setLinearVelocity(0, 0.75f);
     }
 }
