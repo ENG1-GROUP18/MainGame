@@ -91,7 +91,6 @@ public class LeaderBoardScreen implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("back button clicked");
                 parent.changeScreen(Orchestrator.MENU);
-                hide();
             }
         });
 
