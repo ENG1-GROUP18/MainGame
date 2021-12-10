@@ -31,9 +31,14 @@ public class LeaderboardHandler {
     }
 
     // TODO implement function to add score to appropriate position in leaderboard
-//    public void addScoreToList(int score) {
-//        for (int i = 0; i < getPrefs().get().size(); i++) {
-//
-//        }
-//    }
-}
+    public void addScoreToList(int score) {
+        for (int i = 0; i < getPrefs().get().size(); i++) {
+            if (getPrefs().getInteger(String.valueOf(i + 1)) < score){
+                for (int j = i; j < getPrefs().get().size() - 1; j++) {
+                    getPrefs().putInteger(String.valueOf(j + 2), getPrefs().getInteger(String.valueOf(j + 1)));
+                }
+                getPrefs().putInteger(String.valueOf(i + 1), score);
+                break;
+            }
+        }
+    }
