@@ -20,11 +20,13 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import jdk.tools.jmod.Main;
 import york.eng1.team18.GameModel;
 import york.eng1.team18.Orchestrator;
+import york.eng1.team18.controller.InputController;
 
 public class MainScreen implements Screen {
     private Orchestrator parent;
     Sprite sprite;
     Batch batch;
+    InputController controller;
     GameModel model;
     OrthographicCamera camera;
     ExtendViewport viewport;
@@ -33,13 +35,14 @@ public class MainScreen implements Screen {
     public MainScreen(Orchestrator orchestrator) {
         parent = orchestrator;
 
-        Gdx.input.setInputProcessor(null);
+        controller = new InputController();
+        model = new GameModel(controller);
+        Gdx.input.setInputProcessor(controller);
+
         Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Arrow);
 
-        model = new GameModel();
-
-        camera = new OrthographicCamera(16, 9);
-        viewport = new ExtendViewport(16, 9, camera);
+        camera = new OrthographicCamera(1, 1);
+        viewport = new ExtendViewport(80, 80, camera);
 
         debugRenderer = new Box2DDebugRenderer(true,true,true,true,true,true);
     }

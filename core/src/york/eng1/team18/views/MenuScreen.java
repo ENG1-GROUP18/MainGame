@@ -34,6 +34,7 @@ public class MenuScreen implements Screen {
         table.setFillParent(true);
         table.setDebug(parent.DEBUG_TABLES);
         stage.addActor(table);
+        Gdx.input.setInputProcessor(stage);
 
         // temp
         Skin skin = new Skin(Gdx.files.internal("skin/customSkin.json"));
@@ -86,9 +87,9 @@ public class MenuScreen implements Screen {
 
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                System.out.println("Leaderboard button clicked");
                 parent.changeScreen(Orchestrator.LEADERBOARD);
                 super.clicked(event, x, y);
+
             }
         });
 
@@ -112,7 +113,6 @@ public class MenuScreen implements Screen {
             }
         });
 
-        Gdx.input.setInputProcessor(stage);
     }
 
     @Override
