@@ -13,93 +13,70 @@ public class GameModel {
     private Box2DDebugRenderer debugRenderer;
 
 
-    private Body playerShip;
-    private Body bodys;
-    private Body bodyk;
+    public Body playerShip;
+    public Body islandBox;
 
 
     public GameModel(InputController cont){
         controller = cont;
         world = new World(new Vector2(0, 0), true);
-        createFloor();
+        createIsland();
         createBoat();
-        createMovingObject();
     }
 
     public void logicStep(float delta){
         // Game logic goes here
-        float ep = 5;
+        // For forward/backward force
+        float enginePower = 100;
         float x = (float)Math.sin(playerShip.getAngle() - Math.PI);
         float y = (float)Math.cos(playerShip.getAngle());
 
-
         if (controller.forward) {
-            playerShip.applyForceToCenter(x * ep, y * ep,true);
+            // Increase linear damping, apply forward force
+            playerShip.applyForceToCenter(x * enginePower, y * enginePower,true);
+            playerShip.setLinearDamping(4f);
+        } else {
+            // Reduce Linear Damping
+            playerShip.setLinearDamping(2f);
         }
         if (controller.backward) {
-            playerShip.applyForceToCenter(-x * ep, -y * ep,true);
+            playerShip.applyForceToCenter(-x * 0.2f * enginePower, -y * 0.2f * enginePower,true);
         }
         if (controller.left && !controller.right) {
-            playerShip.setAngularVelocity(1f);
+            playerShip.setAngularVelocity(2f);
         } else if (controller.right && !controller.left) {
-            playerShip.setAngularVelocity(-1f);
-        } else {
-            playerShip.setAngularVelocity(0);
+            playerShip.setAngularVelocity(-2f);
         }
+//        else {
+//            playerShip.setAngularVelocity(0);
+//        }
         world.step(delta, 3, 3);
     }
 
     private void createBoat() {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
-        bodyDef.position.set(5, 5);
+        //bodyDef.position.set(-10, -5);
         playerShip = world.createBody(bodyDef);
+        playerShip.setLinearDamping(2);
+        playerShip.setAngularDamping(1.4f);
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(1f, 2f);
+        playerShip.setTransform(-40, -10, (float)(Math.PI * 1.5));
         playerShip.createFixture(shape, 0.0f);
         shape.dispose();
     }
 
 
 
-    private void createFloor() {
+    private void createIsland() {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;
-        bodyDef.position.set(0, -5);
-        playerShip = world.createBody(bodyDef);
+        bodyDef.position.set(20, -5);
+        islandBox = world.createBody(bodyDef);
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(10f, 1);
-        playerShip.createFixture(shape, 0.0f);
+        shape.setAsBox(10f, 10f);
+        islandBox.createFixture(shape, 0.0f);
         shape.dispose();
-    }
-
-
-    private void createObject(){
-        BodyDef bodyDef = new BodyDef();
-        bodyDef.type = BodyDef.BodyType.DynamicBody;
-        bodyDef.position.set(0,0);
-        playerShip = world.createBody(bodyDef);
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox(1,1);
-        FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.shape = shape;
-        fixtureDef.density = 1f;
-        playerShip.createFixture(shape, 0.0f);
-        shape.dispose();
-    }
-
-    private void createMovingObject(){
-        BodyDef bodyDef = new BodyDef();
-        bodyDef.type = BodyDef.BodyType.KinematicBody;
-        bodyDef.position.set(0,-7);
-        bodyk = world.createBody(bodyDef);
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox(1,1);
-        FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.shape = shape;
-        fixtureDef.density = 1f;
-        bodyk.createFixture(shape, 0.0f);
-        shape.dispose();
-        bodyk.setLinearVelocity(0, 0.75f);
     }
 }

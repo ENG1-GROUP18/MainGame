@@ -1,6 +1,8 @@
 package york.eng1.team18;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.assets.AssetManager;
+import york.eng1.team18.loader.AssetController;
 import york.eng1.team18.views.*;
 
 public class Orchestrator extends Game {
@@ -15,6 +17,7 @@ public class Orchestrator extends Game {
 	private LeaderBoardScreen leaderBoardScreen;
 	private MainScreen mainScreen;
 	private EndScreen endScreen;
+	public AssetController assMan = new AssetController();
 
 	public final static int MENU = 0;
 	public final static int APPLICATION = 1;

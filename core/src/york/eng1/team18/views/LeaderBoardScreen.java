@@ -31,11 +31,11 @@ public class LeaderBoardScreen implements Screen {
 
     @Override
     public void show() {
-        Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Arrow);
         stage.setDebugAll(parent.DEBUG_TABLES);
         Table table = new Table();
         table.setFillParent(true);
         stage.addActor(table);
+        Gdx.input.setInputProcessor(stage);
 
         skin = new Skin(Gdx.files.internal("skin/customSkin.json"));
 
@@ -75,26 +75,12 @@ public class LeaderBoardScreen implements Screen {
         table.add(backToMenuBtn).colspan(2).pad(20).height(backToMenuBtn.getHeight()-20).row();
 
         // BACK BUTTON
-        backToMenuBtn.addListener(new ClickListener() {
+        backToMenuBtn.addListener(new ChangeListener() {
             @Override
-            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                super.enter(event, x, y, pointer, fromActor);
-                Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Hand);
-            }
-            @Override
-            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
-                super.exit(event, x, y, pointer, toActor);
-                Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Arrow);
-            }
-
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                System.out.println("back button clicked");
+            public void changed(ChangeEvent event, Actor actor) {
                 parent.changeScreen(Orchestrator.MENU);
             }
         });
-
-        Gdx.input.setInputProcessor(stage);
     }
 
     @Override

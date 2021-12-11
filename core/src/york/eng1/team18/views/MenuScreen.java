@@ -15,8 +15,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import org.w3c.dom.Text;
 import york.eng1.team18.Orchestrator;
+
 
 public class MenuScreen implements Screen {
 
@@ -36,6 +36,7 @@ public class MenuScreen implements Screen {
         stage.addActor(table);
         Gdx.input.setInputProcessor(stage);
 
+
         // temp
         Skin skin = new Skin(Gdx.files.internal("skin/customSkin.json"));
 
@@ -51,68 +52,28 @@ public class MenuScreen implements Screen {
 
 
         // PLAY BUTTON
-        playBtn.addListener(new ClickListener() {
+        playBtn.addListener(new ChangeListener() {
             @Override
-            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Hand);
-                super.enter(event, x, y, pointer, fromActor);
-            }
-
-            @Override
-            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
-                Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Arrow);
-                super.exit(event, x, y, pointer, toActor);
-            }
-
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
+            public void changed(ChangeEvent event, Actor actor) {
                 parent.changeScreen(Orchestrator.APPLICATION);
-                super.clicked(event, x, y);
             }
         });
 
         // LEADERBOARD BUTTON
-        leaderboardBtn.addListener(new ClickListener() {
+        leaderboardBtn.addListener(new ChangeListener() {
             @Override
-            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Hand);
-                super.enter(event, x, y, pointer, fromActor);
-            }
-
-            @Override
-            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
-                Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Arrow);
-                super.exit(event, x, y, pointer, toActor);
-            }
-
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
+            public void changed(ChangeEvent event, Actor actor) {
                 parent.changeScreen(Orchestrator.LEADERBOARD);
-                super.clicked(event, x, y);
-
             }
         });
 
         // QUIT BUTTON
-        quitBtn.addListener(new ClickListener() {
+        quitBtn.addListener(new ChangeListener() {
             @Override
-            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Hand);
-                super.enter(event, x, y, pointer, fromActor);
-            }
-
-            @Override
-            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
-                Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Arrow);
-                super.exit(event, x, y, pointer, toActor);
-            }
-
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
+            public void changed(ChangeEvent event, Actor actor) {
                 Gdx.app.exit();
             }
         });
-
     }
 
     @Override
@@ -139,9 +100,7 @@ public class MenuScreen implements Screen {
     }
 
     @Override
-    public void hide() {
-
-    }
+    public void hide() {}
 
     @Override
     public void dispose() {

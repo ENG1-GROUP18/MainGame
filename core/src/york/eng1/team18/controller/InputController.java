@@ -11,7 +11,6 @@ public class InputController implements InputProcessor {
     public boolean right;
 
 
-
     @Override
     public boolean keyDown(int keycode) {
         boolean keyProcessed = false;

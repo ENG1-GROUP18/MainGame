@@ -2,12 +2,14 @@ package york.eng1.team18.views;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.TimeUtils;
 import york.eng1.team18.Orchestrator;
+import york.eng1.team18.loader.AssetController;
 
 public class SplashScreen implements Screen {
 
@@ -22,7 +24,7 @@ public class SplashScreen implements Screen {
     public SplashScreen(Orchestrator orchestrator) {
         parent = orchestrator;
         batch = new SpriteBatch();
-        logoTexture = new Texture(Gdx.files.internal("logo330w.png"));
+        logoTexture = new Texture(Gdx.files.internal(parent.assMan.logoImage));
         logoSprite = new Sprite(logoTexture);
 
         logoSprite.setPosition((Gdx.graphics.getWidth() - logoSprite.getWidth())/2f,
