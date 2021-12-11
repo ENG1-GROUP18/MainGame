@@ -8,7 +8,7 @@ import york.eng1.team18.views.*;
 public class Orchestrator extends Game {
 
 	//----------------------------------
-	private boolean SPLASH_ENABLED = false;
+	private boolean SPLASH_ENABLED = true;
 	public boolean DEBUG_TABLES = false;
 	//----------------------------------
 

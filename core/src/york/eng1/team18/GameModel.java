@@ -1,10 +1,13 @@
 package york.eng1.team18;
 
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import york.eng1.team18.controller.InputController;
+import york.eng1.team18.loader.BodyEditorLoader;
+import york.eng1.team18.views.MainScreen;
 
 public class GameModel {
     public World world;
@@ -12,16 +15,17 @@ public class GameModel {
     private InputController controller;
     private Box2DDebugRenderer debugRenderer;
 
-
     public Body playerShip;
+    public Body lakeBody;
     public Body islandBox;
 
 
     public GameModel(InputController cont){
         controller = cont;
         world = new World(new Vector2(0, 0), true);
-        createIsland();
+        //createIsland();
         createBoat();
+        createLake();
     }
 
     public void logicStep(float delta){
@@ -65,6 +69,27 @@ public class GameModel {
         playerShip.setTransform(-40, -10, (float)(Math.PI * 1.5));
         playerShip.createFixture(shape, 0.0f);
         shape.dispose();
+    }
+
+    private void createLake() {
+        // Create loader
+        BodyEditorLoader loader = new BodyEditorLoader(Gdx.files.internal("paths/UniLake.json"));
+        // Create BodyDef
+        BodyDef bd = new BodyDef();
+        bd.position.set(-50 , -50);
+        bd.type = BodyDef.BodyType.StaticBody;
+
+        // Create FixtureDef
+        FixtureDef fd = new FixtureDef();
+        fd.density = 1;
+        fd.friction = 0.5f;
+        fd.restitution = 0.3f;
+
+        // Create Body
+        lakeBody = world.createBody(bd);
+
+        // Create body fixture with loader
+        loader.attachFixture(lakeBody, "UniLake", fd, 200f);
     }
 
 

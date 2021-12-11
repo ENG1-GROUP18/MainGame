@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -26,16 +27,21 @@ import york.eng1.team18.controller.InputController;
 
 public class MainScreen implements Screen {
     private Orchestrator parent;
-    ShapeRenderer shapeRenderer;
+
     InputController controller;
     GameModel model;
+
     OrthographicCamera camera;
+    Vector2 camPos;
     ExtendViewport viewport;
-    Box2DDebugRenderer debugRenderer;
+
+
     Sprite playerSprite;
     Sprite islandSprite;
+    Sprite testMapSprite;
     SpriteBatch batch;
-
+    ShapeRenderer shapeRenderer;
+    Box2DDebugRenderer debugRenderer;
 
     public MainScreen(Orchestrator orchestrator) {
         parent = orchestrator;
@@ -45,13 +51,17 @@ public class MainScreen implements Screen {
         Gdx.input.setInputProcessor(controller);
 
         camera = new OrthographicCamera(1, 1);
-        viewport = new ExtendViewport(50, 50, camera);
+        viewport = new ExtendViewport(100, 100, camera);
 
-        debugRenderer = new Box2DDebugRenderer(false,false,false,true,false,false);
-        shapeRenderer = new ShapeRenderer();
+        debugRenderer = new Box2DDebugRenderer(true,true,false,true,true,true);
 
         playerSprite = new Sprite(new Texture(Gdx.files.internal("images/rubber_duck.jpg")));
-        islandSprite = new Sprite(new Texture(Gdx.files.internal("images/island.jpg")));
+        playerSprite.setSize(2, 4);
+        testMapSprite = new Sprite(new Texture(Gdx.files.internal("paths/UniLake.png")));
+        // 200 = image scale when created.
+        // 132 = 200 * image height / image width.
+        testMapSprite.setSize(200, 132);
+        //islandSprite = new Sprite(new Texture(Gdx.files.internal("images/island.jpg")));
         batch = new SpriteBatch();
     }
 
@@ -64,7 +74,11 @@ public class MainScreen implements Screen {
     public void render(float delta) {
         model.logicStep(delta);
         ScreenUtils.clear(parent.assMan.waterCol);
-        debugRenderer.render(model.world, camera.combined);
+
+        camera.position.x = model.playerShip.getPosition().x;
+        camera.position.y = model.playerShip.getPosition().y;
+        camera.update();
+
 
 //        shapeRenderer.setProjectionMatrix(camera.combined);
 //        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
@@ -73,26 +87,30 @@ public class MainScreen implements Screen {
 //        shapeRenderer.end();
 
 
+//        batch.setProjectionMatrix(camera.combined);
+//        batch.begin();
+//        islandSprite.setSize(20, 20);
+//        islandSprite.setPosition(model.islandBox.getPosition().x, model.islandBox.getPosition().y);
+//        islandSprite.translate(-10, -10);
+//        islandSprite.draw(batch);
+//        batch.end();
+
+
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
-        islandSprite.setSize(20, 20);
-        islandSprite.setPosition(model.islandBox.getPosition().x, model.islandBox.getPosition().y);
-        islandSprite.translate(-10, -10);
-        islandSprite.draw(batch);
-        batch.end();
+        testMapSprite.setPosition(model.lakeBody.getPosition().x, model.lakeBody.getPosition().y);
 
-
-
-
-        batch.setProjectionMatrix(camera.combined);
-        batch.begin();
-        playerSprite.setSize(2, 4);
         playerSprite.setPosition(model.playerShip.getPosition().x, model.playerShip.getPosition().y);
         playerSprite.setOriginCenter();
         playerSprite.setRotation(model.playerShip.getAngle()*57.3f);
         playerSprite.translate(-1, -2);
+
+        testMapSprite.draw(batch);
         playerSprite.draw(batch);
+
         batch.end();
+
+        debugRenderer.render(model.world, camera.combined);
     }
 
     @Override

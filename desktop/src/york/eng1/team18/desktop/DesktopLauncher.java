@@ -9,7 +9,7 @@ public class DesktopLauncher {
 	public static void main (String[] arg) {
 
 		//----------------------------------
-		boolean FULLSCREEN = false;
+		boolean FULLSCREEN = true;
 		//----------------------------------
 
 		Graphics.Monitor primaryMonitor = Lwjgl3ApplicationConfiguration.getPrimaryMonitor();
