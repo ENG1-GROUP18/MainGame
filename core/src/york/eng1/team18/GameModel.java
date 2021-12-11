@@ -35,10 +35,13 @@ public class GameModel {
         float x = (float)Math.sin(playerShip.getAngle() - Math.PI);
         float y = (float)Math.cos(playerShip.getAngle());
 
+        float speed_dependant = 1- Math.abs((30  - (Math.abs(playerShip.getLinearVelocity().x) + Math.abs(playerShip.getLinearVelocity().y)))/30);
+
+
         if (controller.forward) {
             // Increase linear damping, apply forward force
             playerShip.applyForceToCenter(x * enginePower, y * enginePower,true);
-            playerShip.setLinearDamping(4f);
+            playerShip.setLinearDamping(5f);
         } else {
             // Reduce Linear Damping
             playerShip.setLinearDamping(2f);
@@ -47,9 +50,12 @@ public class GameModel {
             playerShip.applyForceToCenter(-x * 0.2f * enginePower, -y * 0.2f * enginePower,true);
         }
         if (controller.left && !controller.right) {
-            playerShip.setAngularVelocity(2f);
+            System.out.println(speed_dependant);
+            playerShip.setAngularVelocity(1.5f + (speed_dependant * 1.5f));
+            playerShip.setAngularDamping(4f - speed_dependant);
         } else if (controller.right && !controller.left) {
-            playerShip.setAngularVelocity(-2f);
+            playerShip.setAngularVelocity(-1.5f - (speed_dependant * 1.5f));
+            playerShip.setAngularDamping(4f - speed_dependant);
         }
 //        else {
 //            playerShip.setAngularVelocity(0);
