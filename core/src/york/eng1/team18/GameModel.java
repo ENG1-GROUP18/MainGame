@@ -28,9 +28,23 @@ public class GameModel {
 
     public void logicStep(float delta){
         // Game logic goes here
+        float ep = 5;
+        float x = (float)Math.sin(playerShip.getAngle() - Math.PI);
+        float y = (float)Math.cos(playerShip.getAngle());
+
+
         if (controller.forward) {
-            playerShip.applyForceToCenter(0, 100f, true);
-            System.out.println("up held");
+            playerShip.applyForceToCenter(x * ep, y * ep,true);
+        }
+        if (controller.backward) {
+            playerShip.applyForceToCenter(-x * ep, -y * ep,true);
+        }
+        if (controller.left && !controller.right) {
+            playerShip.setAngularVelocity(1f);
+        } else if (controller.right && !controller.left) {
+            playerShip.setAngularVelocity(-1f);
+        } else {
+            playerShip.setAngularVelocity(0);
         }
         world.step(delta, 3, 3);
     }

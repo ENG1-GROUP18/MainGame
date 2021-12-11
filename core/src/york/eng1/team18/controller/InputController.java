@@ -41,7 +41,7 @@ public class InputController implements InputProcessor {
         boolean keyProcessed = false;
         switch (keycode) {
             case Input.Keys.W:
-                forward = true;
+                forward = false;
                 keyProcessed = true;
                 break;
             case Input.Keys.S:
