@@ -8,9 +8,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import org.jetbrains.annotations.NotNull;
 
 public class CannonBall {
-    public static final int speed = 50;
-    public static int speedy;
-    public static int speedx;
     private static Texture texture;
     private static Pixmap original;
     private static Pixmap tenx9;
@@ -46,7 +43,8 @@ public class CannonBall {
         float a_y = (float)Math.cos(angle);
         y+= (x_speed * delta) * a_y;
         x+= (y_speed * delta) * a_x;
-        if (y> Gdx.graphics.getHeight() || x > Gdx.graphics.getWidth()){
+        if (y> Gdx.graphics.getHeight() || x > Gdx.graphics.getWidth() || y < -50 || x < -50){
+            //texture.dispose();
             remove = true;
         }
     }
@@ -57,5 +55,6 @@ public class CannonBall {
 
 
     public void remove(CannonBall cannonBall) {
+
     }
 }

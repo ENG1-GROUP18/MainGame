@@ -76,6 +76,7 @@ public class MainScreen implements Screen {
         //islandSprite = new Sprite(new Texture(Gdx.files.internal("images/island.jpg")));
 
         batch = new SpriteBatch();
+        batch2 = new SpriteBatch();
     }
 
     @Override
@@ -85,14 +86,14 @@ public class MainScreen implements Screen {
 
     @Override
     public void render(float delta) {
-
+        timeSinceLastShot -=1;
         if (controller.space){
+
             if (timeSinceLastShot <= 0){
                 cannonBalls.add(new CannonBall(model.playerShip.getPosition().x, model.playerShip.getPosition().y, Math.abs(model.playerShip.getLinearVelocity().x), Math.abs(model.playerShip.getLinearVelocity().y) , model.playerShip.getAngle()));
                 //sets how fast they can shoot
+
                 timeSinceLastShot = 50;
-            } else{
-                timeSinceLastShot-=1;
             }
         }
 
@@ -128,6 +129,7 @@ public class MainScreen implements Screen {
 
                 cannonBall.update(delta);
                 if (cannonBall.remove){
+                    System.out.println(cannonBall);
                     cannonBallsToRemove.add(cannonBall);
                 }
             }
@@ -156,7 +158,7 @@ public class MainScreen implements Screen {
 
         batch.end();
 
-        batch2 = new SpriteBatch();
+
         batch2.setProjectionMatrix(camera.combined);
         batch2.begin();
         if (cannonBalls != null) {
@@ -170,6 +172,7 @@ public class MainScreen implements Screen {
 
 
         debugRenderer.render(model.world, camera.combined);
+
     }
 
     @Override

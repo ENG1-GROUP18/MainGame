@@ -29,7 +29,6 @@ public class GameModel {
         controller = cont;
         world = new World(new Vector2(0, 0), true);
 
-        //cann = new CannonBall();
 
         //createIsland();
         createBoat();
