@@ -26,18 +26,31 @@ import york.eng1.team18.Orchestrator;
 import york.eng1.team18.controller.InputController;
 
 public class MainScreen implements Screen {
+
+    // When true, camera is still and zoomed out, used to debug.
+    //----------------------------------
+    private boolean CAMERA_FOLLOWS = true;
+    private boolean BOX2D_WIREFRAME = false;
+    //----------------------------------
+
+    private static final int mapImageX = 1155;  // height of map image
+    private static final int mapImageY = 776;   // width of map image
+    public float playerHeight = 4f;             // player height in world units
+    public float playerWidth = 2f;              // player width in world units
+    public float mapScale = 500f;               // map width in world units
+    public float mapAspectRatio = 1.49f;        // Aspect ratio of image used for map
+    public float cameraZoom = 30;               // ExtendViewport minimum size in world units
+
+
     private Orchestrator parent;
 
     InputController controller;
     GameModel model;
 
     OrthographicCamera camera;
-    Vector2 camPos;
     ExtendViewport viewport;
 
-
     Sprite playerSprite;
-    Sprite islandSprite;
     Sprite testMapSprite;
     SpriteBatch batch;
     ShapeRenderer shapeRenderer;
@@ -45,24 +58,24 @@ public class MainScreen implements Screen {
 
     public MainScreen(Orchestrator orchestrator) {
         parent = orchestrator;
-
         controller = new InputController();
-        model = new GameModel(controller);
         Gdx.input.setInputProcessor(controller);
+        model = new GameModel(this, controller);
+
+        batch = new SpriteBatch();
+        debugRenderer = new Box2DDebugRenderer(BOX2D_WIREFRAME,BOX2D_WIREFRAME,BOX2D_WIREFRAME,BOX2D_WIREFRAME,BOX2D_WIREFRAME,BOX2D_WIREFRAME);
 
         camera = new OrthographicCamera(1, 1);
-        viewport = new ExtendViewport(100, 100, camera);
+        if (!CAMERA_FOLLOWS) {
+            cameraZoom = mapScale / 1.5f;
+        }
+        viewport = new ExtendViewport(cameraZoom, cameraZoom, camera);
 
-        debugRenderer = new Box2DDebugRenderer(true,true,false,true,true,true);
+        playerSprite = new Sprite(new Texture(Gdx.files.internal("images/boatSprite.png")));
+        playerSprite.setSize(playerWidth, playerHeight);
 
-        playerSprite = new Sprite(new Texture(Gdx.files.internal("images/rubber_duck.jpg")));
-        playerSprite.setSize(2, 4);
-        testMapSprite = new Sprite(new Texture(Gdx.files.internal("paths/UniLake.png")));
-        // 200 = image scale when created.
-        // 132 = 200 * image height / image width.
-        testMapSprite.setSize(200, 132);
-        //islandSprite = new Sprite(new Texture(Gdx.files.internal("images/island.jpg")));
-        batch = new SpriteBatch();
+        testMapSprite = new Sprite(new Texture(Gdx.files.internal("paths/UniLake.jpg")));
+        testMapSprite.setSize(mapScale, mapScale * (mapImageY / (float)mapImageX));
     }
 
     @Override
@@ -75,26 +88,12 @@ public class MainScreen implements Screen {
         model.logicStep(delta);
         ScreenUtils.clear(parent.assMan.waterCol);
 
-        camera.position.x = model.playerShip.getPosition().x;
-        camera.position.y = model.playerShip.getPosition().y;
+        // Update camera position
+        if (CAMERA_FOLLOWS) {
+            camera.position.x = model.playerShip.getPosition().x;
+            camera.position.y = model.playerShip.getPosition().y;
+        }
         camera.update();
-
-
-//        shapeRenderer.setProjectionMatrix(camera.combined);
-//        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-//        shapeRenderer.setColor(parent.assMan.landCol2);
-//        shapeRenderer.rect(model.islandBox.getPosition().x - 10, model.islandBox.getPosition().y - 10, 20, 20);
-//        shapeRenderer.end();
-
-
-//        batch.setProjectionMatrix(camera.combined);
-//        batch.begin();
-//        islandSprite.setSize(20, 20);
-//        islandSprite.setPosition(model.islandBox.getPosition().x, model.islandBox.getPosition().y);
-//        islandSprite.translate(-10, -10);
-//        islandSprite.draw(batch);
-//        batch.end();
-
 
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
@@ -103,7 +102,7 @@ public class MainScreen implements Screen {
         playerSprite.setPosition(model.playerShip.getPosition().x, model.playerShip.getPosition().y);
         playerSprite.setOriginCenter();
         playerSprite.setRotation(model.playerShip.getAngle()*57.3f);
-        playerSprite.translate(-1, -2);
+        playerSprite.translate(-playerWidth/2, -playerHeight/2);
 
         testMapSprite.draw(batch);
         playerSprite.draw(batch);
