@@ -9,6 +9,7 @@ public class InputController implements InputProcessor {
     public boolean backward;
     public boolean left;
     public boolean right;
+    public boolean space;
 
 
     @Override
@@ -31,6 +32,11 @@ public class InputController implements InputProcessor {
                 right = true;
                 keyProcessed = true;
                 break;
+            case Input.Keys.SPACE:
+                space = true;
+                keyProcessed = true;
+                break;
+
         }
         return keyProcessed;
     }
@@ -53,6 +59,10 @@ public class InputController implements InputProcessor {
                 break;
             case Input.Keys.D:
                 right = false;
+                keyProcessed = true;
+                break;
+            case Input.Keys.SPACE:
+                space = false;
                 keyProcessed = true;
                 break;
         }

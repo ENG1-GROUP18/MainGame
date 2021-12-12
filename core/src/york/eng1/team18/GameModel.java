@@ -6,8 +6,11 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import york.eng1.team18.controller.InputController;
+import york.eng1.team18.entities.CannonBall;
 import york.eng1.team18.loader.BodyEditorLoader;
 import york.eng1.team18.views.MainScreen;
+
+import java.util.ArrayList;
 
 public class GameModel {
     public World world;
@@ -19,10 +22,15 @@ public class GameModel {
     public Body lakeBody;
     public Body islandBox;
 
+    //cannon
+
 
     public GameModel(InputController cont){
         controller = cont;
         world = new World(new Vector2(0, 0), true);
+
+        //cann = new CannonBall();
+
         //createIsland();
         createBoat();
         createLake();
@@ -35,7 +43,7 @@ public class GameModel {
         float x = (float)Math.sin(playerShip.getAngle() - Math.PI);
         float y = (float)Math.cos(playerShip.getAngle());
 
-        float speed_dependant = 1- Math.abs((30  - (Math.abs(playerShip.getLinearVelocity().x) + Math.abs(playerShip.getLinearVelocity().y)))/30);
+        float speed_dependant = 1 - Math.abs((30  - (Math.abs(playerShip.getLinearVelocity().x) + Math.abs(playerShip.getLinearVelocity().y)))/30);
 
 
         if (controller.forward) {
@@ -50,18 +58,20 @@ public class GameModel {
             playerShip.applyForceToCenter(-x * 0.2f * enginePower, -y * 0.2f * enginePower,true);
         }
         if (controller.left && !controller.right) {
-            System.out.println(speed_dependant);
             playerShip.setAngularVelocity(1.5f + (speed_dependant * 1.5f));
             playerShip.setAngularDamping(4f - speed_dependant);
         } else if (controller.right && !controller.left) {
             playerShip.setAngularVelocity(-1.5f - (speed_dependant * 1.5f));
             playerShip.setAngularDamping(4f - speed_dependant);
         }
+
+
 //        else {
 //            playerShip.setAngularVelocity(0);
 //        }
         world.step(delta, 3, 3);
     }
+
 
     private void createBoat() {
         BodyDef bodyDef = new BodyDef();

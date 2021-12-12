@@ -1,6 +1,7 @@
 package york.eng1.team18.views;
 
 import com.badlogic.gdx.Application;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Cursor;
@@ -24,6 +25,9 @@ import jdk.tools.jmod.Main;
 import york.eng1.team18.GameModel;
 import york.eng1.team18.Orchestrator;
 import york.eng1.team18.controller.InputController;
+import york.eng1.team18.entities.CannonBall;
+
+import java.util.ArrayList;
 
 public class MainScreen implements Screen {
     private Orchestrator parent;
@@ -39,9 +43,17 @@ public class MainScreen implements Screen {
     Sprite playerSprite;
     Sprite islandSprite;
     Sprite testMapSprite;
+    Sprite cannonBallSprite;
+
     SpriteBatch batch;
+    SpriteBatch batch2;
     ShapeRenderer shapeRenderer;
     Box2DDebugRenderer debugRenderer;
+
+    ArrayList<CannonBall> cannonBalls = new ArrayList<CannonBall>();
+    float timeSinceLastShot = 0;
+    public CannonBall cann;
+
 
     public MainScreen(Orchestrator orchestrator) {
         parent = orchestrator;
@@ -62,6 +74,7 @@ public class MainScreen implements Screen {
         // 132 = 200 * image height / image width.
         testMapSprite.setSize(200, 132);
         //islandSprite = new Sprite(new Texture(Gdx.files.internal("images/island.jpg")));
+
         batch = new SpriteBatch();
     }
 
@@ -72,6 +85,18 @@ public class MainScreen implements Screen {
 
     @Override
     public void render(float delta) {
+
+        if (controller.space){
+            if (timeSinceLastShot <= 0){
+                cannonBalls.add(new CannonBall(model.playerShip.getPosition().x, model.playerShip.getPosition().y, Math.abs(model.playerShip.getLinearVelocity().x), Math.abs(model.playerShip.getLinearVelocity().y) , model.playerShip.getAngle()));
+                //sets how fast they can shoot
+                timeSinceLastShot = 50;
+            } else{
+                timeSinceLastShot-=1;
+            }
+        }
+
+
         model.logicStep(delta);
         ScreenUtils.clear(parent.assMan.waterCol);
 
@@ -95,9 +120,29 @@ public class MainScreen implements Screen {
 //        islandSprite.draw(batch);
 //        batch.end();
 
+        //update cannonballs
+        ArrayList<CannonBall> cannonBallsToRemove = new ArrayList<CannonBall>();
+        if (cannonBalls != null){
+
+            for (CannonBall cannonBall : cannonBalls){
+
+                cannonBall.update(delta);
+                if (cannonBall.remove){
+                    cannonBallsToRemove.add(cannonBall);
+                }
+            }
+            cannonBalls.removeAll(cannonBallsToRemove);
+
+
+        }
+
+
+
 
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
+
+
         testMapSprite.setPosition(model.lakeBody.getPosition().x, model.lakeBody.getPosition().y);
 
         playerSprite.setPosition(model.playerShip.getPosition().x, model.playerShip.getPosition().y);
@@ -108,7 +153,21 @@ public class MainScreen implements Screen {
         testMapSprite.draw(batch);
         playerSprite.draw(batch);
 
+
         batch.end();
+
+        batch2 = new SpriteBatch();
+        batch2.setProjectionMatrix(camera.combined);
+        batch2.begin();
+        if (cannonBalls != null) {
+            for (CannonBall cannonBall : cannonBalls) {
+
+                //System.out.println(model.playerShip.getPosition().x);
+                cannonBall.render(batch2);
+            }
+        }
+        batch2.end();
+
 
         debugRenderer.render(model.world, camera.combined);
     }
