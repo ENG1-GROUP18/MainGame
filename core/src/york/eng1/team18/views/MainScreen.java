@@ -1,32 +1,20 @@
 package york.eng1.team18.views;
 
-import com.badlogic.gdx.Application;
-import com.badlogic.gdx.Game;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Cursor;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
-import jdk.tools.jmod.Main;
 import york.eng1.team18.GameModel;
 import york.eng1.team18.Orchestrator;
 import york.eng1.team18.controller.InputController;
 import york.eng1.team18.entities.CannonBall;
-
 import java.util.ArrayList;
 
 public class MainScreen implements Screen {
@@ -90,7 +78,6 @@ public class MainScreen implements Screen {
         playerSprite.setSize(playerWidth, playerHeight);
         testMapSprite = new Sprite(new Texture(Gdx.files.internal("paths/UniLake.jpg")));
         testMapSprite.setSize(mapScale, mapScale * (mapImageY / (float)mapImageX));
-        //islandSprite = new Sprite(new Texture(Gdx.files.internal("images/island.jpg")));
 
         batch = new SpriteBatch();
         batch2 = new SpriteBatch();
@@ -107,7 +94,7 @@ public class MainScreen implements Screen {
         if (controller.space){
 
             if (timeSinceLastShot <= 0){
-                cannonBalls.add(new CannonBall(model.playerShip.getPosition().x, model.playerShip.getPosition().y, Math.abs(model.playerShip.getLinearVelocity().x), Math.abs(model.playerShip.getLinearVelocity().y) , model.playerShip.getAngle()));
+                cannonBalls.add(new CannonBall(model.playerBody.getPosition().x, model.playerBody.getPosition().y, Math.abs(model.playerBody.getLinearVelocity().x), Math.abs(model.playerBody.getLinearVelocity().y) , model.playerBody.getAngle()));
                 //sets how fast they can shoot
 
                 timeSinceLastShot = 50;
@@ -120,8 +107,8 @@ public class MainScreen implements Screen {
 
         // Update camera position
         if (CAMERA_FOLLOWS) {
-            camera.position.x = model.playerShip.getPosition().x;
-            camera.position.y = model.playerShip.getPosition().y;
+            camera.position.x = model.playerBody.getPosition().x;
+            camera.position.y = model.playerBody.getPosition().y;
         }
         camera.update();
 
@@ -151,9 +138,9 @@ public class MainScreen implements Screen {
 
         testMapSprite.setPosition(model.lakeBody.getPosition().x, model.lakeBody.getPosition().y);
 
-        playerSprite.setPosition(model.playerShip.getPosition().x, model.playerShip.getPosition().y);
+        playerSprite.setPosition(model.playerBody.getPosition().x, model.playerBody.getPosition().y);
         playerSprite.setOriginCenter();
-        playerSprite.setRotation(model.playerShip.getAngle()*57.3f);
+        playerSprite.setRotation(model.playerBody.getAngle()*57.3f);
         playerSprite.translate(-1, -2);
 
         testMapSprite.draw(batch);
