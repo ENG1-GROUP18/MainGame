@@ -37,6 +37,7 @@ public class Map extends Actor {
         fd.friction = 0.5f;
 
         body = world.createBody(bd);
+        body.setUserData("Map");
 
         loader.attachFixture(body, "Lake", fd, sizeX);
 

@@ -24,6 +24,8 @@ public class Player extends Image {
     private float rateOfAcceleration = 0.05f;
     private float rateOfDeceleration = 0.02f;
     private float maxRateOfTurn = 1.8f;
+    private boolean crash = false;
+    private float count_update = 0f;
 
     public Player(World world, Orchestrator orch, Camera camera, InputController inpt, float pos_x, float pos_y , float size_x, float size_y){
        // Set image, position and world reference
@@ -48,6 +50,7 @@ public class Player extends Image {
         fixtureDef.friction = 0.2f;
         fixtureDef.restitution = 0f;
         body.createFixture(fixtureDef);
+        body.setUserData("Player");
         shape.dispose();
 
         // For rotation around center
@@ -95,6 +98,30 @@ public class Player extends Image {
         this.setRotation(body.getAngle() * MathUtils.radiansToDegrees);
         this.setPosition(body.getPosition().x - this.getWidth()/2,
                 body.getPosition().y - this.getHeight()/2);
+
+
+        // Stops boat if collision
+        for (Contact contact : world.getContactList()){
+            Object nameA = contact.getFixtureA().getBody().getUserData();
+            Object nameB = contact.getFixtureB().getBody().getUserData();
+            //System.out.println(nameB);
+            if (contact.isTouching()  && nameA == "Map" && nameB == "Player" && crash == false && count_update <= 0){
+
+                currentSpeed = 0;
+                //body.setLinearVelocity(0,0);
+
+                crash = true;
+                count_update = 100;
+            } else if (contact.isTouching()  && nameA == "Map" && nameB == "Player" && crash == true && count_update > 0){
+                //System.out.println("Hit");
+                crash = false;
+
+            }
+        }
+        //System.out.println(crash);
+        if (count_update > 0){
+            count_update -=1;
+        }
 
         super.act(delta);
     }
