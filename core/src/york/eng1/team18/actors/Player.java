@@ -138,42 +138,7 @@ public class Player extends Image {
         this.setRotation(body.getAngle() * MathUtils.radiansToDegrees);
         this.setPosition(body.getPosition().x - this.getWidth()/2,
                 body.getPosition().y - this.getHeight()/2);
-
-
-        // Stops boat if collision
-//        for (Contact contact : world.getContactList()){
-//            Object nameA = contact.getFixtureA().getBody().getUserData();
-//            Object nameB = contact.getFixtureB().getBody().getUserData();
-//
-//
-//            if (contact.isTouching()  && nameA == "Map" && nameB == "Player" && is_contact == false && count_update <= 0){
-//                System.out.println(contact.getFixtureB().getUserData());
-//                Object name_fixture = contact.getFixtureB().getUserData();
-//                if (name_fixture == "top" || name_fixture == "bottom"){
-//                    currentSpeed = 0;
-//                    body.setLinearVelocity(body.getLinearVelocity().x/2, 0);
-//                } else if (name_fixture == "right" || name_fixture == "left"){
-//                    currentSpeed = currentSpeed /2;
-//                    body.setLinearVelocity( 0, body.getLinearVelocity().y/2);
-//                }else{
-//                    currentSpeed = currentSpeed/2;
-//                    body.setLinearVelocity(body.getLinearVelocity().x/2, body.getLinearVelocity().y/2);
-//                }
-//
-//                float collision_angle = (float)Math.atan2((((contact.getWorldManifold().getPoints()[0].y +1) - body.getPosition().y)), ((contact.getWorldManifold().getPoints()[0].x + 2) - body.getPosition().x));
-//
-//                is_contact = true;
-//                count_update = 100;
-//            } else if (contact.isTouching()  && nameA == "Map" && nameB == "Player" && is_contact == true && count_update > 0){
-//                //System.out.println("Hit");
-//                is_contact = false;
-//
-//            }
-//        }
-//        //System.out.println(crash);
-//        if (count_update > 0){
-//            count_update -=1;
-//        }
+        
 
         super.act(delta);
     }
