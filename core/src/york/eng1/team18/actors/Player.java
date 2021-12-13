@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import york.eng1.team18.Orchestrator;
@@ -19,12 +20,13 @@ public class Player extends Image {
 
     // PLAYER PROPERTIES:
     private float maxSpeed = 16;
-    private float maxReverseSpeed = -2f;
-    private float currentSpeed = 0f;
+    private float maxReverseSpeed = -8f;
+    public float currentSpeed = 0f; // changed to public
     private float rateOfAcceleration = 0.05f;
-    private float rateOfDeceleration = 0.02f;
+    private float rateOfDeceleration = 0.03f;
     private float maxRateOfTurn = 1.8f;
-    private boolean crash = false;
+    public boolean is_contact = false;
+    public String contact_side = "";
     private float count_update = 0f;
 
     public Player(World world, Orchestrator orch, Camera camera, InputController inpt, float pos_x, float pos_y , float size_x, float size_y){
@@ -51,6 +53,44 @@ public class Player extends Image {
         fixtureDef.restitution = 0f;
         body.createFixture(fixtureDef);
         body.setUserData("Player");
+
+        //creating collision detectors around player
+        //Top
+        FixtureDef fdef = new FixtureDef();
+        PolygonShape top = new PolygonShape();
+        top.setAsBox(size_x/2 , size_y/2  -1, new Vector2(0.5f,0) , 0);
+        fdef.shape = top;
+        fdef.isSensor = true;
+        body.createFixture(fdef).setUserData("top");
+
+        //left
+        FixtureDef fdef1 = new FixtureDef();
+        PolygonShape left = new PolygonShape();
+        left.setAsBox(size_x/2 -1, size_y/2 , new Vector2(0,0.5f) , 0);
+        fdef1.shape = left;
+        fdef1.isSensor = true;
+        body.createFixture(fdef1).setUserData("left");
+
+        //right
+        FixtureDef fdef2 = new FixtureDef();
+        PolygonShape right = new PolygonShape();
+        right.setAsBox(size_x/2 -1, size_y/2 , new Vector2(0,-0.5f) , 0);
+        fdef2.shape = right;
+        fdef2.isSensor = true;
+        body.createFixture(fdef2).setUserData("right");
+
+        //bottom
+        FixtureDef fdef3 = new FixtureDef();
+        PolygonShape bottom = new PolygonShape();
+        bottom.setAsBox(size_x/2 , size_y/2 -1, new Vector2(-0.5f,0) , 0);
+        fdef3.shape = bottom;
+        fdef3.isSensor = true;
+        body.createFixture(fdef3).setUserData("bottom");
+
+
+
+        left.dispose();
+        top.dispose();
         shape.dispose();
 
         // For rotation around center
@@ -63,11 +103,11 @@ public class Player extends Image {
         float rateOfTurn = maxRateOfTurn * (currentSpeed / maxSpeed);
 
         // Handle player input, update movement properties
-        if (inpt.forward && !inpt.backward) {
+        if (inpt.forward && !inpt.backward && contact_side != "top") {
             // Accelerate forward
             currentSpeed = Math.min(currentSpeed + rateOfAcceleration, maxSpeed);
 
-        }else if (inpt.backward && !inpt.forward) {
+        }else if (inpt.backward && !inpt.forward && contact_side != "bottom") {
             // Accelerate backward
             currentSpeed = Math.max(currentSpeed - rateOfAcceleration, maxReverseSpeed);
         } else {
@@ -101,27 +141,39 @@ public class Player extends Image {
 
 
         // Stops boat if collision
-        for (Contact contact : world.getContactList()){
-            Object nameA = contact.getFixtureA().getBody().getUserData();
-            Object nameB = contact.getFixtureB().getBody().getUserData();
-            //System.out.println(nameB);
-            if (contact.isTouching()  && nameA == "Map" && nameB == "Player" && crash == false && count_update <= 0){
-
-                currentSpeed = 0;
-                //body.setLinearVelocity(0,0);
-
-                crash = true;
-                count_update = 100;
-            } else if (contact.isTouching()  && nameA == "Map" && nameB == "Player" && crash == true && count_update > 0){
-                //System.out.println("Hit");
-                crash = false;
-
-            }
-        }
-        //System.out.println(crash);
-        if (count_update > 0){
-            count_update -=1;
-        }
+//        for (Contact contact : world.getContactList()){
+//            Object nameA = contact.getFixtureA().getBody().getUserData();
+//            Object nameB = contact.getFixtureB().getBody().getUserData();
+//
+//
+//            if (contact.isTouching()  && nameA == "Map" && nameB == "Player" && is_contact == false && count_update <= 0){
+//                System.out.println(contact.getFixtureB().getUserData());
+//                Object name_fixture = contact.getFixtureB().getUserData();
+//                if (name_fixture == "top" || name_fixture == "bottom"){
+//                    currentSpeed = 0;
+//                    body.setLinearVelocity(body.getLinearVelocity().x/2, 0);
+//                } else if (name_fixture == "right" || name_fixture == "left"){
+//                    currentSpeed = currentSpeed /2;
+//                    body.setLinearVelocity( 0, body.getLinearVelocity().y/2);
+//                }else{
+//                    currentSpeed = currentSpeed/2;
+//                    body.setLinearVelocity(body.getLinearVelocity().x/2, body.getLinearVelocity().y/2);
+//                }
+//
+//                float collision_angle = (float)Math.atan2((((contact.getWorldManifold().getPoints()[0].y +1) - body.getPosition().y)), ((contact.getWorldManifold().getPoints()[0].x + 2) - body.getPosition().x));
+//
+//                is_contact = true;
+//                count_update = 100;
+//            } else if (contact.isTouching()  && nameA == "Map" && nameB == "Player" && is_contact == true && count_update > 0){
+//                //System.out.println("Hit");
+//                is_contact = false;
+//
+//            }
+//        }
+//        //System.out.println(crash);
+//        if (count_update > 0){
+//            count_update -=1;
+//        }
 
         super.act(delta);
     }

@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import york.eng1.team18.Orchestrator;
+import york.eng1.team18.WorldContactListener;
 import york.eng1.team18.actors.Map;
 import york.eng1.team18.actors.Player;
 import york.eng1.team18.actors.WaterTrail;
@@ -39,6 +40,8 @@ public class MainScreen implements Screen {
     private Box2DDebugRenderer debugRenderer;
     private WaterTrail waterTrail;
 
+    public Player player; // made player a public variable
+
     InputController controller;
 
     OrthographicCamera camera;
@@ -58,10 +61,10 @@ public class MainScreen implements Screen {
         viewport = new ExtendViewport(50, 50, camera);
         stage = new Stage(viewport);
         world = new World(new Vector2(0,0), true);
-
+        world.setContactListener(new WorldContactListener(this));
         // Add objects to world
         Map map = new Map(world, 1000, 1000);
-        Player player = new Player(world, orchestrator, camera,controller, map.getSpawnX(), map.getSpawnY(), 4, 2);
+        player = new Player(world, orchestrator, camera,controller, map.getSpawnX(), map.getSpawnY(), 4, 2);
 
         map.setName("map");
         player.setName("player");
