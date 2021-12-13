@@ -1,4 +1,44 @@
 @startuml
+package eng1{
+
+class GameModel{
+    - MainScreen parent
+    + World world
+    - OrthographicCamera camera
+    - InputController controller
+    - Box2DDebugRenderer debugRenderer
+
+    + Body playerBody
+    + Player player
+    + Body lakeBody
+
+}
+class LeaderBoardHandler{
+    - static final String PREFS_NAME
+    - static final int max_items
+    protected Preferences getPrefs()
+    public void fillWithScores()
+    public int getScoreAtPos(int pos)
+    public void addScoreToList(int score)
+}
+class Orchestrator{
+        - boolean SPLASH_ENABLED
+    	+ boolean DEBUG_TABLES
+       	- SplashScreen splashScreen
+    	- MenuScreen menuScreen
+    	- LeaderBoardScreen leaderBoardScreen
+    	- MainScreen mainScreen
+    	- EndScreen endScreen
+    	+ AssetController assMan
+    	+ final static int MENU
+    	+ final static int APPLICATION
+    	+ final static int ENDGAME
+    	+ final static int LEADERBOARD
+
+    	public void create()
+    	public void changeScreen(int screen)
+}
+
 package actors {
 
     class CannonBall{
@@ -144,7 +184,5 @@ package views {
         long startTime
     }
 }
-
-
-
+}
 @enduml
