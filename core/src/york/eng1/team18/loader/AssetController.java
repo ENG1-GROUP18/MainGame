@@ -19,6 +19,7 @@ public class AssetController {
 
     // Colours
     public final Color waterCol = new Color(122/255f, 180/255f, 196/255f, 1);
+    public final Color trailCol = new Color(153/255f, 193/255f, 201/255f, 1);
     public final Color landCol = new Color(165/255f, 189/255f, 145/255f, 1);
     public final Color landCol2 = new Color(138/255f, 189/255f, 145/255f, 1);
 }
