@@ -23,7 +23,7 @@ public class WaterTrail {
     ShapeRenderer shapeRenderer;
 
     long logTime;
-    int trailSize = 200;
+    int trailSize = 50;
     Vector2 perp = new Vector2();
     private ArrayList<Vector2> trailPoints= new ArrayList<>();
     private ArrayList<Vector2> trailShapeRight = new ArrayList<Vector2>();
@@ -61,7 +61,7 @@ public class WaterTrail {
 
 
         // Update Trail every n nanoseconds
-        if (TimeUtils.timeSinceNanos(logTime) > 10000000) {
+        if (TimeUtils.timeSinceNanos(logTime) > 40000000) {
             // Update trailPoints
 
             Vector2 tempPoint = new Vector2(parent.getX(), parent.getY());
@@ -78,19 +78,17 @@ public class WaterTrail {
 
 
                 // Wave offset
-                perp.set(-perp.y * i/6, perp.x * i/6);
+                perp.set(-perp.y * i/10, perp.x * i/10);
 
                 // Create Left Points
                 Vector2 innerPoint = new Vector2(p1.cpy().sub(new Vector2(perp.x, perp.y)));
-                Vector2 outerPoint = new Vector2(p1.cpy().sub(new Vector2(perp.x * 1.4f, perp.y * 1.4f)));
+                Vector2 outerPoint = new Vector2(p1.cpy().sub(new Vector2(perp.x * 1.2f, perp.y * 1.2f)));
                 trailShapeLeft.add(innerPoint);
                 trailShapeLeft.add(outerPoint);
 
-                System.out.println(innerPoint);
-
                 // Create Right Points
                 Vector2 innerPoint2 = new Vector2(p1.cpy().add(new Vector2(perp.x, perp.y)));
-                Vector2 outerPoint2 = new Vector2(p1.cpy().add(new Vector2(perp.x * 1.4f, perp.y * 1.4f)));
+                Vector2 outerPoint2 = new Vector2(p1.cpy().add(new Vector2(perp.x * 1.2f, perp.y * 1.2f)));
                 trailShapeRight.add(innerPoint2);
                 trailShapeRight.add(outerPoint2);
 
@@ -127,6 +125,17 @@ public class WaterTrail {
             Vector2 r2 = trailShapeRight.get(i + 1);
             Vector2 r3 = trailShapeRight.get(i + 2);
             shapeRenderer.triangle(r1.x, r1.y, r2.x, r2.y, r3.x, r3.y, tCol, tCol, tCol);
+        }
+        shapeRenderer.end();
+
+
+
+        // FOR DEBUG, DRAWS trailpoints in red
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        shapeRenderer.setColor(Color.RED);
+        shapeRenderer.line(trailPoints.get(1), trailPoints.get(1));
+        for (int i = 0; i < trailPoints.size() - 2; i++) {
+            shapeRenderer.line(trailPoints.get(i), trailPoints.get(i+1));
         }
         shapeRenderer.end();
     }

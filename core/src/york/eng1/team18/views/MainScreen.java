@@ -22,8 +22,8 @@ public class MainScreen implements Screen {
 
     // When true, camera is still and zoomed out, used to debug.
     //----------------------------------
-    private boolean CAMERA_FOLLOWS = false;
-    private boolean BOX2D_WIREFRAME = false;
+    private boolean CAMERA_FOLLOWS = true;
+    private boolean BOX2D_WIREFRAME = true;
     //----------------------------------
 
     private static final int mapImageX = 1155;  // height of map image
@@ -92,7 +92,6 @@ public class MainScreen implements Screen {
 
         waterTrail.act();
         waterTrail.draw();
-
 
         stage.act();
 
