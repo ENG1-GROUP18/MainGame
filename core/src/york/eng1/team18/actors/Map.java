@@ -6,9 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 public class Map extends Actor {
 
     //TODO create map class
-
-
-
+    private float worldSize;
 
     @Override
     public void act(float delta) {

@@ -45,13 +45,13 @@ public class WaterTrail {
 //        float parentX = parent.getOriginX();
 //        float parentY = parent.getOriginY();
         for (int i = 0; i < trailSize; i++){
-            trailPoints.add(new Vector2(parent.getX(), parent.getY()));
+            trailPoints.add(new Vector2(parent.getX() + parent.getWidth()/2, parent.getY() + parent.getHeight()/2));
         }
 
         // Fill trailShapePoints with empty vectors
         for (int i = 0; i < trailSize * 2; i++) {
-            trailShapeRight.add(new Vector2(parent.getX(),parent.getY()));
-            trailShapeLeft.add(new Vector2(parent.getX(),parent.getY()));
+            trailShapeRight.add(new Vector2(parent.getX() + parent.getWidth()/2, parent.getY() + parent.getHeight()/2));
+            trailShapeLeft.add(new Vector2(parent.getX() + parent.getWidth()/2, parent.getY() + parent.getHeight()/2));
         }
 
 
@@ -61,10 +61,10 @@ public class WaterTrail {
 
 
         // Update Trail every n nanoseconds
-        if (TimeUtils.timeSinceNanos(logTime) > 40000000) {
-            // Update trailPoints
+        if (TimeUtils.timeSinceNanos(logTime) > 20000000) {
 
-            Vector2 tempPoint = new Vector2(parent.getX(), parent.getY());
+            // Update trailPoints
+            Vector2 tempPoint = new Vector2(parent.getX() + parent.getWidth()/2, parent.getY() + parent.getHeight()/2);
             trailPoints.add(0, tempPoint);
             trailPoints.remove(trailSize - 1);
 
