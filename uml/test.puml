@@ -1,0 +1,150 @@
+@startuml
+package actors {
+
+    class CannonBall{
+        - Texture texture
+        - Pixmap original
+        - Pixmap tenx9
+        + boolean remove
+        float x
+        float y
+        float x_speed
+        float y_speed
+        float angle
+        public void update(float delta)
+        public void render(SpriteBatch batch)
+        public void remove(CannonBall cannonBall)
+    }
+    class Map extends Actor{
+        - float worldSize
+        public void act()
+        public void draw()
+    }
+    class Player extends Image{
+        - InputController input
+        - World world
+        - Body body
+        - WaterTrail watertrail
+        - float maxSpeed
+        - float maxReverseSpeed
+        - float currentSpeed
+        - float rateOfAcceleration
+        - float rateOfDeceleration
+        - float maxRateOfTurn
+        public void act()
+        public void draw()
+    }
+    class WaterTrail{
+        - Orchestrator orch
+        - Actor parent
+        - Camera camera
+        - Color colorSea
+        - Color colorTrail
+        - ImmediateModeRenderer20 imr
+        - ShapeRenderer shapeRenderer
+        long logTime
+        int trailSize
+        Vector2 perp
+        - ArrayList <Vector2> trailPoints
+        - ArrayList <Vector2> trailShapeRight
+        - ArrayList <Vector2> trailShapeLeft
+        ArrayList<Color> pointColors
+
+        public void act()
+        public void draw()
+    }
+
+}
+
+package controller{
+    class InputController  implements InputProcessor{
+        + boolean forward;
+        + boolean backward;
+        + boolean left;
+        + boolean right;
+        + boolean space;
+        public boolean keyDown(int keycode)
+        public boolean keyUp(int keycode)
+        public boolean keyTyped(char character)
+        public boolean touchDown(int screenX, int screenY, int pointer, int button)
+        public boolean touchUp(int screenX, int screenY, int pointer, int button)
+        public boolean touchDragged(int screenX, int screenY, int pointer)
+        public boolean mouseMoved(int screenX, int screenY)
+        public boolean scrolled(float amountX, float amountY)
+
+    }
+}
+
+package loader {
+    class AssetController{
+        + final AssetManager manager
+        + final String logoImage
+        + final Color waterCol
+        + final Color trailCol
+        + final Color landCol
+        + final Color landCol2
+    }
+    class BodyEditorLoader{
+        - final Model model
+        - final List<Vector2> vectorPool
+        - final PolygonShape polygonShape
+        - final CircleShape circleShape
+        - final Vector2 vec
+        public void attachFixture(Body body, String name, FixtureDef fd, float scale)
+        public String getImagePath(String name)
+        public Vector2 getOrigin(String name, float scale)
+        private Model readJson(String str)
+        private RigidBodyModel readRigidBody(JsonValue bodyElem)
+        private RigidBodyModel readRigidBody(OrderedMap<String,?> bodyElem)
+        private Vector2 newVec()
+        private void free(Vector2 v)
+        + static class Model
+        + static class RigidBodyModel
+        + static class PolygonModel
+        + static class CircleModel
+    }
+}
+
+package views {
+    class EndScreen implements Screen{
+        - Orchestrator parent
+    }
+    class LeaderBoardScreen implements Screen {
+        - Orchestrator parent
+        - Stage stage
+        - Skin skin
+    }
+    class MainScreen implements Screen {
+        - boolean CAMERA_FOLLOWS
+        - boolean BOX2D_WIREFRAME
+        - static final int mapImageX
+        - static final int mapImageY
+        - float mapScale = 500f
+        - float mapAspectRatio = 1.49f
+        - float cameraZoom = 30
+        - Orchestrator parent
+        - Stage stage
+        - World world
+        - Box2DDebugRenderer debugRenderer
+        - WaterTrail waterTrail
+        - InputController controller
+        - OrthographicCamera camera
+        - ExtendViewport viewport
+    }
+    class MenuScreen implements Screen {
+        - Orchestrator parent
+        - Stage stage
+        }
+    class SplashScreen implements Screen {
+        - Orchestrator parent
+        SpriteBatch batch
+        Texture logoTexture
+        Sprite logoSprite
+        float logoAlpha
+        long startTime
+    }
+}
+
+
+
+@enduml
