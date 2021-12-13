@@ -2,7 +2,6 @@ package york.eng1.team18.actors;
 
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ImmediateModeRenderer20;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
@@ -59,9 +58,8 @@ public class WaterTrail {
 
     public void act() {
 
-
         // Update Trail every n nanoseconds
-        if (TimeUtils.timeSinceNanos(logTime) > 20000000) {
+        if (TimeUtils.timeSinceNanos(logTime) > 25000000) {
 
             // Update trailPoints
             Vector2 tempPoint = new Vector2(parent.getX() + parent.getWidth()/2, parent.getY() + parent.getHeight()/2);
@@ -125,17 +123,6 @@ public class WaterTrail {
             Vector2 r2 = trailShapeRight.get(i + 1);
             Vector2 r3 = trailShapeRight.get(i + 2);
             shapeRenderer.triangle(r1.x, r1.y, r2.x, r2.y, r3.x, r3.y, tCol, tCol, tCol);
-        }
-        shapeRenderer.end();
-
-
-
-        // FOR DEBUG, DRAWS trailpoints in red
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        shapeRenderer.setColor(Color.RED);
-        shapeRenderer.line(trailPoints.get(1), trailPoints.get(1));
-        for (int i = 0; i < trailPoints.size() - 2; i++) {
-            shapeRenderer.line(trailPoints.get(i), trailPoints.get(i+1));
         }
         shapeRenderer.end();
     }

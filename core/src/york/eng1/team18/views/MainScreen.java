@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import york.eng1.team18.Orchestrator;
+import york.eng1.team18.actors.Map;
 import york.eng1.team18.actors.Player;
 import york.eng1.team18.actors.WaterTrail;
 import york.eng1.team18.controller.InputController;
@@ -36,7 +37,6 @@ public class MainScreen implements Screen {
     private Stage stage;
     private World world;
     private Box2DDebugRenderer debugRenderer;
-    private Actor player;
     private WaterTrail waterTrail;
 
     InputController controller;
@@ -60,12 +60,19 @@ public class MainScreen implements Screen {
         world = new World(new Vector2(0,0), true);
 
         // Add objects to world
-        player = new Player(world,orchestrator, camera,controller,0, 0, 4, 2);
+        Map map = new Map(world, 400, 400);
+        Player player = new Player(world, orchestrator, camera,controller, map.getSpawnX(), map.getSpawnY(), 4, 2);
+
+        map.setName("map");
+        player.setName("player");
+
+        waterTrail = new WaterTrail(camera, player);
+        stage.addActor(map);
         stage.addActor(player);
 
 
-
-        waterTrail = new WaterTrail(camera, player);
+        System.out.println(map.getSpawnX());
+        System.out.println(map.getSpawnY());
 
 
         debugRenderer = new Box2DDebugRenderer(BOX2D_WIREFRAME,BOX2D_WIREFRAME,BOX2D_WIREFRAME,BOX2D_WIREFRAME,BOX2D_WIREFRAME,BOX2D_WIREFRAME);
@@ -96,8 +103,8 @@ public class MainScreen implements Screen {
         stage.act();
 
         if (CAMERA_FOLLOWS) {
-            camera.position.x = stage.getActors().first().getX();
-            camera.position.y = stage.getActors().first().getY();
+            camera.position.x = stage.getRoot().findActor("player").getX();
+            camera.position.y = stage.getRoot().findActor("player").getY();
         }
 
         stage.draw();

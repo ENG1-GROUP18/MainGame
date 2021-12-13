@@ -38,7 +38,7 @@ public class Player extends Image {
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         bodyDef.position.set(pos_x, pos_y);
         body = world.createBody(bodyDef);
-        body.setTransform(0, 0, 0);
+        body.setTransform(pos_x, pos_y, MathUtils.degreesToRadians * 90f);
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(size_x/2, size_y/2);
 
