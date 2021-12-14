@@ -6,7 +6,10 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 import javax.accessibility.AccessibleRelation;
@@ -16,16 +19,20 @@ public class Cannon extends Image {
 //
 //    Pixmap pixmapBlackish = new Pixmap(1,1, Pixmap.Format.RGBA8888);;
 
+    Group parent;
+
     // CANNON PROPERTIES:
     float rateOfTurn;
     float sizeX;
     float sizeY;
 
-    public Cannon(Actor parent) {
+    public Cannon(Group parent) {
         super(new Texture(Gdx.files.internal("images/cannonShape.png")));
+        this.parent = parent;
 
         this.setSize(parent.getWidth()/8, parent.getHeight());
         this.setPosition(parent.getWidth()/3, parent.getHeight()/2);
+        this.setOrigin(this.getWidth()/2, this.getHeight()/3);
 
     }
 
@@ -33,7 +40,22 @@ public class Cannon extends Image {
     public void act(float delta) {
         super.act(delta);
 
-        // Get player pos
+        // Get bearing from cannon origin to mouse position
+
+        // Get coords of cannon in stage coords.
+        float myX = this.localToScreenCoordinates(new Vector2(0,0)).x;
+        float myY = this.localToScreenCoordinates(new Vector2(0,0)).y;
+
+
+        // Get coords of cursor in stage coords?
+        float mouseX = Gdx.input.getX();
+        float mouseY = Gdx.input.getY();
+
+        // Get cannon pos
+        float bearingToMouse = MathUtils.radiansToDegrees * MathUtils.atan2(mouseX - myX, mouseY - myY) - parent.getRotation() + 180;
+        this.setRotation(bearingToMouse);
+
+
         // Get mouse pos
 
         // Maths
