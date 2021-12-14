@@ -22,7 +22,7 @@ public class WaterTrail {
     ShapeRenderer shapeRenderer;
 
     long logTime;
-    int trailSize = 50;
+    int trailSize = 60;
     Vector2 perp = new Vector2();
     private ArrayList<Vector2> trailPoints= new ArrayList<>();
     private ArrayList<Vector2> trailShapeRight = new ArrayList<Vector2>();

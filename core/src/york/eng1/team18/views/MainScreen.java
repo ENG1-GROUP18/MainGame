@@ -14,11 +14,8 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import york.eng1.team18.Orchestrator;
 import york.eng1.team18.WorldContactListener;
-import york.eng1.team18.actors.Map;
-import york.eng1.team18.actors.Player;
-import york.eng1.team18.actors.WaterTrail;
+import york.eng1.team18.actors.*;
 import york.eng1.team18.controller.InputController;
-import york.eng1.team18.actors.CannonBall;
 
 public class MainScreen implements Screen {
 
@@ -65,6 +62,10 @@ public class MainScreen implements Screen {
         // Add objects to world
         Map map = new Map(world, 1000, 1000);
         player = new Player(world, orchestrator, camera,controller, map.getSpawnX(), map.getSpawnY(), 4, 2);
+        Cannon cannon = new Cannon(player);
+        //stage.add
+
+
 
         map.setName("map");
         player.setName("player");
@@ -73,13 +74,8 @@ public class MainScreen implements Screen {
         stage.addActor(map);
         stage.addActor(player);
 
-
-        System.out.println(map.getSpawnX());
-        System.out.println(map.getSpawnY());
-
-
-        debugRenderer = new Box2DDebugRenderer(BOX2D_WIREFRAME,BOX2D_WIREFRAME,BOX2D_WIREFRAME,BOX2D_WIREFRAME,BOX2D_WIREFRAME,BOX2D_WIREFRAME);
-
+        // debugRenderer = new Box2DDebugRenderer(BOX2D_WIREFRAME,BOX2D_WIREFRAME,BOX2D_WIREFRAME,BOX2D_WIREFRAME,BOX2D_WIREFRAME,BOX2D_WIREFRAME);
+        debugRenderer = new Box2DDebugRenderer(true, false, false, false, true, true);
 
 //        playerSprite = new Sprite(new Texture(Gdx.files.internal("images/rubber_duck.jpg")));
 //        playerSprite.setSize(playerWidth, playerHeight);

@@ -7,11 +7,12 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import york.eng1.team18.Orchestrator;
 import york.eng1.team18.controller.InputController;
 
-public class Player extends Image {
+public class Player extends Group {
 
     private InputController inpt;
     private World world;
@@ -25,13 +26,14 @@ public class Player extends Image {
     private float rateOfAcceleration = 0.05f;
     private float rateOfDeceleration = 0.03f;
     private float maxRateOfTurn = 1.8f;
+
     public boolean is_contact = false;
     public String contact_side = "";
     private float count_update = 0f;
 
     public Player(World world, Orchestrator orch, Camera camera, InputController inpt, float pos_x, float pos_y , float size_x, float size_y){
        // Set image, position and world reference
-        super(new Texture(Gdx.files.internal("images/rubber_duck.jpg")));
+        super();
         this.inpt = inpt;
         this.world = world;
         this.setPosition(pos_x, pos_y);
@@ -87,11 +89,15 @@ public class Player extends Image {
         fdef3.isSensor = true;
         body.createFixture(fdef3).setUserData("bottom");
 
-
-
+        // Dispose shapes used to create fixtures
         left.dispose();
         top.dispose();
         shape.dispose();
+
+        // Add components to player
+        this.addActor(new Hull(this));
+        this.addActor(new Cannon(this));
+
 
         // For rotation around center
         this.setOrigin(this.getWidth()/2, this.getHeight()/2);
