@@ -97,7 +97,10 @@ public class Player extends Group {
 
         // Add components to player
         this.addActor(new Hull(this));
-        this.addActor(new Cannon(this));
+
+        // parent.getWidth()/3, parent.getHeight()/2
+        this.addActor(new Cannon(this, this.getWidth()/2, this.getHeight()/4));
+        this.addActor(new Cannon(this, this.getWidth()/2, this.getHeight()*3/4));
 
         // For rotation around center
         this.setOrigin(this.getWidth()/2, this.getHeight()/2);

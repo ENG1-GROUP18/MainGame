@@ -20,18 +20,23 @@ public class Cannon extends Image {
 //
 //    Pixmap pixmapBlackish = new Pixmap(1,1, Pixmap.Format.RGBA8888);;
 
-    Group parent;
+    private Group parent;
 
     // CANNON PROPERTIES:
-    float sizeX;
-    float sizeY;
+    private float rateOfTurn = 3f; // in radians
+    private float currentBearing;
+    private float targetBearing;
+    private float posX;
+    private float posY;
 
-    public Cannon(Group parent) {
+
+    public Cannon(Group parent, float posX, float posY) {
         super(new Texture(Gdx.files.internal("images/cannonShape.png")));
         this.parent = parent;
 
+
         this.setSize(parent.getWidth()/8, parent.getHeight());
-        this.setPosition(parent.getWidth()/3, parent.getHeight()/2);
+        this.setPosition(posX - this.getWidth()/2, posY - this.getHeight()/3);
         this.setOrigin(this.getWidth()/2, this.getHeight()/3);
 
     }
@@ -49,10 +54,42 @@ public class Cannon extends Image {
         float mouseY = Gdx.input.getY();
 
         // Creates a bearing in degrees, addition at end accounts for the direction the element faces in image source
-        float bearingToMouse = MathUtils.radiansToDegrees * MathUtils.atan2(mouseX - myX, mouseY - myY) - parent.getRotation() + 180;
+        targetBearing = MathUtils.radiansToDegrees * MathUtils.atan2(mouseX - myX, mouseY - myY) - parent.getRotation() + 180;
+
+
+
+
+        // TODO this is all a work in progress, broken af though so will comment out and fix soon
+//        // Make cannon rotate the shortest distance to target direction
+//        float tmp1 = targetBearing - currentBearing;
+//        float tmp2 = targetBearing - currentBearing + 360;
+//        float tmp3 = targetBearing - currentBearing - 360;
+//
+//        if (tmp1 < tmp2 && tmp2 < tmp3) {
+//
+//
+//        }
+//
+//
+//        // Take smallest of above values, if its positive rotate clockwise
+//        if (Math.min(Math.min(Math.abs(tmp1), Math.abs(tmp2)), Math.abs(tmp3)) > 0){
+//            // Rotate clockwise
+//            currentBearing += rateOfTurn;
+//            currentBearing = currentBearing % 360;
+//            System.out.println(targetBearing);
+//            System.out.println(currentBearing);
+//            System.out.println("---");
+//
+//        } else {
+//            //Rotate anti-clockwise
+//            currentBearing -= rateOfTurn;
+//            currentBearing = (currentBearing +360) % 360;
+//        }
+
+
 
         // Rotate cannon
-        this.setRotation(bearingToMouse);
+        this.setRotation(targetBearing);
     }
 
     @Override

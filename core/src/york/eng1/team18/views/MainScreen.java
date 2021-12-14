@@ -62,8 +62,6 @@ public class MainScreen implements Screen {
         // Add objects to world
         Map map = new Map(world, 1000, 1000);
         player = new Player(world, orchestrator, camera,controller, map.getSpawnX(), map.getSpawnY(), 4, 2);
-        Cannon cannon = new Cannon(player);
-        //stage.add
 
 
 
