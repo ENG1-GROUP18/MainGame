@@ -52,12 +52,11 @@ public class Cannon extends Image {
 
         // Creates a bearing in degrees, addition at end accounts for the direction the element faces in image source
         float bearingToMouse = MathUtils.radiansToDegrees * MathUtils.atan2(mouseX - myX, mouseY - myY) - parent.getRotation() + 180;
+
         // Stops the cannon spinning when the mouse hovers over it
-        if ((myX <= mouseX + 10 && myX > mouseX -10) && (myY <= mouseY + 10 && myY > mouseY -10)){}
-        else{
+        if (!((myX <= mouseX + 10 && myX > mouseX -10) && (myY <= mouseY + 10 && myY > mouseY -10))){
             this.setRotation(bearingToMouse);
         }
-
 
         // TODO tidy this code ^^
 

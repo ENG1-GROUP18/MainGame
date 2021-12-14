@@ -14,14 +14,13 @@ public class WorldContactListener implements ContactListener {
 
     @Override
     public void beginContact(Contact contact) {
-        //System.out.println("Start: ");
         Fixture fa = contact.getFixtureA();
         Fixture fb = contact.getFixtureB();
-        //System.out.println(fa.getBody().getType()+" has hit "+ fb.getUserData());
         if (fb.getUserData() == "top" || fb.getUserData() == "bottom"){
             parent.player.currentSpeed = 0;
             fb.getBody().applyForceToCenter(new Vector2(-1000,-1000), true);
             parent.player.contact_side = fb.getUserData().toString();
+
         } else if (fb.getUserData() == "left" || fb.getUserData() == "right"){
             parent.player.currentSpeed = parent.player.currentSpeed/2;
             fb.getBody().applyForceToCenter(new Vector2(-100,-100), true);
@@ -34,13 +33,10 @@ public class WorldContactListener implements ContactListener {
             parent.player.contact_side = "";
 
         }
-
-        //System.out.println(fb.getUserData());
     }
 
     @Override
     public void endContact(Contact contact) {
-        //System.out.println("End: ");
         parent.player.is_contact = false;
         parent.player.contact_side = "";
     }
