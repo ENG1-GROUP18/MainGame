@@ -29,7 +29,6 @@ public class Player extends Group {
 
     public boolean is_contact = false;
     public String contact_side = "";
-    private float count_update = 0f;
 
     public Player(World world, Orchestrator orch, Camera camera, InputController inpt, float pos_x, float pos_y , float size_x, float size_y){
        // Set image, position and world reference
@@ -90,6 +89,8 @@ public class Player extends Group {
         body.createFixture(fdef3).setUserData("bottom");
 
         // Dispose shapes used to create fixtures
+        right.dispose();
+        bottom.dispose();
         left.dispose();
         top.dispose();
         shape.dispose();
