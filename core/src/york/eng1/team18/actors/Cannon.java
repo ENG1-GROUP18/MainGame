@@ -46,14 +46,18 @@ public class Cannon extends Image {
         float myX = this.localToScreenCoordinates(new Vector2(0,0)).x;
         float myY = this.localToScreenCoordinates(new Vector2(0,0)).y;
 
-
         // Get coords of cursor in stage coords
         float mouseX = Gdx.input.getX();
         float mouseY = Gdx.input.getY();
 
         // Creates a bearing in degrees, addition at end accounts for the direction the element faces in image source
         float bearingToMouse = MathUtils.radiansToDegrees * MathUtils.atan2(mouseX - myX, mouseY - myY) - parent.getRotation() + 180;
-        this.setRotation(bearingToMouse);
+        // Stops the cannon spinning when the mouse hovers over it
+        if ((myX <= mouseX + 10 && myX > mouseX -10) && (myY <= mouseY + 10 && myY > mouseY -10)){}
+        else{
+            this.setRotation(bearingToMouse);
+        }
+
 
         // TODO tidy this code ^^
 
