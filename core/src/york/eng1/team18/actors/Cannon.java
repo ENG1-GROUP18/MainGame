@@ -47,20 +47,15 @@ public class Cannon extends Image {
         float myY = this.localToScreenCoordinates(new Vector2(0,0)).y;
 
 
-        // Get coords of cursor in stage coords?
+        // Get coords of cursor in stage coords
         float mouseX = Gdx.input.getX();
         float mouseY = Gdx.input.getY();
 
-        // Get cannon pos
+        // Creates a bearing in degrees, addition at end accounts for the direction the element faces in image source
         float bearingToMouse = MathUtils.radiansToDegrees * MathUtils.atan2(mouseX - myX, mouseY - myY) - parent.getRotation() + 180;
         this.setRotation(bearingToMouse);
 
-
-        // Get mouse pos
-
-        // Maths
-
-        // Point at mouse
+        // TODO tidy this code ^^
 
 
 
