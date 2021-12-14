@@ -98,7 +98,6 @@ public class Player extends Group {
         this.addActor(new Hull(this));
         this.addActor(new Cannon(this));
 
-
         // For rotation around center
         this.setOrigin(this.getWidth()/2, this.getHeight()/2);
     }
