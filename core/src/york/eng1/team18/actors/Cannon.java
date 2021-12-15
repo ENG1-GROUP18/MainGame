@@ -72,8 +72,9 @@ public class Cannon extends Image {
         float mouseX = Gdx.input.getX();
         float mouseY = Gdx.input.getY();
 
+
         // Creates a bearing in degrees
-        targetBearing = MathUtils.radiansToDegrees * MathUtils.atan2(mouseX - myX, mouseY - myY) - parent.getRotation() + 180;
+        targetBearing = MathUtils.radiansToDegrees * MathUtils.atan2(mouseX - myX, mouseY - myY) - (parent.getRotation()%360) + 180;
 
         // make sure that both parent and cannon have rotation within 0 to 360 degrees.
         if(targetBearing < 0) {
@@ -82,7 +83,7 @@ public class Cannon extends Image {
         } else if(targetBearing > 360) {
             targetBearing -= 360;
             parent.rotateBy(-360);
-        };
+        }
 
         // Activate cannon on side of mouse pointer
         if (leftFacing) {
@@ -113,15 +114,16 @@ public class Cannon extends Image {
 
     private void rotateTowards(float targetAngle) {
 
-        if(Math.abs(targetAngle - this.getRotation()) > 5) {
+        if(Math.abs(targetAngle - this.getRotation()) > 1) {
             if (((targetAngle - this.getRotation() + 540)%360 - 180) > 0) {
                 // Clockwise rotation
                 this.rotateBy(rateOfTurn);
+                //System.out.println(this.getRotation());
 
             } else {
                 this.rotateBy(-rateOfTurn);
+                //System.out.println(this.getRotation());
             }
-
 
             // Prevents cannon rotation jumping over target angle, then back again each frame
             if(this.getRotation() >= (targetAngle - rateOfTurn) && this.getRotation() <= (targetAngle + rateOfTurn)){
