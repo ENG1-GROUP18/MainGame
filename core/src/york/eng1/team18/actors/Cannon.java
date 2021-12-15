@@ -93,8 +93,6 @@ public class Cannon extends Image {
             }
         }
 
-        System.out.println(targetBearing);
-
         if (activated) {
             this.rotateTowards(targetBearing);
         }
