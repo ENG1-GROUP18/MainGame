@@ -28,7 +28,7 @@ public class Cannon extends Image {
 
 
     // CANNON PROPERTIES:
-    private float rateOfTurn = 1f; // degrees per act
+    private float rateOfTurn = 2f; // degrees per act
     private float currentBearing;
     private float targetBearing;
     private float posX;
@@ -101,32 +101,30 @@ public class Cannon extends Image {
         }
 
         if (activated) {
-            this.rotateTowards(targetBearing);
+            this.rotateTowards(targetBearing, rateOfTurn);
         }
         else {
             if(leftFacing) {
-                this.rotateTowards(0);
+                this.rotateTowards(0, rateOfTurn/4);
             } else {
-                this.rotateTowards(180);
+                this.rotateTowards(180, rateOfTurn/4);
             }
         }
     }
 
-    private void rotateTowards(float targetAngle) {
+    private void rotateTowards(float targetAngle, float turnRate) {
 
         if(Math.abs(targetAngle - this.getRotation()) > 1) {
             if (((targetAngle - this.getRotation() + 540)%360 - 180) > 0) {
                 // Clockwise rotation
-                this.rotateBy(rateOfTurn);
-                //System.out.println(this.getRotation());
+                this.rotateBy(turnRate);
 
             } else {
-                this.rotateBy(-rateOfTurn);
-                //System.out.println(this.getRotation());
+                this.rotateBy(-turnRate);
             }
 
             // Prevents cannon rotation jumping over target angle, then back again each frame
-            if(this.getRotation() >= (targetAngle - rateOfTurn) && this.getRotation() <= (targetAngle + rateOfTurn)){
+            if(this.getRotation() >= (targetAngle - turnRate) && this.getRotation() <= (targetAngle + turnRate)){
                 this.setRotation(targetAngle);
             }
         }
