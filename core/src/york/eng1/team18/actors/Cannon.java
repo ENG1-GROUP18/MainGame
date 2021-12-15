@@ -44,6 +44,12 @@ public class Cannon extends Image {
         this.setPosition(posX - this.getWidth()/2, posY - this.getHeight()/3);
         this.setOrigin(this.getWidth()/2, this.getHeight()/3);
 
+        if (!leftFacing) {
+            this.setRotation(180);
+
+        }
+
+
     }
 
     @Override

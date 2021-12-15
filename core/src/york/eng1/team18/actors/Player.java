@@ -43,7 +43,7 @@ public class Player extends Group {
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         bodyDef.position.set(pos_x, pos_y);
         body = world.createBody(bodyDef);
-        body.setTransform(pos_x, pos_y, MathUtils.degreesToRadians * 90f);
+        body.setTransform(pos_x, pos_y, (float)-Math.PI);
         PolygonShape shape = new PolygonShape();
 
         // Box2D shape is facing right by default so after rotation, sprite width becomes body height.

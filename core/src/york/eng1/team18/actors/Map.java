@@ -17,8 +17,8 @@ public class Map extends Actor {
     private Body body;
     private float sizeX;
     private float sizeY;
-    private float spawnPosX = 0.20f; // As percentage of x across map to scale
-    private float spawnPosY = 0.06f; // As percentage of y across map to scale
+    private float spawnPosX = 0.18f; // As percentage of x across map to scale
+    private float spawnPosY = 0.16f; // As percentage of y across map to scale
 
 
     public Map(World world, float sizeX, float sizeY) {
