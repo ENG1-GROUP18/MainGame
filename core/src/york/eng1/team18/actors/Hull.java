@@ -13,10 +13,9 @@ public class Hull extends Image {
     Group parent;
 
     public Hull(Group parent) {
-        super(new Texture(Gdx.files.internal("images/rubber_duck.jpg")));
+        super(new Texture(Gdx.files.internal("images/debugBoat.png")));
         this.parent = parent;
         this.setSize(parent.getWidth(), parent.getHeight());
-
     }
 
     @Override

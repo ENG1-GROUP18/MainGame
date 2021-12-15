@@ -45,6 +45,8 @@ public class Player extends Group {
         body = world.createBody(bodyDef);
         body.setTransform(pos_x, pos_y, MathUtils.degreesToRadians * 90f);
         PolygonShape shape = new PolygonShape();
+
+        // Box2D shape is facing right by default so after rotation, sprite width becomes body height.
         shape.setAsBox(size_x/2, size_y/2);
 
         FixtureDef fixtureDef = new FixtureDef();
@@ -64,21 +66,21 @@ public class Player extends Group {
         fdef.isSensor = true;
         body.createFixture(fdef).setUserData("top");
 
-        //left
-        FixtureDef fdef1 = new FixtureDef();
-        PolygonShape left = new PolygonShape();
-        left.setAsBox(size_x/2 -1, size_y/2 , new Vector2(0,0.5f) , 0);
-        fdef1.shape = left;
-        fdef1.isSensor = true;
-        body.createFixture(fdef1).setUserData("left");
-
-        //right
-        FixtureDef fdef2 = new FixtureDef();
-        PolygonShape right = new PolygonShape();
-        right.setAsBox(size_x/2 -1, size_y/2 , new Vector2(0,-0.5f) , 0);
-        fdef2.shape = right;
-        fdef2.isSensor = true;
-        body.createFixture(fdef2).setUserData("right");
+//        //left
+//        FixtureDef fdef1 = new FixtureDef();
+//        PolygonShape left = new PolygonShape();
+//        left.setAsBox(size_x/2 -1, size_y/2 , new Vector2(0,0.5f) , 0);
+//        fdef1.shape = left;
+//        fdef1.isSensor = true;
+//        body.createFixture(fdef1).setUserData("left");
+//
+//        //right
+//        FixtureDef fdef2 = new FixtureDef();
+//        PolygonShape right = new PolygonShape();
+//        right.setAsBox(size_x/2 -1, size_y/2 , new Vector2(0,-0.5f) , 0);
+//        fdef2.shape = right;
+//        fdef2.isSensor = true;
+//        body.createFixture(fdef2).setUserData("right");
 
         //bottom
         FixtureDef fdef3 = new FixtureDef();
@@ -89,18 +91,18 @@ public class Player extends Group {
         body.createFixture(fdef3).setUserData("bottom");
 
         // Dispose shapes used to create fixtures
-        right.dispose();
-        bottom.dispose();
-        left.dispose();
         top.dispose();
+        bottom.dispose();
+//        left.dispose();
+//        right.dispose();
         shape.dispose();
 
         // Add components to player
         this.addActor(new Hull(this));
 
         // parent.getWidth()/3, parent.getHeight()/2
-        this.addActor(new Cannon(this, this.getWidth()/2, this.getHeight()/4));
-        this.addActor(new Cannon(this, this.getWidth()/2, this.getHeight()*3/4));
+        this.addActor(new Cannon(this, this.getWidth()/2, this.getHeight()/4, false));
+        this.addActor(new Cannon(this, this.getWidth()/2, this.getHeight()*3/4, true));
 
         // For rotation around center
         this.setOrigin(this.getWidth()/2, this.getHeight()/2);
@@ -141,13 +143,12 @@ public class Player extends Group {
         // Update position of box2d body based on updated movement properties.
         float velX = MathUtils.cos(angle) * currentSpeed;
         float velY = MathUtils.sin(angle) * currentSpeed;
-        body.setLinearVelocity(velX/2 + body.getLinearVelocity().x/2, velY/2 + body.getLinearVelocity().y/2);
+        body.setLinearVelocity((velX + body.getLinearVelocity().x)/2f, (velY + body.getLinearVelocity().y)/2f);
 
 
         this.setRotation(body.getAngle() * MathUtils.radiansToDegrees);
         this.setPosition(body.getPosition().x - this.getWidth()/2,
                 body.getPosition().y - this.getHeight()/2);
-        
 
         super.act(delta);
     }

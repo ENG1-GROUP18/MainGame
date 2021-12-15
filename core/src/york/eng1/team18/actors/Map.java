@@ -21,7 +21,6 @@ public class Map extends Actor {
     private float spawnPosY = 0.06f; // As percentage of y across map to scale
 
 
-
     public Map(World world, float sizeX, float sizeY) {
         this.world = world;
         this.sizeX = sizeX;

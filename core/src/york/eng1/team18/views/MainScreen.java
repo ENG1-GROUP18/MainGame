@@ -22,14 +22,14 @@ public class MainScreen implements Screen {
     // When true, camera is still and zoomed out, used to debug.
     //----------------------------------
     private boolean CAMERA_FOLLOWS = true;
-    private boolean BOX2D_WIREFRAME = true;
+    private boolean BOX2D_WIREFRAME = false;
     //----------------------------------
 
     private static final int mapImageX = 1155;  // height of map image
     private static final int mapImageY = 776;   // width of map image
     private float mapScale = 500f;               // map width in world units
     private float mapAspectRatio = 1.49f;        // Aspect ratio of image used for map
-    private float cameraZoom = 30;               // ExtendViewport minimum size in world units
+    private float cameraZoom = 60;               // ExtendViewport minimum size in world units
 
     private Orchestrator parent;
     private Stage stage;
@@ -55,7 +55,7 @@ public class MainScreen implements Screen {
         Gdx.input.setInputProcessor(controller);
 
         camera = new OrthographicCamera(1, 1);
-        viewport = new ExtendViewport(50, 50, camera);
+        viewport = new ExtendViewport(cameraZoom, cameraZoom, camera);
         stage = new Stage(viewport);
         world = new World(new Vector2(0,0), true);
         world.setContactListener(new WorldContactListener(this));
@@ -72,7 +72,7 @@ public class MainScreen implements Screen {
         stage.addActor(map);
         stage.addActor(player);
 
-        // debugRenderer = new Box2DDebugRenderer(BOX2D_WIREFRAME,BOX2D_WIREFRAME,BOX2D_WIREFRAME,BOX2D_WIREFRAME,BOX2D_WIREFRAME,BOX2D_WIREFRAME);
+        //debugRenderer = new Box2DDebugRenderer(BOX2D_WIREFRAME,BOX2D_WIREFRAME,BOX2D_WIREFRAME,BOX2D_WIREFRAME,BOX2D_WIREFRAME,BOX2D_WIREFRAME);
         debugRenderer = new Box2DDebugRenderer(true, false, false, false, true, true);
 
 //        playerSprite = new Sprite(new Texture(Gdx.files.internal("images/rubber_duck.jpg")));
