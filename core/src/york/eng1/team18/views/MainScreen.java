@@ -28,6 +28,7 @@ public class MainScreen implements Screen {
     private float mapScale = 500f;               // map width in world units
     private float mapAspectRatio = 1.49f;        // Aspect ratio of image used for map
     private float cameraZoom = 60;               // ExtendViewport minimum size in world units
+    private Vector2 cameraOffset;
 
     private Orchestrator parent;
     private Stage stage;
@@ -52,6 +53,7 @@ public class MainScreen implements Screen {
         inpt = new InputController();
         Gdx.input.setInputProcessor(inpt);
 
+        cameraOffset = new Vector2(0, 15);
         camera = new OrthographicCamera(1, 1);
         viewport = new ExtendViewport(cameraZoom, cameraZoom, camera);
         stage = new Stage(viewport);
@@ -60,7 +62,7 @@ public class MainScreen implements Screen {
 
         // Add objects to world
         Map map = new Map(world, 1000, 1000);
-        player = new Player(world, orchestrator, camera, inpt, map.getSpawnX(), map.getSpawnY(), 4, 2);
+        player = new Player(world, orchestrator, camera, inpt, map.getSpawnX(), map.getSpawnY(), 6, 3);
 
 
         map.setName("map");
@@ -97,14 +99,12 @@ public class MainScreen implements Screen {
             if (inpt.space) {
                 // Allow player to look towards mouse pos
                 Vector2 mousePos = stage.screenToStageCoordinates(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
-                camera.position.x = (myX + (mousePos.x - myX) / 2);
-                camera.position.y = (myY + (mousePos.y - myY) / 2);
 
-            } else {
-                // Camera attaches to ship
-                camera.position.x = (myX);
-                camera.position.y = (myY);
+                cameraOffset = new Vector2(((mousePos.x - myX) / 2), ((mousePos.y - myY) / 2));
             }
+
+            camera.position.x = myX + cameraOffset.x;
+            camera.position.y = myY + cameraOffset.y;
         }
 
         stage.draw();

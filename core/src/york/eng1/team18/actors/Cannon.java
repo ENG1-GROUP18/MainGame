@@ -40,7 +40,7 @@ public class Cannon extends Image {
         this.parent = parent;
         this.leftFacing = leftFacing;
 
-        this.setSize(parent.getWidth()/8, parent.getHeight());
+        this.setSize(parent.getWidth()/10, parent.getHeight()*2/3);
         this.setPosition(posX - this.getWidth()/2, posY - this.getHeight()/3);
         this.setOrigin(this.getWidth()/2, this.getHeight()/3);
 
@@ -107,12 +107,21 @@ public class Cannon extends Image {
 
     private void rotateTowards(float targetAngle) {
 
-        if (((targetAngle - this.getRotation() + 540)%360 - 180) > 0) {
-            // Clockwise rotation
-            this.rotateBy(rateOfTurn);
-        } else {
-            this.rotateBy(-rateOfTurn);
-        }
-    }
+        if(Math.abs(targetAngle - this.getRotation()) > 5) {
+            if (((targetAngle - this.getRotation() + 540)%360 - 180) > 0) {
+                // Clockwise rotation
+                this.rotateBy(rateOfTurn);
 
+            } else {
+                this.rotateBy(-rateOfTurn);
+            }
+
+
+            // Prevents cannon rotation jumping over target angle, then back again each frame
+            if(this.getRotation() >= (targetAngle - rateOfTurn) && this.getRotation() <= (targetAngle + rateOfTurn)){
+                this.setRotation(targetAngle);
+            }
+        }
+
+    }
 }
