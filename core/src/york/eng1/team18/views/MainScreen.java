@@ -3,6 +3,7 @@ package york.eng1.team18.views;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
@@ -19,9 +20,10 @@ public class MainScreen implements Screen {
 
     // When true, camera is still and zoomed out, used to debug.
     //----------------------------------
-    private boolean CAMERA_FOLLOWS = true;
     private boolean BOX2D_WIREFRAME = false;
     //----------------------------------
+
+    Color waterCol = new Color(111/255f, 164/255f, 189/255f, 0);
 
     private static final int mapImageX = 1155;  // height of map image
     private static final int mapImageY = 776;   // width of map image
@@ -38,8 +40,8 @@ public class MainScreen implements Screen {
 
     public Player player; // made player a public variable
 
-    InputController inpt;
 
+    InputController inpt;
     OrthographicCamera camera;
     ExtendViewport viewport;
 
@@ -60,10 +62,10 @@ public class MainScreen implements Screen {
         world = new World(new Vector2(0,0), true);
         world.setContactListener(new WorldContactListener(this));
 
+
         // Add objects to world
         Map map = new Map(world, 1000, 1000);
         player = new Player(world, orchestrator, camera, inpt, map.getSpawnX(), map.getSpawnY(), 6, 3);
-
 
         map.setName("map");
         player.setName("player");
@@ -83,33 +85,30 @@ public class MainScreen implements Screen {
     @Override
     public void render(float delta) {
 
-        ScreenUtils.clear(parent.assMan.waterCol);
+        ScreenUtils.clear(111/255f, 164/255f, 189/255f, 0);
 
         waterTrail.act();
         waterTrail.draw();
 
         stage.act();
 
-
+        // Update camera position
         float myX = player.getX();
         float myY = player.getY();
-
-        // Update camera position
-        if (CAMERA_FOLLOWS) {
-            if (inpt.space) {
-                // Allow player to look towards mouse pos
-                Vector2 mousePos = stage.screenToStageCoordinates(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
-
-                cameraOffset = new Vector2(((mousePos.x - myX) / 2), ((mousePos.y - myY) / 2));
-            }
-
-            camera.position.x = myX + cameraOffset.x;
-            camera.position.y = myY + cameraOffset.y;
+        if (inpt.space) {
+            // Allow player to look towards mouse pos
+            Vector2 mousePos = stage.screenToStageCoordinates(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
+            cameraOffset = new Vector2(((mousePos.x - myX) / 2), ((mousePos.y - myY) / 2));
         }
+        camera.position.x = myX + cameraOffset.x;
+        camera.position.y = myY + cameraOffset.y;
+
 
         stage.draw();
 
+        // Draws box2d hitboxes for debug only
         debugRenderer.render(world, stage.getCamera().combined);
+
         world.step(Gdx.graphics.getDeltaTime(), 6, 2);
     }
 

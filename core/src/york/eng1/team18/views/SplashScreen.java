@@ -2,40 +2,38 @@ package york.eng1.team18.views;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.TimeUtils;
 import york.eng1.team18.Orchestrator;
-import york.eng1.team18.loader.AssetController;
 
 public class SplashScreen implements Screen {
 
     private Orchestrator parent;
-    SpriteBatch batch;
-    Texture logoTexture;
-    Sprite logoSprite;
-    float logoAlpha = 0f;
-    long startTime;
 
+    private Sprite logoSprite;
+    private SpriteBatch batch;
+
+    private long startTime;
+    private float logoAlpha = 0f;
 
     public SplashScreen(Orchestrator orchestrator) {
         parent = orchestrator;
         batch = new SpriteBatch();
-        logoTexture = new Texture(Gdx.files.internal(parent.assMan.logoImage));
-        logoSprite = new Sprite(logoTexture);
+        logoSprite = new Sprite(new Texture(Gdx.files.internal("images/logo330w.png")));
 
         logoSprite.setPosition((Gdx.graphics.getWidth() - logoSprite.getWidth())/2f,
                 (Gdx.graphics.getHeight() - logoSprite.getHeight())/2f);
 
-        startTime = TimeUtils.millis();
+
     }
 
     @Override
     public void show() {
-
+        startTime = TimeUtils.millis();
+        logoAlpha = 0f;
     }
 
     @Override

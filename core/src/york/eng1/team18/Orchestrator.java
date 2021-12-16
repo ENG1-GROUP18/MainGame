@@ -1,8 +1,6 @@
 package york.eng1.team18;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.assets.AssetManager;
-import york.eng1.team18.loader.AssetController;
 import york.eng1.team18.views.*;
 
 public class Orchestrator extends Game {
@@ -17,7 +15,6 @@ public class Orchestrator extends Game {
 	private LeaderBoardScreen leaderBoardScreen;
 	private MainScreen mainScreen;
 	private EndScreen endScreen;
-	public AssetController assMan = new AssetController();
 
 	public final static int MENU = 0;
 	public final static int APPLICATION = 1;
@@ -27,6 +24,7 @@ public class Orchestrator extends Game {
 	@Override
 	public void create() {
 
+		// Splash screen displays logo at the start of the game
 		if (SPLASH_ENABLED) {
 			splashScreen = new SplashScreen(this);
 			this.setScreen(splashScreen);
@@ -38,24 +36,28 @@ public class Orchestrator extends Game {
 
 	public void changeScreen(int screen){
 		switch(screen) {
+			// Menu allows player to move through game screens
 			case MENU:
 				if(menuScreen == null) {
 					menuScreen = new MenuScreen(this);
 				}
 				this.setScreen(menuScreen);
 				break;
+			// Application hosts the game
 			case APPLICATION:
 				if(mainScreen == null) {
 					mainScreen = new MainScreen(this);
 					this.setScreen(mainScreen);
 				}
 				break;
+			// Shown after the player has ended a game
 			case ENDGAME:
 				if(endScreen == null) {
 					endScreen = new EndScreen(this);
 					this.setScreen(endScreen);
 				}
 				break;
+			// Displays the highest scores achieved by previous players
 			case LEADERBOARD:
 				if(leaderBoardScreen == null) {
 					leaderBoardScreen = new LeaderBoardScreen(this);

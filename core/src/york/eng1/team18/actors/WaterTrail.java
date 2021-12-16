@@ -13,8 +13,7 @@ import java.util.ArrayList;
 
 public class WaterTrail {
 
-    private Orchestrator orch;
-    private Actor parent;
+    private Actor source;
     private Camera camera;
     private Color colorSea;
     private Color colorTrail;
@@ -30,10 +29,10 @@ public class WaterTrail {
     ArrayList<Color> pointColors = new ArrayList<Color>();
 
 
-    public WaterTrail(Camera camera, Actor parent) {
-        this.parent = parent;
+    public WaterTrail(Camera camera, Actor source) {
+        this.source = source;
         this.camera = camera;
-        colorSea = new Color(122/255f, 180/255f, 196/255f, 1);
+        colorSea = new Color(111/255f, 164/255f, 189/255f, 0);
         colorTrail = new Color(153/255f, 193/255f, 201/255f, 1);
         shapeRenderer = new ShapeRenderer();
 
@@ -44,13 +43,13 @@ public class WaterTrail {
 //        float parentX = parent.getOriginX();
 //        float parentY = parent.getOriginY();
         for (int i = 0; i < trailSize; i++){
-            trailPoints.add(new Vector2(parent.getX() + parent.getWidth()/2, parent.getY() + parent.getHeight()/2));
+            trailPoints.add(new Vector2(this.source.getX() + this.source.getWidth()/2, this.source.getY() + this.source.getHeight()/2));
         }
 
         // Fill trailShapePoints with empty vectors
         for (int i = 0; i < trailSize * 2; i++) {
-            trailShapeRight.add(new Vector2(parent.getX() + parent.getWidth()/2, parent.getY() + parent.getHeight()/2));
-            trailShapeLeft.add(new Vector2(parent.getX() + parent.getWidth()/2, parent.getY() + parent.getHeight()/2));
+            trailShapeRight.add(new Vector2(this.source.getX() + this.source.getWidth()/2, this.source.getY() + this.source.getHeight()/2));
+            trailShapeLeft.add(new Vector2(this.source.getX() + this.source.getWidth()/2, this.source.getY() + this.source.getHeight()/2));
         }
 
 
@@ -62,7 +61,7 @@ public class WaterTrail {
         if (TimeUtils.timeSinceNanos(logTime) > 25000000) {
 
             // Update trailPoints
-            Vector2 tempPoint = new Vector2(parent.getX() + parent.getWidth()/2, parent.getY() + parent.getHeight()/2);
+            Vector2 tempPoint = new Vector2(source.getX() + source.getWidth()/2, source.getY() + source.getHeight()/2);
             trailPoints.add(0, tempPoint);
             trailPoints.remove(trailSize - 1);
 

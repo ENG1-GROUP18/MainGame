@@ -45,8 +45,6 @@ public class Player extends Group {
         body = world.createBody(bodyDef);
         body.setTransform(pos_x, pos_y, (float)-Math.PI);
         PolygonShape shape = new PolygonShape();
-
-        // Box2D shape is facing right by default so after rotation, sprite width becomes body height.
         shape.setAsBox(size_x/2, size_y/2);
 
         FixtureDef fixtureDef = new FixtureDef();
@@ -66,22 +64,6 @@ public class Player extends Group {
         fdef.isSensor = true;
         body.createFixture(fdef).setUserData("top");
 
-//        //left
-//        FixtureDef fdef1 = new FixtureDef();
-//        PolygonShape left = new PolygonShape();
-//        left.setAsBox(size_x/2 -1, size_y/2 , new Vector2(0,0.5f) , 0);
-//        fdef1.shape = left;
-//        fdef1.isSensor = true;
-//        body.createFixture(fdef1).setUserData("left");
-//
-//        //right
-//        FixtureDef fdef2 = new FixtureDef();
-//        PolygonShape right = new PolygonShape();
-//        right.setAsBox(size_x/2 -1, size_y/2 , new Vector2(0,-0.5f) , 0);
-//        fdef2.shape = right;
-//        fdef2.isSensor = true;
-//        body.createFixture(fdef2).setUserData("right");
-
         //bottom
         FixtureDef fdef3 = new FixtureDef();
         PolygonShape bottom = new PolygonShape();
@@ -93,8 +75,6 @@ public class Player extends Group {
         // Dispose shapes used to create fixtures
         top.dispose();
         bottom.dispose();
-//        left.dispose();
-//        right.dispose();
         shape.dispose();
 
         // Add components to player
