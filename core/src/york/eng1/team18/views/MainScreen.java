@@ -9,12 +9,15 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.*;
 import york.eng1.team18.Orchestrator;
 import york.eng1.team18.WorldContactListener;
 import york.eng1.team18.actors.*;
 import york.eng1.team18.controller.InputController;
+
 
 public class MainScreen implements Screen {
 
@@ -30,10 +33,12 @@ public class MainScreen implements Screen {
     private float mapScale = 500f;               // map width in world units
     private float mapAspectRatio = 1.49f;        // Aspect ratio of image used for map
     private float cameraZoom = 60;               // ExtendViewport minimum size in world units
-    private Vector2 cameraOffset;
+    private Vector2 gameCameraOffset;
 
     private Orchestrator parent;
-    private Stage stage;
+    private Stage gameStage;
+    private Stage hudStage;
+
     private World world;
     private Box2DDebugRenderer debugRenderer;
     private WaterTrail waterTrail;
@@ -42,8 +47,10 @@ public class MainScreen implements Screen {
 
 
     InputController inpt;
-    OrthographicCamera camera;
-    ExtendViewport viewport;
+    OrthographicCamera gameCamera;
+    OrthographicCamera uiCamera;
+    ExtendViewport gameViewport;
+
 
 //    ArrayList<CannonBall> cannonBalls = new ArrayList<CannonBall>();
 //    float timeSinceLastShot = 0;
@@ -52,27 +59,36 @@ public class MainScreen implements Screen {
     public MainScreen(Orchestrator orchestrator) {
         parent = orchestrator;
 
+        // Set up game camera, viewport, stage, world
         inpt = new InputController();
         Gdx.input.setInputProcessor(inpt);
 
-        cameraOffset = new Vector2(0, 15);
-        camera = new OrthographicCamera(1, 1);
-        viewport = new ExtendViewport(cameraZoom, cameraZoom, camera);
-        stage = new Stage(viewport);
+        gameCameraOffset = new Vector2(0, 15);
+        gameCamera = new OrthographicCamera(1, 1);
+        uiCamera = new OrthographicCamera();
+        gameViewport = new ExtendViewport(cameraZoom, cameraZoom, gameCamera);
+        gameStage = new Stage(gameViewport);
+        hudStage = new Stage(new ScreenViewport());
         world = new World(new Vector2(0,0), true);
         world.setContactListener(new WorldContactListener(this));
 
 
         // Add objects to world
         Map map = new Map(world, 1000, 1000);
-        player = new Player(world, orchestrator, camera, inpt, map.getSpawnX(), map.getSpawnY(), 6, 3);
+        player = new Player(world, orchestrator, gameCamera, inpt, map.getSpawnX(), map.getSpawnY(), 6, 3);
 
         map.setName("map");
         player.setName("player");
 
-        waterTrail = new WaterTrail(camera, player);
-        stage.addActor(map);
-        stage.addActor(player);
+        waterTrail = new WaterTrail(gameCamera, player);
+        gameStage.addActor(map);
+        gameStage.addActor(player);
+
+        Skin uiSkin = new Skin(Gdx.files.internal("skin/customSkin.json"));
+        Label testLbl = new Label("testing", uiSkin);
+        testLbl.setPosition(0,0);
+        hudStage.addActor(testLbl);
+
 
         debugRenderer = new Box2DDebugRenderer(true, false, false, false, true, true);
     }
@@ -84,37 +100,42 @@ public class MainScreen implements Screen {
 
     @Override
     public void render(float delta) {
-
+        // Clear buffers
         ScreenUtils.clear(111/255f, 164/255f, 189/255f, 0);
 
+        // Run game logic for each component
+        world.step(Gdx.graphics.getDeltaTime(), 6, 2);
+        gameStage.act();
         waterTrail.act();
-        waterTrail.draw();
-
-        stage.act();
+        hudStage.act();
 
         // Update camera position
         float myX = player.getX();
         float myY = player.getY();
         if (inpt.space) {
             // Allow player to look towards mouse pos
-            Vector2 mousePos = stage.screenToStageCoordinates(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
-            cameraOffset = new Vector2(((mousePos.x - myX) / 2), ((mousePos.y - myY) / 2));
+            Vector2 mousePos = gameStage.screenToStageCoordinates(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
+            gameCameraOffset = new Vector2(((mousePos.x - myX) / 2), ((mousePos.y - myY) / 2));
         }
-        camera.position.x = myX + cameraOffset.x;
-        camera.position.y = myY + cameraOffset.y;
+        gameCamera.position.x = myX + gameCameraOffset.x;
+        gameCamera.position.y = myY + gameCameraOffset.y;
 
 
-        stage.draw();
+        // Draw game
+        gameStage.getViewport().apply();
+        waterTrail.draw(); // Uses shape renderer so needs to be drawn before the stage batch begins.
+        gameStage.draw();
+        debugRenderer.render(world, gameStage.getCamera().combined);
 
-        // Draws box2d hitboxes for debug only
-        debugRenderer.render(world, stage.getCamera().combined);
-
-        world.step(Gdx.graphics.getDeltaTime(), 6, 2);
+        // Draw ui
+        hudStage.getViewport().apply();
+        hudStage.draw();
     }
 
     @Override
     public void resize(int width, int height) {
-        viewport.update(width, height);
+        gameViewport.update(width, height);
+        hudStage.getViewport().update(width, height, true);
     }
 
     @Override
