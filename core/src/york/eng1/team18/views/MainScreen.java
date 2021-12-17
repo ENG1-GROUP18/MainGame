@@ -42,6 +42,7 @@ public class MainScreen implements Screen {
     private Orchestrator parent;
     private Stage gameStage;
     private Stage hudStage;
+    private HUD hud;
 
     private World world;
     private Box2DDebugRenderer debugRenderer;
@@ -77,9 +78,15 @@ public class MainScreen implements Screen {
         world.setContactListener(new WorldContactListener(this));
 
 
+
+        // Add hud to hud stage
+        hud = new HUD(this);
+        hudStage.addActor(hud);
+
+
         // Add objects to world
         Map map = new Map(world, 1000, 1000);
-        player = new Player(world, orchestrator, gameCamera, inpt, map.getSpawnX(), map.getSpawnY(), 6, 3);
+        player = new Player(world, inpt, hud, map.getSpawnX(), map.getSpawnY());
 
         map.setName("map");
         player.setName("player");
@@ -88,9 +95,6 @@ public class MainScreen implements Screen {
         gameStage.addActor(map);
         gameStage.addActor(player);
 
-        // Add hud to hud stage
-        HUD hud = new HUD();
-        hudStage.addActor(hud);
 
 
         // Can remove

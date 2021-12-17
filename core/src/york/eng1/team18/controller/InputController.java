@@ -11,6 +11,9 @@ public class InputController implements InputProcessor {
     public boolean right;
     public boolean space;
 
+    public boolean leftClick;
+    public boolean rightClick;
+
 
     @Override
     public boolean keyDown(int keycode) {
@@ -69,19 +72,44 @@ public class InputController implements InputProcessor {
         return keyProcessed;
     }
 
+
+
     @Override
     public boolean keyTyped(char character) {
         return false;
     }
-
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        return false;
+        boolean buttonProcessed = false;
+        switch (button) {
+            case Input.Buttons.LEFT:
+                leftClick = true;
+                buttonProcessed = true;
+                break;
+            case Input.Buttons.RIGHT:
+                rightClick = true;
+                buttonProcessed = true;
+                break;
+        }
+
+        return buttonProcessed;
     }
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        return false;
+        boolean buttonProcessed = false;
+        switch (button) {
+            case Input.Buttons.LEFT:
+                leftClick = false;
+                buttonProcessed = true;
+                break;
+            case Input.Buttons.RIGHT:
+                rightClick = false;
+                buttonProcessed = true;
+                break;
+        }
+
+        return buttonProcessed;
     }
 
     @Override

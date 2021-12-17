@@ -1,25 +1,25 @@
 package york.eng1.team18.actors;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import york.eng1.team18.Orchestrator;
+import com.badlogic.gdx.utils.TimeUtils;
+import york.eng1.team18.actors.HUD.HUD;
 import york.eng1.team18.controller.InputController;
 
 public class Player extends Group {
 
     private InputController inpt;
     private World world;
+    private HUD hud;
     private Body body;
     private WaterTrail waterTrail;
 
     // PLAYER PROPERTIES:
+    private float size_x = 6;
+    private float size_y = 3;
     private float maxSpeed = 16;
     private float maxReverseSpeed = -8f;
     public float currentSpeed = 0f; // changed to public
@@ -27,14 +27,19 @@ public class Player extends Group {
     private float rateOfDeceleration = 0.03f;
     private float maxRateOfTurn = 1.8f;
 
+    private long fireLimitTimer;
+    private float ammoReplenishTimer;
+    private float ammoReplenishRate = 2f;
+
     public boolean is_contact = false;
     public String contact_side = "";
 
-    public Player(World world, Orchestrator orch, Camera camera, InputController inpt, float pos_x, float pos_y , float size_x, float size_y){
+    public Player(World world, InputController inpt, HUD hud, float pos_x, float pos_y){
        // Set image, position and world reference
         super();
         this.inpt = inpt;
         this.world = world;
+        this.hud = hud;
         this.setPosition(pos_x, pos_y);
         this.setSize(size_x, size_y);
 
@@ -84,6 +89,9 @@ public class Player extends Group {
 
         // For rotation around center
         this.setOrigin(this.getWidth()/2, this.getHeight()/2);
+
+        // Record start time
+        fireLimitTimer = TimeUtils.nanoTime();
     }
 
     @Override
@@ -127,6 +135,31 @@ public class Player extends Group {
         this.setRotation(body.getAngle() * MathUtils.radiansToDegrees);
         this.setPosition(body.getPosition().x - this.getWidth()/2,
                 body.getPosition().y - this.getHeight()/2);
+
+        // Handle cannon firing
+
+        ammoReplenishTimer += delta;
+        if (ammoReplenishTimer > ammoReplenishRate) {
+            // Replenish ammo
+            hud.increaseCannonTicks();
+            // Reset Replenish Timer
+            ammoReplenishTimer = 0;
+        }
+
+        // Fire on mouse click
+        if (TimeUtils.timeSinceNanos(fireLimitTimer) > 500000000) {
+            if (inpt.leftClick) {
+                hud.decreaseCannonTicks();
+                fireLimitTimer = TimeUtils.nanoTime();
+            }
+
+            if (inpt.rightClick) {
+                hud.increaseCannonTicks();
+                fireLimitTimer = TimeUtils.nanoTime();
+            }
+        }
+
+
 
         super.act(delta);
     }

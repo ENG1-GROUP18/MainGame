@@ -18,12 +18,12 @@ public class HealthBar extends Group {
 
     public HealthBar(int posX, int posY, int maxHealth, int barLength) {
         super();
-
         this.barCurrentValue = maxHealth;
         this.barMaxValue = maxHealth;
-
         this.barWidth = barLength;
 
+
+        // Create health bar
         Image bar = new Image(new Texture(Gdx.files.internal("images/WhiteSquare.png")));
         bar.setPosition(posX, posY);
         bar.setSize(barWidth, barHeight);

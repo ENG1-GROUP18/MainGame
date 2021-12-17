@@ -1,35 +1,47 @@
 package york.eng1.team18.actors.HUD;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.actions.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
 
 public class CannonBar extends Group {
 
-    private int blockWidth = 40;
-    private int blockHeight = 38;
-    private int blockGap = 2;
-    private Color barColor = new Color(0/255f, 255/255f, 255/255f, 1);
+    private int maxTicks;
+    private int currentTicks;
 
+    private int tickWidth = 32;
+    private int tickHeight = 32;
+    private int tickGap = 8;
 
-    public CannonBar(int numberOfBars, int posX, int posY) {
+    private Image[] ticks;
+
+    public CannonBar(int maxTicks, int posX, int posY) {
         super();
+        this.maxTicks = maxTicks;
+        this.currentTicks = maxTicks;
 
-        Image[] bars = new Image[numberOfBars];
 
-
-        for (int i = 0; i < numberOfBars; i++) {
-            bars[i] = new Image(new Texture(Gdx.files.internal("images/WhiteSquare.png")));
-            bars[i].setPosition(posX + i*blockWidth, posY);
-            bars[i].setSize(blockWidth - blockGap, blockHeight);
-            this.addActor(bars[i]);
+        // Create blocks
+        ticks = new Image[maxTicks];
+        for (int i = 0; i < maxTicks; i++) {
+            ticks[i] = new Image(new Texture(Gdx.files.internal("images/hud/cannonball32.png")));
+            ticks[i].setPosition(posX + i*(tickGap + tickWidth), posY);
+            ticks[i].setSize(tickWidth, tickHeight);
+            ticks[i].setOrigin(Align.center);
+            this.addActor(ticks[i]);
         }
 
+
+        increaseActiveTicks();
     }
+
 
     @Override
     public void act(float delta) {
@@ -40,4 +52,44 @@ public class CannonBar extends Group {
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
     }
+
+
+
+
+    public void increaseActiveTicks() {
+        if (currentTicks < maxTicks) {
+            AlphaAction aa = new AlphaAction();
+            aa.setAlpha(1f);
+            aa.setDuration(0.1f);
+
+            ScaleToAction sta = new ScaleToAction();
+            sta.setScale(1f);
+            sta.setDuration(0.1f);
+
+            ParallelAction pa = new ParallelAction(aa, sta);
+
+            ticks[currentTicks].addAction(pa);
+
+            currentTicks += 1;
+        }
+    }
+
+    public void decreaseActiveTicks() {
+        if (currentTicks > 0) {
+            AlphaAction aa = new AlphaAction();
+            aa.setAlpha(0.4f);
+            aa.setDuration(0.1f);
+
+            ScaleToAction sta = new ScaleToAction();
+            sta.setScale(0.7f);
+            sta.setDuration(0.1f);
+
+            ParallelAction pa = new ParallelAction(aa, sta);
+
+            ticks[currentTicks - 1].addAction(pa);
+            currentTicks -= 1;
+        }
+    }
+
+
 }
