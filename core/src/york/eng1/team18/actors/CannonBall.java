@@ -12,16 +12,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ImmediateModeRenderer20;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.TimeUtils;
 import york.eng1.team18.Orchestrator;
 
+import javax.swing.text.html.parser.Entity;
 import java.util.ArrayList;
 
 
@@ -68,6 +66,7 @@ public class CannonBall  extends Group {
         }
         //this.addActor(new CannonBallImage(this));
         this.setPosition(this.x,this.y);
+        this.setOrigin(x/2,y/2);
 //        sprite.setPosition(this.x,this.y);
 //        sprite.setOrigin(this.x,this.y);
 //        sprite.setScale(0.10f);
@@ -81,11 +80,23 @@ public class CannonBall  extends Group {
 
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
-        bodyDef.position.set(x, y);
+        bodyDef.position.set(x/2, y/2);
         body = world.createBody(bodyDef);
         body.setTransform(x, y, angle);
-        PolygonShape shape = new PolygonShape(); //TODO change change shape to circle
-        shape.setAsBox(x/2, y/2);
+        CircleShape shape = new CircleShape(); //TODO change change shape to circle
+        shape.setRadius(0.5f);
+
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = shape;
+        fixtureDef.density = 1f;
+        fixtureDef.friction = 0.2f;
+        fixtureDef.restitution = 0f;
+
+//        char[] temp_char = {'a'};
+//        Entity entity_temp = new Entity("",1, temp_char);
+        fixtureDef.filter.maskBits = (short) 2;
+        body.createFixture(fixtureDef);
+        body.setUserData("Cannon ball");
 
         this.body = body;
 //        System.out.println(body_player.getPosition());
@@ -130,7 +141,7 @@ public class CannonBall  extends Group {
         float y_val = body.getLinearVelocity().y;
         if (x_vel < 1 && x_vel > -1 && y_val< 1 && y_val > -1){
             remove = true;
-
+            world.destroyBody(body);
         }
 //        float myX = this.localToScreenCoordinates(new Vector2(this.getOriginX(),this.getOriginY())).x;
 //        float myY = this.localToScreenCoordinates(new Vector2(this.getOriginX(),this.getOriginY())).y;
@@ -141,11 +152,13 @@ public class CannonBall  extends Group {
 //
 //    }
 
+
+
     public void render (Batch batch) {
         //Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); // This cryptic line clears the screen.
         //batch.setProjectionMatrix(camera.combined);
         //sprite.setPosition(body.getPosition().x,body.getPosition().y);
-        batch.draw(sprite, body.getPosition().x, body.getPosition().y);
+        batch.draw(sprite, body.getPosition().x - 0.5f, body.getPosition().y - 0.5f);
         //super.draw(batch,1);
 
     }
