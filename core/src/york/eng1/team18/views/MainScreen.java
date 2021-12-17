@@ -5,17 +5,21 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.*;
 import york.eng1.team18.Orchestrator;
 import york.eng1.team18.WorldContactListener;
 import york.eng1.team18.actors.*;
+import york.eng1.team18.actors.HUD.HUD;
 import york.eng1.team18.controller.InputController;
 
 
@@ -48,7 +52,7 @@ public class MainScreen implements Screen {
 
     InputController inpt;
     OrthographicCamera gameCamera;
-    OrthographicCamera uiCamera;
+    OrthographicCamera hudCamera;
     ExtendViewport gameViewport;
 
 
@@ -65,7 +69,7 @@ public class MainScreen implements Screen {
 
         gameCameraOffset = new Vector2(0, 15);
         gameCamera = new OrthographicCamera(1, 1);
-        uiCamera = new OrthographicCamera();
+        hudCamera = new OrthographicCamera();
         gameViewport = new ExtendViewport(cameraZoom, cameraZoom, gameCamera);
         gameStage = new Stage(gameViewport);
         hudStage = new Stage(new ScreenViewport());
@@ -84,12 +88,12 @@ public class MainScreen implements Screen {
         gameStage.addActor(map);
         gameStage.addActor(player);
 
-        Skin uiSkin = new Skin(Gdx.files.internal("skin/customSkin.json"));
-        Label testLbl = new Label("testing", uiSkin);
-        testLbl.setPosition(0,0);
-        hudStage.addActor(testLbl);
+        // Add hud to hud stage
+        HUD hud = new HUD();
+        hudStage.addActor(hud);
 
 
+        // Can remove
         debugRenderer = new Box2DDebugRenderer(true, false, false, false, true, true);
     }
 

@@ -8,7 +8,6 @@ import org.jetbrains.annotations.NotNull;
 
 public class CannonBall {
 
-
     private static Texture texture;
     private static Pixmap original;
     private static Pixmap tenx9;
