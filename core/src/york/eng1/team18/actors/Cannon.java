@@ -1,19 +1,26 @@
 package york.eng1.team18.actors;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.utils.TimeUtils;
 
 import javax.accessibility.AccessibleRelation;
+import java.util.ArrayList;
 
 public class Cannon extends Image {
 //    Sprite sprite;
@@ -26,6 +33,12 @@ public class Cannon extends Image {
     private float angleLimitLeft;
     private float angleLimitRight;
 
+    private CannonBall ball;
+
+    World world;
+    Camera camera;
+    Stage stage;
+
 
     // CANNON PROPERTIES:
     private float rateOfTurn = 2f; // degrees per act
@@ -34,11 +47,28 @@ public class Cannon extends Image {
     private float posX;
     private float posY;
 
+    public ArrayList<CannonBall> CannonBalls;
+    private SpriteBatch batch;
+    private Body body;
 
-    public Cannon(Group parent, float posX, float posY, boolean leftFacing) {
+    private long fireLimitTimer;
+    private int balls;
+    private float ammoReplenishTimer;
+    private float ammoReplenishRate = 2f;
+
+
+    public Cannon(Group parent, float posX, float posY, boolean leftFacing, World world, Camera camera, Stage stage, Body body) {
         super(new Texture(Gdx.files.internal("images/cannonShape.png")));
         this.parent = parent;
         this.leftFacing = leftFacing;
+
+        this.world = world;
+        this.camera = camera;
+        this.stage = stage;
+        this.body = body;
+
+        this.balls = 5;
+
 
         this.setSize(parent.getWidth()/10, parent.getHeight()*2/3);
         this.setPosition(posX - this.getWidth()/2, posY - this.getHeight()/3);
@@ -48,6 +78,9 @@ public class Cannon extends Image {
             this.setRotation(180);
 
         }
+        CannonBalls = new ArrayList<CannonBall>();
+
+        batch = new SpriteBatch();
 
 
     }
@@ -56,11 +89,59 @@ public class Cannon extends Image {
     public void act(float delta) {
         super.act(delta);
         handleRotation();
+
+        float angle = this.getRotation();
+
+        ammoReplenishTimer += delta;
+        if (ammoReplenishTimer > ammoReplenishRate) {
+            // Replenish ammo
+            ammoReplenishTimer = 0;
+            balls+=1;
+        }
+
+
+
+        if (Gdx.input.justTouched() && activated && TimeUtils.timeSinceNanos(fireLimitTimer) > 500000000 && balls> 0){
+
+            if (leftFacing) {
+                angle = this.getRotation() +90;
+            } else {
+                angle = this.getRotation() -90;
+            }
+
+            CannonBalls.add(new CannonBall(parent, world, camera, body, angle, this, leftFacing));
+            fireLimitTimer = TimeUtils.nanoTime();
+            balls-=1; // change variable name
+            //ball = new CannonBall(this, this.getOriginX(),this.getOriginY(), world, camera, stage);
+            //stage.addActor(ball);
+
+        }
+
+        ArrayList<CannonBall> toRemove = new ArrayList<CannonBall>();
+        for (CannonBall cannonBall : CannonBalls){
+            cannonBall.update(delta);
+            if (cannonBall.remove == true){
+                toRemove.add(cannonBall);
+            }
+        }
+        CannonBalls.removeAll(toRemove);
+
+        batch.setProjectionMatrix(camera.combined);
+        batch.begin();
+
+        for (CannonBall cannonBall : CannonBalls){
+            cannonBall.render(batch);
+
+
+        }
+        batch.end();
+
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
+
     }
 
     private void handleRotation() {

@@ -1,60 +1,152 @@
 package york.eng1.team18.actors;
 
+import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import org.jetbrains.annotations.NotNull;
+import com.badlogic.gdx.graphics.glutils.ImmediateModeRenderer20;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.TimeUtils;
+import york.eng1.team18.Orchestrator;
 
-public class CannonBall {
-
-    private static Texture texture;
-    private static Pixmap original;
-    private static Pixmap tenx9;
+import java.util.ArrayList;
 
 
-    float x,y,x_speed,y_speed,angle;
+public class CannonBall  extends Group {
+    private SpriteBatch batch;
+    public final static int SPEED = 500;
+    private static Texture sprite;
+
+    World world;
+    Camera camera;
+    Stage stage;
+    Group player;
+    Cannon parent;
+    float angle;
+    Boolean leftFacing;
+    private Body body;
+    private Body body_player;
+
+
 
     public boolean remove = false;
 
-    public CannonBall(float x, float y , float x_speed, float y_speed , float angle){
-        this.x = x;
-        this.y = y;
-        this.x_speed = Math.abs(x_speed)  + 50;
-        this.y_speed = Math.abs(y_speed) + 50;
+    float x,y;
+
+    public CannonBall(Group player, World world, Camera camera, Body body_player, float angle, Cannon parent, boolean leftFacing){
+        this.x = parent.localToStageCoordinates(new Vector2(parent.getOriginX(), parent.getOriginY())).x;
+        this.y = parent.localToStageCoordinates(new Vector2(parent.getOriginX(), parent.getOriginY())).y;
+//        this.x = body_player.getPosition().x;
+//        this.y = body_player.getPosition().y;
+        this.stage = stage;
+        this.camera = camera;
+        this.world = world;
+        this.body_player = body_player;
+        this.parent = parent;
         this.angle = angle;
-        if (texture == null) {
-            texture = new Texture("images/small_cannonball.png" );
-            original = new Pixmap(Gdx.files.internal("images/small_cannonball.png"));
-            tenx9 = new Pixmap(2,1,original.getFormat());
-            tenx9.drawPixmap(original,
-                    0, 0, original.getWidth(), original.getHeight(),
-                    0, 0, tenx9.getWidth(), tenx9.getHeight()
-            );
-            texture = new Texture(tenx9);
-            original.dispose();
-            tenx9.dispose();
+
+
+
+        //batch = new SpriteBatch();
+        //
+
+        if (sprite == null){
+            sprite = new Texture("images/temp_cannonball.png");
+        }
+        //this.addActor(new CannonBallImage(this));
+        this.setPosition(this.x,this.y);
+//        sprite.setPosition(this.x,this.y);
+//        sprite.setOrigin(this.x,this.y);
+//        sprite.setScale(0.10f);
+//        System.out.println(x);
+//        System.out.println(y);
+//        System.out.println(body_player.getAngle());
+//        System.out.println(Math.abs(player.getRotation()%360));
+//        System.out.println(this.getX());
+
+
+
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.DynamicBody;
+        bodyDef.position.set(x, y);
+        body = world.createBody(bodyDef);
+        body.setTransform(x, y, angle);
+        PolygonShape shape = new PolygonShape(); //TODO change change shape to circle
+        shape.setAsBox(x/2, y/2);
+
+        this.body = body;
+//        System.out.println(body_player.getPosition());
+        //need
+//        System.out.println((float)Math.sin(angle));
+//        System.out.println((float)Math.cos(angle - Math.PI));
+//        System.out.println((float)Math.cos((angle - Math.abs(player.getRotation()%360)) - Math.PI) );
+//        System.out.println(a_x);
+//
+        //TODO clean up code, make angles and velocities match
+        float angle_x = (float)Math.cos(body_player.getAngle()  + (float)Math.cos(Math.toRadians(angle)- Math.PI));
+        float angle_y = (float)Math.sin(body_player.getAngle() + (float)Math.sin(Math.toRadians(angle)- Math.PI/2));
+
+        float vel_x = 0;
+        float vel_y = 0;
+        if (leftFacing){
+
+            vel_x = (Math.abs (body_player.getLinearVelocity().x) + 50) * -(angle_y );
+            vel_y = (Math.abs (body_player.getLinearVelocity().y) + 50) * (angle_x);
+            System.out.println(vel_x);
+            System.out.println(vel_y);
+        }else{
+            vel_x = (Math.abs (body_player.getLinearVelocity().x) + 50) * (angle_y );
+            vel_y = (Math.abs (body_player.getLinearVelocity().y) + 50) * -(angle_x);
+            System.out.println(vel_x);
+            System.out.println(vel_y);
         }
 
+//        System.out.println((float)Math.cos(Math.toRadians(angle)- Math.PI));
+//        System.out.println(angle_y);
+
+        System.out.println("end");
+
+        body.setLinearVelocity(vel_x,vel_y);
+        body.setLinearDamping(1);
     }
 
-    public void update (float delta){
-        float a_x = (float)Math.sin(angle - Math.PI);
-        float a_y = (float)Math.cos(angle);
-        y+= (x_speed * delta) * a_y;
-        x+= (y_speed * delta) * a_x;
-        if (y> Gdx.graphics.getHeight() || x > Gdx.graphics.getWidth() || y < -50 || x < -50){
-            //texture.dispose();
+    public void update(float deltaTime){
+        //y+=SPEED * deltaTime;
+        //
+        float x_vel = body.getLinearVelocity().x;
+        float y_val = body.getLinearVelocity().y;
+        if (x_vel < 1 && x_vel > -1 && y_val< 1 && y_val > -1){
             remove = true;
+
         }
+//        float myX = this.localToScreenCoordinates(new Vector2(this.getOriginX(),this.getOriginY())).x;
+//        float myY = this.localToScreenCoordinates(new Vector2(this.getOriginX(),this.getOriginY())).y;
     }
 
-    public void render(@NotNull SpriteBatch batch){
-        batch.draw(texture,x,y);
-    }
 
+//    public void create () {
+//
+//    }
 
-    public void remove(CannonBall cannonBall) {
+    public void render (Batch batch) {
+        //Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); // This cryptic line clears the screen.
+        //batch.setProjectionMatrix(camera.combined);
+        //sprite.setPosition(body.getPosition().x,body.getPosition().y);
+        batch.draw(sprite, body.getPosition().x, body.getPosition().y);
+        //super.draw(batch,1);
 
     }
 }

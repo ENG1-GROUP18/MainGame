@@ -1,12 +1,19 @@
 package york.eng1.team18.actors;
 
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Group;
+
 import com.badlogic.gdx.utils.TimeUtils;
 import york.eng1.team18.actors.HUD.HUD;
+
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import york.eng1.team18.Orchestrator;
+
 import york.eng1.team18.controller.InputController;
 
 public class Player extends Group {
@@ -34,7 +41,9 @@ public class Player extends Group {
     public boolean is_contact = false;
     public String contact_side = "";
 
-    public Player(World world, InputController inpt, HUD hud, float pos_x, float pos_y){
+
+    public Player(World world, InputController inpt, HUD hud , Stage stage, Camera camera, float pos_x, float pos_y){
+
        // Set image, position and world reference
         super();
         this.inpt = inpt;
@@ -84,8 +93,8 @@ public class Player extends Group {
 
         // Add components to player
         this.addActor(new Hull(this));
-        this.addActor(new Cannon(this, this.getWidth()*2/5, this.getHeight()/4, false));
-        this.addActor(new Cannon(this, this.getWidth()*2/5, this.getHeight()*3/4, true));
+        this.addActor(new Cannon(this, this.getWidth()*2/5, this.getHeight()/4, false , world, camera, stage, body));
+        this.addActor(new Cannon(this, this.getWidth()*2/5, this.getHeight()*3/4, true, world, camera, stage, body));
 
         // For rotation around center
         this.setOrigin(this.getWidth()/2, this.getHeight()/2);
@@ -161,6 +170,7 @@ public class Player extends Group {
 
 
 
+
         super.act(delta);
     }
 
@@ -169,3 +179,5 @@ public class Player extends Group {
         super.draw(batch, parentAlpha);
     }
 }
+
+

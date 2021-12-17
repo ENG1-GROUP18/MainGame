@@ -3,12 +3,19 @@ package york.eng1.team18.views;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -21,6 +28,9 @@ import york.eng1.team18.WorldContactListener;
 import york.eng1.team18.actors.*;
 import york.eng1.team18.actors.HUD.HUD;
 import york.eng1.team18.controller.InputController;
+import york.eng1.team18.actors.CannonBall;
+
+import java.util.ArrayList;
 
 
 public class MainScreen implements Screen {
@@ -51,6 +61,8 @@ public class MainScreen implements Screen {
     public Player player; // made player a public variable
 
 
+
+
     InputController inpt;
     OrthographicCamera gameCamera;
     OrthographicCamera hudCamera;
@@ -68,12 +80,14 @@ public class MainScreen implements Screen {
         inpt = new InputController();
         Gdx.input.setInputProcessor(inpt);
 
+
         gameCameraOffset = new Vector2(0, 15);
         gameCamera = new OrthographicCamera(1, 1);
         hudCamera = new OrthographicCamera();
         gameViewport = new ExtendViewport(cameraZoom, cameraZoom, gameCamera);
         gameStage = new Stage(gameViewport);
         hudStage = new Stage(new ScreenViewport());
+
         world = new World(new Vector2(0,0), true);
         world.setContactListener(new WorldContactListener(this));
 
@@ -86,7 +100,10 @@ public class MainScreen implements Screen {
 
         // Add objects to world
         Map map = new Map(world, 1000, 1000);
-        player = new Player(world, inpt, hud, map.getSpawnX(), map.getSpawnY());
+
+
+        player = new Player(world,inpt, hud, gameStage, gameCamera, map.getSpawnX(), map.getSpawnY());
+
 
         map.setName("map");
         player.setName("player");
@@ -97,7 +114,6 @@ public class MainScreen implements Screen {
 
 
 
-        // Can remove
         debugRenderer = new Box2DDebugRenderer(true, false, false, false, true, true);
     }
 
@@ -135,9 +151,14 @@ public class MainScreen implements Screen {
         gameStage.draw();
         debugRenderer.render(world, gameStage.getCamera().combined);
 
+        // Draws box2d hitboxes for debug only
+        debugRenderer.render(world, gameStage.getCamera().combined);
+
+
         // Draw ui
         hudStage.getViewport().apply();
         hudStage.draw();
+
     }
 
     @Override
