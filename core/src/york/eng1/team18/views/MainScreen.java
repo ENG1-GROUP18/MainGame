@@ -99,7 +99,7 @@ public class MainScreen implements Screen {
 
 
         // Add objects to world
-        Map map = new Map(world, 1000, 1000);
+        Map map = new Map(world, 800, 800);
 
 
         player = new Player(world,inpt, hud, gameStage, gameCamera, map.getSpawnX(), map.getSpawnY());
