@@ -19,7 +19,18 @@ public class Map extends Actor {
     private float sizeY;
     private float spawnPosX = 0.18f; // As percentage of x across map to scale
     private float spawnPosY = 0.16f; // As percentage of y across map to scale
-
+    private float halifaxPosX = 0.17f;
+    private float wentworthPosX = 0.17f;
+    private float jamesPosX = 0.34f;
+    private float vanbrughPosX = 0.29f;
+    private float alcuinPosX = 0.62f;
+    private float derwentPosX = 0.92f;
+    private float halifaxPosY = 0.11f;
+    private float wentworthPosY = 0.36f;
+    private float jamesPosY = 0.53f;
+    private float vanbrughPosY = 0.63f;
+    private float alcuinPosY = 0.48f;
+    private float derwentPosY = 0.46f;
 
     public Map(World world, float sizeX, float sizeY) {
         this.world = world;
@@ -59,6 +70,50 @@ public class Map extends Actor {
 
     public float getSpawnY() {
         return (spawnPosY * sizeY);
+    }
+
+    public float getCollegeX(String collegeName) {
+        if(collegeName == "Halifax"){
+            return halifaxPosX*sizeX;
+        }
+        if(collegeName == "Wentworth"){
+            return wentworthPosX*sizeX;
+        }
+        if(collegeName == "James"){
+            return jamesPosX*sizeX;
+        }
+        if(collegeName == "Vanbrugh"){
+            return vanbrughPosX*sizeX;
+        }
+        if(collegeName == "Alcuin"){
+            return alcuinPosX*sizeX;
+        }
+        if(collegeName == "Derwent"){
+            return derwentPosX*sizeX;
+        }
+        return derwentPosX;
+    }
+
+    public float getCollegeY(String collegeName) {
+        if(collegeName == "Halifax"){
+            return halifaxPosY*sizeY;
+        }
+        if(collegeName == "Wentworth"){
+            return wentworthPosY*sizeY;
+        }
+        if(collegeName == "James"){
+            return jamesPosY*sizeY;
+        }
+        if(collegeName == "Vanbrugh"){
+            return vanbrughPosY*sizeY;
+        }
+        if(collegeName == "Alcuin"){
+            return alcuinPosY*sizeY;
+        }
+        if(collegeName == "Derwent"){
+            return derwentPosY*sizeY;
+        }
+        return derwentPosY;
     }
 
 }
