@@ -169,6 +169,7 @@ public class MainScreen implements Screen {
     public void resize(int width, int height) {
         gameViewport.update(width, height);
         hudStage.getViewport().update(width, height, true);
+        hud.recalculatePos();
     }
 
     @Override

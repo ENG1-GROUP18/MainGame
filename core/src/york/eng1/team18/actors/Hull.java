@@ -25,6 +25,9 @@ public class Hull extends Image {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
+        batch.end();
+        batch.begin();
+
         super.draw(batch, parentAlpha);
     }
 }

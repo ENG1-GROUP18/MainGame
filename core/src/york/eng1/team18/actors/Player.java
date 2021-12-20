@@ -36,7 +36,7 @@ public class Player extends Group {
 
     private long fireLimitTimer;
     private float ammoReplenishTimer;
-    private float ammoReplenishRate = 2f;
+    private float ammoReplenishRate = 1.5f;
 
     public boolean is_contact = false;
     public String contact_side = "";

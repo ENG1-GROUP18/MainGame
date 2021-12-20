@@ -22,7 +22,7 @@ public class CannonBar extends Group {
 
     private Image[] ticks;
 
-    public CannonBar(int maxTicks, int posX, int posY) {
+    public CannonBar(int posX, int posY, int maxTicks) {
         super();
         this.maxTicks = maxTicks;
         this.currentTicks = maxTicks;
@@ -77,11 +77,11 @@ public class CannonBar extends Group {
     public void decreaseActiveTicks() {
         if (currentTicks > 0) {
             AlphaAction aa = new AlphaAction();
-            aa.setAlpha(0.4f);
+            aa.setAlpha(0.25f);
             aa.setDuration(0.1f);
 
             ScaleToAction sta = new ScaleToAction();
-            sta.setScale(0.7f);
+            sta.setScale(0.5f);
             sta.setDuration(0.1f);
 
             ParallelAction pa = new ParallelAction(aa, sta);

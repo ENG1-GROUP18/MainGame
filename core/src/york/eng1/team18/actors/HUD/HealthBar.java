@@ -14,7 +14,7 @@ public class HealthBar extends Group {
     private int barCurrentValue;
     private int barMaxValue = 100;
     private int barWidth;
-    private int barHeight = 32;
+    private int barHeight = 16;
 
     public HealthBar(int posX, int posY, int maxHealth, int barLength) {
         super();
