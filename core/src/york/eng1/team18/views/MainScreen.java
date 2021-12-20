@@ -60,9 +60,6 @@ public class MainScreen implements Screen {
 
     public Player player; // made player a public variable
 
-
-
-
     InputController inpt;
     OrthographicCamera gameCamera;
     OrthographicCamera hudCamera;
@@ -100,10 +97,13 @@ public class MainScreen implements Screen {
 
         // Add objects to world
         Map map = new Map(world, 800, 800);
-
-
         player = new Player(world,inpt, hud, gameStage, gameCamera, map.getSpawnX(), map.getSpawnY());
-
+        College Halifax = new College(world, gameStage, gameCamera, map.getCollegeX("Halifax"), map.getCollegeY("Halifax"), "images/building1.png");
+        College Wentworth = new College(world, gameStage, gameCamera, map.getCollegeX("Wentworth"), map.getCollegeY("Wentworth"), "images/building2.png");
+        College James = new College(world, gameStage, gameCamera, map.getCollegeX("James"), map.getCollegeY("James"), "images/building4.png");
+        College Vanbrugh = new College(world, gameStage, gameCamera, map.getCollegeX("Vanbrugh"), map.getCollegeY("Vanbrugh"), "images/building3.png");
+        College Alcuin = new College(world, gameStage, gameCamera, map.getCollegeX("Alcuin"), map.getCollegeY("Alcuin"), "images/building5.png");
+        College Derwent = new College(world, gameStage, gameCamera, map.getCollegeX("Derwent"), map.getCollegeY("Derwent"), "images/building6.png");
 
         map.setName("map");
         player.setName("player");
@@ -111,8 +111,12 @@ public class MainScreen implements Screen {
         waterTrail = new WaterTrail(gameCamera, player);
         gameStage.addActor(map);
         gameStage.addActor(player);
-
-
+        gameStage.addActor(Halifax);
+        gameStage.addActor(Wentworth);
+        gameStage.addActor(James);
+        gameStage.addActor(Vanbrugh);
+        gameStage.addActor(Alcuin);
+        gameStage.addActor(Derwent);
 
         debugRenderer = new Box2DDebugRenderer(true, false, false, false, true, true);
     }
