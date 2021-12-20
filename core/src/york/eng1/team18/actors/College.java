@@ -42,7 +42,7 @@ public class College extends Group {
         bodyDef.type = BodyDef.BodyType.StaticBody;
         bodyDef.position.set(pos_x, pos_y);
         body = world.createBody(bodyDef);
-        body.setTransform(pos_x, pos_y, (float)-Math.PI);
+        body.setTransform(pos_x +size_x/2, pos_y +size_y/2, (float)-Math.PI);
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(size_x/2, size_y/2);
 
@@ -52,7 +52,7 @@ public class College extends Group {
         fixtureDef.friction = 0.2f;
         fixtureDef.restitution = 0f;
         body.createFixture(fixtureDef);
-        body.setUserData("Player");
+        body.setUserData("Collage"); //Will need to have the collage name later, can just be passed in as variable
 
 
         // Dispose shapes used to create fixtures
