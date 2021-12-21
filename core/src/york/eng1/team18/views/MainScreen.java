@@ -3,24 +3,13 @@ package york.eng1.team18.views;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.*;
 import york.eng1.team18.Orchestrator;
@@ -28,9 +17,6 @@ import york.eng1.team18.WorldContactListener;
 import york.eng1.team18.actors.*;
 import york.eng1.team18.actors.HUD.HUD;
 import york.eng1.team18.controller.InputController;
-import york.eng1.team18.actors.CannonBall;
-
-import java.util.ArrayList;
 
 
 public class MainScreen implements Screen {
@@ -44,9 +30,9 @@ public class MainScreen implements Screen {
 
     private static final int mapImageX = 1155;  // height of map image
     private static final int mapImageY = 776;   // width of map image
-    private float mapScale = 500f;               // map width in world units
+    private float mapSize = 800f;               // map width in world units
     private float mapAspectRatio = 1.49f;        // Aspect ratio of image used for map
-    private float cameraZoom = 60;               // ExtendViewport minimum size in world units
+    private float cameraZoom = 360;               // ExtendViewport minimum size in world units
     private Vector2 gameCameraOffset;
 
     private Orchestrator parent;
@@ -91,13 +77,14 @@ public class MainScreen implements Screen {
 
 
         // Add hud to hud stage
-        hud = new HUD(this);
+        hud = new HUD(this, player, mapSize);
         hudStage.addActor(hud);
 
 
         // Add objects to world
-        Map map = new Map(world, 800, 800);
+        Map map = new Map(world, mapSize, mapSize);
         player = new Player(world,inpt, hud, gameStage, gameCamera, map.getSpawnX(), map.getSpawnY());
+        hud.setPlayer(player);
         College Halifax = new College(world, gameStage, gameCamera, map.getCollegeX("Halifax"), map.getCollegeY("Halifax"), "images/building1.png");
         College Wentworth = new College(world, gameStage, gameCamera, map.getCollegeX("Wentworth"), map.getCollegeY("Wentworth"), "images/building2.png");
         College James = new College(world, gameStage, gameCamera, map.getCollegeX("James"), map.getCollegeY("James"), "images/building4.png");
@@ -126,6 +113,7 @@ public class MainScreen implements Screen {
 
     }
 
+
     @Override
     public void render(float delta) {
         // Clear buffers
@@ -141,12 +129,17 @@ public class MainScreen implements Screen {
         float myX = player.getX();
         float myY = player.getY();
         if (inpt.space) {
-            // Allow player to look towards mouse pos
+            // Allow player to look towards mouse position
             Vector2 mousePos = gameStage.screenToStageCoordinates(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
             gameCameraOffset = new Vector2(((mousePos.x - myX) / 2), ((mousePos.y - myY) / 2));
         }
         gameCamera.position.x = myX + gameCameraOffset.x;
         gameCamera.position.y = myY + gameCameraOffset.y;
+
+        // Update HUD
+        hud.updatePointer();
+
+
 
 
         // Draw game

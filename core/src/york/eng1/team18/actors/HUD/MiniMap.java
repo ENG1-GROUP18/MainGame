@@ -3,13 +3,13 @@ package york.eng1.team18.actors.HUD;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 public class MiniMap extends Image {
 
     public MiniMap() {
-        super(new Texture(Gdx.files.internal("images/hud/MiniMapPlaceholder.png")));
-        this.setSize(300, 200);
+        super(new Texture(Gdx.files.internal("images/hud/minimapxd.png")));
     }
 
     @Override

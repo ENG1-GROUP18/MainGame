@@ -1,24 +1,37 @@
 package york.eng1.team18.actors.HUD;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.utils.Align;
+import york.eng1.team18.actors.Map;
+import york.eng1.team18.actors.Player;
 import york.eng1.team18.views.MainScreen;
 
 public class HUD extends Group {
 
+    Player player;
+    Map map;
+    float mapSize;
+
     Group playerStatsGroup;
     Group miniMapGroup;
-
 
     // Components of the HUD all extend Actor class in some way. Useful for animation through actions.
     BackPlate backPlate;
     HealthBar healthBar;
     CannonBar cannonBar;
-    MiniMap map;
+    MiniMap miniMap;
+    Image playerPointer;
 
-    public HUD(MainScreen parent) {
+    public HUD(MainScreen parent, Player player, float mapSize) {
         super();
+
+        this. player = player;
+        this.mapSize = mapSize;
 
         // Create and add components to display players stats.
         playerStatsGroup = new Group();
@@ -40,10 +53,15 @@ public class HUD extends Group {
         this.addActor(miniMapGroup);
         miniMapGroup.setPosition(20, 20);
 
+        miniMap = new MiniMap();
+        miniMapGroup.addActor(miniMap);
+        miniMap.setSize(300, 200);
 
-        map = new MiniMap();
-        miniMapGroup.addActor(map);
-        map.setSize(300, 200);
+        playerPointer = new Image(new Texture(Gdx.files.internal("images/hud/pointer.png")));
+        playerPointer.setPosition(40, 10);
+        playerPointer.setScale(0.5f, 0.5f);
+        playerPointer.setOrigin(Align.center);
+        miniMapGroup.addActor(playerPointer);
     }
 
     @Override
@@ -80,7 +98,24 @@ public class HUD extends Group {
 
     }
 
+    public void updatePointer() {
+        float x = miniMap.getWidth() * player.getX() / mapSize;
+        float y = miniMap.getHeight() * player.getY() / mapSize;
+        float angle = player.getRotation() - 90;
+
+        playerPointer.setPosition(x - 20, y*1.49f - 20);
+        playerPointer.setRotation(angle);
+
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+
+    }
+
+    public void setMap(Map map) {
+        this.map = map;
+
+    }
 
 }
-
-
