@@ -34,15 +34,31 @@ public class HealthBar extends Group {
     @Override
     public void act(float delta) {
         super.act(delta);
+
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
+        batch.end();
+
+
+
+
+
+
+        batch.begin();
+
+
     }
 
-    public void setValue() {
+    public void setValue(int value) {
+        this.barCurrentValue = value;
 
+    }
+
+    public int getValue() {
+        return this.barCurrentValue;
 
     }
 

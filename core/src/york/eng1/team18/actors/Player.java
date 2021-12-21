@@ -36,7 +36,7 @@ public class Player extends Group {
 
     private long fireLimitTimer;
     private float ammoReplenishTimer;
-    private float ammoReplenishRate = 1.5f;
+    private float ammoReplenishRate = 1f;
 
     public boolean is_contact = false;
     public String contact_side = "";
@@ -160,6 +160,7 @@ public class Player extends Group {
             if (inpt.leftClick) {
                 hud.decreaseCannonTicks();
                 fireLimitTimer = TimeUtils.nanoTime();
+                ammoReplenishTimer = 0;
             }
 
             if (inpt.rightClick) {
