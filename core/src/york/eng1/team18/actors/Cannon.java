@@ -18,14 +18,13 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.TimeUtils;
+import york.eng1.team18.controller.InputController;
 
 import javax.accessibility.AccessibleRelation;
 import java.util.ArrayList;
 
 public class Cannon extends Image {
-//    Sprite sprite;
-//
-//    Pixmap pixmapBlackish = new Pixmap(1,1, Pixmap.Format.RGBA8888);;
+
 
     private Group parent;
     private boolean leftFacing;
@@ -55,9 +54,10 @@ public class Cannon extends Image {
     private int balls;
     private float ammoReplenishTimer;
     private float ammoReplenishRate = 2f;
+    private InputController inpt;
 
 
-    public Cannon(Group parent, float posX, float posY, boolean leftFacing, World world, Camera camera, Stage stage, Body body) {
+    public Cannon(Group parent, float posX, float posY, boolean leftFacing, World world, Camera camera, Stage stage, Body body, InputController inpt) {
         super(new Texture(Gdx.files.internal("images/cannonShape.png")));
         this.parent = parent;
         this.leftFacing = leftFacing;
@@ -66,6 +66,7 @@ public class Cannon extends Image {
         this.camera = camera;
         this.stage = stage;
         this.body = body;
+        this.inpt = inpt;
 
         this.balls = 5;
 
@@ -90,7 +91,7 @@ public class Cannon extends Image {
         super.act(delta);
         handleRotation();
 
-        float angle = this.getRotation();
+        float angle;
 
         ammoReplenishTimer += delta;
         if (ammoReplenishTimer > ammoReplenishRate) {
@@ -101,7 +102,7 @@ public class Cannon extends Image {
 
 
 
-        if (Gdx.input.justTouched() && activated && TimeUtils.timeSinceNanos(fireLimitTimer) > 500000000 && balls> 0){
+        if (inpt.leftClick && activated && TimeUtils.timeSinceNanos(fireLimitTimer) > 500000000 && balls> 0){
 
             if (leftFacing) {
                 angle = this.getRotation() +90;
@@ -120,7 +121,7 @@ public class Cannon extends Image {
         ArrayList<CannonBall> toRemove = new ArrayList<CannonBall>();
         for (CannonBall cannonBall : CannonBalls){
             cannonBall.update(delta);
-            if (cannonBall.remove == true){
+            if (cannonBall.remove){
                 toRemove.add(cannonBall);
             }
         }

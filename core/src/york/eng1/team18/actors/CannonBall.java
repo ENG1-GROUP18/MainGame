@@ -47,8 +47,6 @@ public class CannonBall  extends Group {
     public CannonBall(Group player, World world, Camera camera, Body body_player, float angle, Cannon parent, boolean leftFacing){
         this.x = parent.localToStageCoordinates(new Vector2(parent.getOriginX(), parent.getOriginY())).x;
         this.y = parent.localToStageCoordinates(new Vector2(parent.getOriginX(), parent.getOriginY())).y;
-//        this.x = body_player.getPosition().x;
-//        this.y = body_player.getPosition().y;
         this.stage = stage;
         this.camera = camera;
         this.world = world;
@@ -57,25 +55,12 @@ public class CannonBall  extends Group {
         this.angle = angle;
 
 
-
-        //batch = new SpriteBatch();
-        //
-
         if (sprite == null){
             sprite = new Texture("images/temp_cannonball.png");
         }
-        //this.addActor(new CannonBallImage(this));
+
         this.setPosition(this.x,this.y);
         this.setOrigin(x/2,y/2);
-//        sprite.setPosition(this.x,this.y);
-//        sprite.setOrigin(this.x,this.y);
-//        sprite.setScale(0.10f);
-//        System.out.println(x);
-//        System.out.println(y);
-//        System.out.println(body_player.getAngle());
-//        System.out.println(Math.abs(player.getRotation()%360));
-//        System.out.println(this.getX());
-
 
 
         BodyDef bodyDef = new BodyDef();
@@ -91,21 +76,12 @@ public class CannonBall  extends Group {
         fixtureDef.density = 1f;
         fixtureDef.friction = 0.2f;
         fixtureDef.restitution = 0f;
-
-//        char[] temp_char = {'a'};
-//        Entity entity_temp = new Entity("",1, temp_char);
         fixtureDef.filter.maskBits = (short) 2;
         body.createFixture(fixtureDef);
         body.setUserData("Cannon ball");
 
         this.body = body;
-//        System.out.println(body_player.getPosition());
-        //need
-//        System.out.println((float)Math.sin(angle));
-//        System.out.println((float)Math.cos(angle - Math.PI));
-//        System.out.println((float)Math.cos((angle - Math.abs(player.getRotation()%360)) - Math.PI) );
-//        System.out.println(a_x);
-//
+
         //TODO clean up code, make angles and velocities match
         float angle_x = (float)Math.cos(body_player.getAngle()  + (float)Math.cos(Math.toRadians(angle)- Math.PI));
         float angle_y = (float)Math.sin(body_player.getAngle() + (float)Math.sin(Math.toRadians(angle)- Math.PI/2));
@@ -116,41 +92,29 @@ public class CannonBall  extends Group {
 
             vel_x = (Math.abs (body_player.getLinearVelocity().x) + 50) * -(angle_y );
             vel_y = (Math.abs (body_player.getLinearVelocity().y) + 50) * (angle_x);
-            System.out.println(vel_x);
-            System.out.println(vel_y);
+
         }else{
             vel_x = (Math.abs (body_player.getLinearVelocity().x) + 50) * (angle_y );
             vel_y = (Math.abs (body_player.getLinearVelocity().y) + 50) * -(angle_x);
-            System.out.println(vel_x);
-            System.out.println(vel_y);
+
         }
 
-//        System.out.println((float)Math.cos(Math.toRadians(angle)- Math.PI));
-//        System.out.println(angle_y);
 
-        System.out.println("end");
 
         body.setLinearVelocity(vel_x,vel_y);
         body.setLinearDamping(1);
     }
 
     public void update(float deltaTime){
-        //y+=SPEED * deltaTime;
-        //
         float x_vel = body.getLinearVelocity().x;
         float y_val = body.getLinearVelocity().y;
         if (x_vel < 1 && x_vel > -1 && y_val< 1 && y_val > -1){
             remove = true;
             world.destroyBody(body);
         }
-//        float myX = this.localToScreenCoordinates(new Vector2(this.getOriginX(),this.getOriginY())).x;
-//        float myY = this.localToScreenCoordinates(new Vector2(this.getOriginX(),this.getOriginY())).y;
+
     }
 
-
-//    public void create () {
-//
-//    }
 
 
 
