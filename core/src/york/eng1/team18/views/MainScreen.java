@@ -32,7 +32,7 @@ public class MainScreen implements Screen {
     private static final int mapImageY = 776;   // width of map image
     private float mapSize = 800f;               // map width in world units
     private float mapAspectRatio = 1.49f;        // Aspect ratio of image used for map
-    private float cameraZoom = 360;               // ExtendViewport minimum size in world units
+    private float cameraZoom = 60;               // ExtendViewport minimum size in world units
     private Vector2 gameCameraOffset;
 
     private Orchestrator parent;
