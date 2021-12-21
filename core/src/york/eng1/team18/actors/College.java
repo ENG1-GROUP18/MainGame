@@ -19,6 +19,7 @@ public class College extends Group {
     private float size_y = 6;
     private float pos_x;
     private float pos_y;
+    private boolean isConquered;
 
     private long fireLimitTimer;
     private float ammoReplenishTimer;
@@ -31,11 +32,12 @@ public class College extends Group {
     public College(World world, Stage stage, Camera camera, float pos_x, float pos_y, String imagePath){
 
 
-        // Set image, position, image path and world reference
+        // Set image, position, image path, conquered state and world reference
         super();
         this.world = world;
         this.setPosition(pos_x, pos_y);
         this.setSize(size_x, size_y);
+        this.isConquered = false;
 
         // Create body
         BodyDef bodyDef = new BodyDef();
@@ -69,7 +71,9 @@ public class College extends Group {
         // Record start time
         //fireLimitTimer = TimeUtils.nanoTime();
     }
-
+    public void conquer() {
+        isConquered = true;
+    }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
