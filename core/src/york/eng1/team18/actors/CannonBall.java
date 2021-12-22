@@ -56,7 +56,7 @@ public class CannonBall  extends Group {
 
 
         if (sprite == null){
-            sprite = new Texture("images/temp_cannonball.png");
+            sprite = new Texture("images/small_cannonball.png");
         }
 
         this.setPosition(this.x,this.y);
@@ -122,7 +122,7 @@ public class CannonBall  extends Group {
         //Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); // This cryptic line clears the screen.
         //batch.setProjectionMatrix(camera.combined);
         //sprite.setPosition(body.getPosition().x,body.getPosition().y);
-        batch.draw(sprite, body.getPosition().x - 0.5f, body.getPosition().y - 0.5f);
+        batch.draw(sprite, body.getPosition().x - 0.5f, body.getPosition().y - 0.5f , 1 , 1);
         //super.draw(batch,1);
 
     }
