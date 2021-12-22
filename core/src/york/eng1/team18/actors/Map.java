@@ -19,12 +19,18 @@ public class Map extends Actor {
     private float sizeY;
     private float spawnPosX = 0.18f; // As percentage of x across map to scale
     private float spawnPosY = 0.16f; // As percentage of y across map to scale
+    private float halifaxCannon0PosX = 0.19f;
+    private float wentworthCannon0PosX = 0.185f;
+    private float wentworthCannon1PosX = 0.155f;
     private float halifaxPosX = 0.17f;
     private float wentworthPosX = 0.17f;
     private float jamesPosX = 0.34f;
     private float vanbrughPosX = 0.29f;
     private float alcuinPosX = 0.62f;
     private float derwentPosX = 0.92f;
+    private float halifaxCannon0PosY = 0.11f;
+    private float wentworthCannon0PosY = 0.36f;
+    private float wentworthCannon1PosY = 0.36f;
     private float halifaxPosY = 0.11f;
     private float wentworthPosY = 0.36f;
     private float jamesPosY = 0.53f;
@@ -63,6 +69,9 @@ public class Map extends Actor {
         super.draw(batch, parentAlpha);
     }
 
+    public float getSizeX(){ return sizeX;}
+
+    public float getSizeY(){return sizeY;}
 
     public float getSpawnX() {
         return (spawnPosX * sizeX);
@@ -73,6 +82,16 @@ public class Map extends Actor {
     }
 
     public float getCollegeX(String collegeName) {
+        if(collegeName == "HalifaxCannon0"){
+            return halifaxCannon0PosX*sizeX;
+        }
+        if(collegeName == "WentworthCannon0"){
+            return wentworthCannon0PosX*sizeX;
+        }
+        if(collegeName == "WentworthCannon1"){
+            return wentworthCannon1PosX*sizeX;
+        }
+
         if(collegeName == "Halifax"){
             return halifaxPosX*sizeX;
         }
@@ -95,6 +114,16 @@ public class Map extends Actor {
     }
 
     public float getCollegeY(String collegeName) {
+        if(collegeName == "HalifaxCannon0"){
+            return halifaxCannon0PosY*sizeY;
+        }
+        if(collegeName == "WentworthCannon0"){
+            return wentworthCannon0PosY*sizeY;
+        }
+        if(collegeName == "WentworthCannon1"){
+            return wentworthCannon1PosY*sizeY;
+        }
+
         if(collegeName == "Halifax"){
             return halifaxPosY*sizeY;
         }
