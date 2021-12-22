@@ -3,6 +3,7 @@ package york.eng1.team18.views;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 
@@ -91,6 +92,9 @@ public class MainScreen implements Screen {
         College Vanbrugh = new College(world, gameStage, gameCamera, map.getCollegeX("Vanbrugh"), map.getCollegeY("Vanbrugh"), "images/building3.png");
         College Alcuin = new College(world, gameStage, gameCamera, map.getCollegeX("Alcuin"), map.getCollegeY("Alcuin"), "images/building5.png");
         College Derwent = new College(world, gameStage, gameCamera, map.getCollegeX("Derwent"), map.getCollegeY("Derwent"), "images/building6.png");
+        EnemyBase HalifaxCannon0 = new EnemyBase(0.03f, map, inpt, Halifax, player, world, gameStage, gameCamera, map.getCollegeX("HalifaxCannon0"), map.getCollegeY("HalifaxCannon0"));
+        EnemyBase WentworthCannon0 = new EnemyBase(0.04f, map, inpt, Wentworth, player, world, gameStage, gameCamera, map.getCollegeX("WentworthCannon0"), map.getCollegeY("WentworthCannon0"));
+        EnemyBase WentworthCannon1 = new EnemyBase(0.04f, map, inpt, Wentworth, player, world, gameStage, gameCamera, map.getCollegeX("WentworthCannon1"), map.getCollegeY("WentworthCannon1"));
 
         map.setName("map");
         player.setName("player");
@@ -104,6 +108,9 @@ public class MainScreen implements Screen {
         gameStage.addActor(Vanbrugh);
         gameStage.addActor(Alcuin);
         gameStage.addActor(Derwent);
+        gameStage.addActor(HalifaxCannon0);
+        gameStage.addActor(WentworthCannon0);
+        gameStage.addActor(WentworthCannon1);
 
         debugRenderer = new Box2DDebugRenderer(true, false, false, false, true, true);
     }
@@ -140,6 +147,51 @@ public class MainScreen implements Screen {
         hud.updatePointer();
 
 
+
+
+        // Draw game
+        gameStage.getViewport().apply();
+        waterTrail.draw(); // Uses shape renderer so needs to be drawn before the stage batch begins.
+        gameStage.draw();
+        debugRenderer.render(world, gameStage.getCamera().combined);
+
+        // Draws box2d hitboxes for debug only
+        debugRenderer.render(world, gameStage.getCamera().combined);
+
+
+        // Draw ui
+        hudStage.getViewport().apply();
+        hudStage.draw();
+
+    }
+
+    @Override
+    public void resize(int width, int height) {
+        gameViewport.update(width, height);
+        hudStage.getViewport().update(width, height, true);
+        hud.recalculatePos();
+    }
+
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public void resume() {
+
+    }
+
+    @Override
+    public void hide() {
+
+    }
+
+    @Override
+    public void dispose() {
+        debugRenderer.dispose();
+    }
+}
 
 
         // Draw game
