@@ -27,10 +27,13 @@ public class Cannon extends Image {
 
 
     private Group parent;
+    private Player player;
     private boolean leftFacing;
     private boolean activated;
     private float angleLimitLeft;
     private float angleLimitRight;
+    private boolean isInRange;
+    private EnemyBase enemyBase;
 
     private CannonBall ball;
 
@@ -55,12 +58,19 @@ public class Cannon extends Image {
     private float ammoReplenishTimer;
     private float ammoReplenishRate = 2f;
     private InputController inpt;
+    private boolean belongsToPlayer;
 
+    public Cannon(Player parent, float posX, float posY, boolean leftFacing, World world, Camera camera, Stage stage, Body body, InputController inpt){
+        this(true, parent, parent, posX, posY, leftFacing, world, camera, stage, body, inpt);
+    }
 
-    public Cannon(Group parent, float posX, float posY, boolean leftFacing, World world, Camera camera, Stage stage, Body body, InputController inpt) {
+    public Cannon(Boolean belongsToPlayer, Player player, Group parent, float posX, float posY, boolean leftFacing, World world, Camera camera, Stage stage, Body body, InputController inpt) {
         super(new Texture(Gdx.files.internal("images/cannonShape.png")));
         this.parent = parent;
         this.leftFacing = leftFacing;
+        this.belongsToPlayer = belongsToPlayer;
+        this.player = player;
+        if (!belongsToPlayer){this.enemyBase = (EnemyBase) parent;}
 
         this.world = world;
         this.camera = camera;
@@ -89,9 +99,12 @@ public class Cannon extends Image {
     @Override
     public void act(float delta) {
         super.act(delta);
-        handleRotation();
-
+        if (belongsToPlayer){playerHandleRotation();}
+        else {collegeHandleRotation();
+            isInRange = enemyBase.isInRange();
+        }
         float angle;
+
 
         ammoReplenishTimer += delta;
         if (ammoReplenishTimer > ammoReplenishRate) {
@@ -100,16 +113,19 @@ public class Cannon extends Image {
             balls+=1;
         }
 
+        /**if(!belongsToPlayer && TimeUtils.timeSinceNanos(fireLimitTimer) > 500000000) {
+            angle = this.getRotation()+90;
+            CannonBalls.add(new CannonBall(parent, world, camera, body, angle, this, leftFacing));
+            fireLimitTimer = TimeUtils.nanoTime();
+        }**/
 
-
-        if (inpt.leftClick && activated && TimeUtils.timeSinceNanos(fireLimitTimer) > 500000000 && balls> 0){
+        if (((!belongsToPlayer && isInRange)||(belongsToPlayer && inpt.leftClick)) && activated && TimeUtils.timeSinceNanos(fireLimitTimer) > 500000000 && balls> 0){
 
             if (leftFacing) {
                 angle = this.getRotation() +90;
             } else {
-                angle = this.getRotation() -90;
+                angle = this.getRotation() - 90;
             }
-
             CannonBalls.add(new CannonBall(parent, world, camera, body, angle, this, leftFacing));
             fireLimitTimer = TimeUtils.nanoTime();
             balls-=1; // change variable name
@@ -145,7 +161,22 @@ public class Cannon extends Image {
 
     }
 
-    private void handleRotation() {
+    private void collegeHandleRotation(){
+        float myX = this.localToScreenCoordinates(new Vector2(this.getOriginX(),this.getOriginY())).x;
+        float myY = this.localToScreenCoordinates(new Vector2(this.getOriginX(),this.getOriginY())).y;
+
+        // Get coords of mouse in screen coords
+        float playerX = player.localToScreenCoordinates(new Vector2(this.getOriginX(),this.getOriginY())).x;
+        float playerY = player.localToScreenCoordinates(new Vector2(this.getOriginX(),this.getOriginY())).y;
+
+        // Creates a bearing in degrees
+        targetBearing = MathUtils.radiansToDegrees * MathUtils.atan2(playerX - myX, playerY - myY) - (parent.getRotation()%360)+ 180;
+
+        this.activated = true;
+        this.rotateTowards(targetBearing, rateOfTurn);
+    }
+
+    private void playerHandleRotation() {
         // Get coords of cannon origin in screen coords.
         float myX = this.localToScreenCoordinates(new Vector2(this.getOriginX(),this.getOriginY())).x;
         float myY = this.localToScreenCoordinates(new Vector2(this.getOriginX(),this.getOriginY())).y;
