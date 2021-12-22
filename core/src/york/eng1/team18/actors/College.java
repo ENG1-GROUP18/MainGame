@@ -20,6 +20,7 @@ public class College extends Group {
     private float pos_x;
     private float pos_y;
     private boolean isConquered;
+    private int numCannons;
 
     private long fireLimitTimer;
     private float ammoReplenishTimer;
@@ -38,6 +39,7 @@ public class College extends Group {
         this.setPosition(pos_x, pos_y);
         this.setSize(size_x, size_y);
         this.isConquered = false;
+        this.numCannons = 0;
 
         // Create body
         BodyDef bodyDef = new BodyDef();
@@ -73,6 +75,15 @@ public class College extends Group {
     }
     public void conquer() {
         isConquered = true;
+    }
+
+    public void incrementCannons(){
+        numCannons += 1;
+    }
+
+    public void decrementCannons(){
+        numCannons -= 1;
+        if (numCannons == 0){this.conquer();}
     }
 
     @Override
