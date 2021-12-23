@@ -28,7 +28,7 @@ public class Cannon extends Image {
 
     private Group parent;
     private Player player;
-    private boolean leftFacing;
+    private float leftFacing;
     private boolean activated;
     private float angleLimitLeft;
     private float angleLimitRight;
@@ -60,11 +60,11 @@ public class Cannon extends Image {
     private InputController inpt;
     private boolean belongsToPlayer;
 
-    public Cannon(Player parent, float posX, float posY, boolean leftFacing, World world, Camera camera, Stage stage, Body body, InputController inpt){
+    public Cannon(Player parent, float posX, float posY, float leftFacing, World world, Camera camera, Stage stage, Body body, InputController inpt){
         this(true, parent, parent, posX, posY, leftFacing, world, camera, stage, body, inpt);
     }
 
-    public Cannon(Boolean belongsToPlayer, Player player, Group parent, float posX, float posY, boolean leftFacing, World world, Camera camera, Stage stage, Body body, InputController inpt) {
+    public Cannon(Boolean belongsToPlayer, Player player, Group parent, float posX, float posY, float leftFacing, World world, Camera camera, Stage stage, Body body, InputController inpt) {
         super(new Texture(Gdx.files.internal("images/cannonShape.png")));
         this.parent = parent;
         this.leftFacing = leftFacing;
@@ -85,7 +85,7 @@ public class Cannon extends Image {
         this.setPosition(posX - this.getWidth()/2, posY - this.getHeight()/3);
         this.setOrigin(this.getWidth()/2, this.getHeight()/3);
 
-        if (!leftFacing) {
+        if (leftFacing == 1) {
             this.setRotation(180);
 
         }
@@ -121,9 +121,11 @@ public class Cannon extends Image {
 
         if (((!belongsToPlayer && isInRange)||(belongsToPlayer && inpt.leftClick)) && activated && TimeUtils.timeSinceNanos(fireLimitTimer) > 500000000 && balls> 0){
 
-            if (leftFacing) {
+            if (leftFacing == 2) {
                 angle = this.getRotation() +90;
-            } else {
+            } else if (leftFacing == 1){
+                angle = this.getRotation() - 90;
+            } else{
                 angle = this.getRotation() - 90;
             }
             CannonBalls.add(new CannonBall(parent, world, camera, body, angle, this, leftFacing));
@@ -199,7 +201,7 @@ public class Cannon extends Image {
         }
 
         // Activate cannon on side of mouse pointer
-        if (leftFacing) {
+        if (leftFacing == 2) {
             if ((targetBearing > 270 || targetBearing < 90)) {
                 this.activated = true;
             } else {
@@ -217,7 +219,7 @@ public class Cannon extends Image {
             this.rotateTowards(targetBearing, rateOfTurn);
         }
         else {
-            if(leftFacing) {
+            if(leftFacing == 2) {
                 this.rotateTowards(0, rateOfTurn/4);
             } else {
                 this.rotateTowards(180, rateOfTurn/4);

@@ -93,8 +93,8 @@ public class Player extends Group {
 
         // Add components to player
         this.addActor(new Hull(this));
-        this.addActor(new Cannon(this, this.getWidth()*2/5, this.getHeight()/4, false , world, camera, stage, body,inpt));
-        this.addActor(new Cannon(this, this.getWidth()*2/5, this.getHeight()*3/4, true, world, camera, stage, body,inpt));
+        this.addActor(new Cannon(this, this.getWidth()*2/5, this.getHeight()/4, 1 , world, camera, stage, body,inpt));
+        this.addActor(new Cannon(this, this.getWidth()*2/5, this.getHeight()*3/4, 2, world, camera, stage, body,inpt));
 
         // For rotation around center
         this.setOrigin(this.getWidth()/2, this.getHeight()/2);

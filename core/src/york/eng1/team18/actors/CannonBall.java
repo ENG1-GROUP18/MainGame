@@ -34,7 +34,7 @@ public class CannonBall  extends Group {
     Group player;
     Cannon parent;
     float angle;
-    Boolean leftFacing;
+    float leftFacing;
     private Body body;
     private Body body_player;
 
@@ -44,7 +44,7 @@ public class CannonBall  extends Group {
 
     float x,y;
 
-    public CannonBall(Group player, World world, Camera camera, Body body_player, float angle, Cannon parent, boolean leftFacing){
+    public CannonBall(Group player, World world, Camera camera, Body body_player, float angle, Cannon parent, float leftFacing){
         this.x = parent.localToStageCoordinates(new Vector2(parent.getOriginX(), parent.getOriginY())).x;
         this.y = parent.localToStageCoordinates(new Vector2(parent.getOriginX(), parent.getOriginY())).y;
         this.stage = stage;
@@ -62,13 +62,14 @@ public class CannonBall  extends Group {
         this.setPosition(this.x,this.y);
         this.setOrigin(x/2,y/2);
 
+        System.out.println(angle);
 
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         bodyDef.position.set(x/2, y/2);
         body = world.createBody(bodyDef);
         body.setTransform(x, y, angle);
-        CircleShape shape = new CircleShape(); //TODO change change shape to circle
+        CircleShape shape = new CircleShape();
         shape.setRadius(0.5f);
 
         FixtureDef fixtureDef = new FixtureDef();
@@ -88,15 +89,20 @@ public class CannonBall  extends Group {
 
         float vel_x = 0;
         float vel_y = 0;
-        if (leftFacing){
+        if (leftFacing == 2){
 
             vel_x = (Math.abs (body_player.getLinearVelocity().x) + 50) * -(angle_y );
             vel_y = (Math.abs (body_player.getLinearVelocity().y) + 50) * (angle_x);
 
-        }else{
+        }else if (leftFacing == 1){
             vel_x = (Math.abs (body_player.getLinearVelocity().x) + 50) * (angle_y );
             vel_y = (Math.abs (body_player.getLinearVelocity().y) + 50) * -(angle_x);
 
+        } else{
+            angle_x = (float)Math.cos(Math.toRadians(angle));
+            angle_y = (float)Math.sin(Math.toRadians(angle));
+            vel_x = (100) * (angle_x );
+            vel_y = (100) * (angle_y);
         }
 
 

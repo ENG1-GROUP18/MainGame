@@ -76,7 +76,7 @@ public class EnemyBase extends Group {
         shape.dispose();
 
         // Add components to player
-        this.addActor(new Cannon(false, player, this, this.getWidth()*2/5, this.getHeight()*3/4, false, world, camera, stage, body,inpt));
+        this.addActor(new Cannon(false, player, this, this.getWidth()*2/5, this.getHeight()*3/4, 0, world, camera, stage, body,inpt));
 
         // For rotation around center
         this.setOrigin(this.getWidth()/2, this.getHeight()/2);
