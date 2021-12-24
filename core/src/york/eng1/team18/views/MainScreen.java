@@ -86,15 +86,24 @@ public class MainScreen implements Screen {
         Map map = new Map(world, mapSize, mapSize);
         player = new Player(world,inpt, hud, gameStage, gameCamera, map.getSpawnX(), map.getSpawnY());
         hud.setPlayer(player);
-        College Halifax = new College(world, gameStage, gameCamera, map.getCollegeX("Halifax"), map.getCollegeY("Halifax"), "images/building1.png");
-        College Wentworth = new College(world, gameStage, gameCamera, map.getCollegeX("Wentworth"), map.getCollegeY("Wentworth"), "images/building2.png");
-        College James = new College(world, gameStage, gameCamera, map.getCollegeX("James"), map.getCollegeY("James"), "images/building4.png");
-        College Vanbrugh = new College(world, gameStage, gameCamera, map.getCollegeX("Vanbrugh"), map.getCollegeY("Vanbrugh"), "images/building3.png");
-        College Alcuin = new College(world, gameStage, gameCamera, map.getCollegeX("Alcuin"), map.getCollegeY("Alcuin"), "images/building5.png");
-        College Derwent = new College(world, gameStage, gameCamera, map.getCollegeX("Derwent"), map.getCollegeY("Derwent"), "images/building6.png");
-        EnemyBase HalifaxCannon0 = new EnemyBase(0.03f, map, inpt, Halifax, player, world, gameStage, gameCamera, map.getCollegeX("HalifaxCannon0"), map.getCollegeY("HalifaxCannon0"));
-        EnemyBase WentworthCannon0 = new EnemyBase(0.04f, map, inpt, Wentworth, player, world, gameStage, gameCamera, map.getCollegeX("WentworthCannon0"), map.getCollegeY("WentworthCannon0"));
-        EnemyBase WentworthCannon1 = new EnemyBase(0.04f, map, inpt, Wentworth, player, world, gameStage, gameCamera, map.getCollegeX("WentworthCannon1"), map.getCollegeY("WentworthCannon1"));
+        College Halifax = new College(world, gameStage, gameCamera, map.getCollegeX(0), map.getCollegeY(0), "images/building1.png");
+        College Wentworth = new College(world, gameStage, gameCamera, map.getCollegeX(1), map.getCollegeY(1), "images/building2.png");
+        College James = new College(world, gameStage, gameCamera, map.getCollegeX(2), map.getCollegeY(2), "images/building4.png");
+        College Vanbrugh = new College(world, gameStage, gameCamera, map.getCollegeX(3), map.getCollegeY(3), "images/building3.png");
+        College Alcuin = new College(world, gameStage, gameCamera, map.getCollegeX(4), map.getCollegeY(4), "images/building5.png");
+        College Derwent = new College(world, gameStage, gameCamera, map.getCollegeX(5), map.getCollegeY(5), "images/building6.png");
+        EnemyBase HalifaxCannon0 = new EnemyBase(0.03f, map, inpt, Halifax, player, world, gameStage, gameCamera, map.getBaseX(0,0), map.getBaseY(0,0));
+        EnemyBase WentworthCannon0 = new EnemyBase(0.04f, map, inpt, Wentworth, player, world, gameStage, gameCamera, map.getBaseX(1,0), map.getBaseY(1,0));
+        EnemyBase WentworthCannon1 = new EnemyBase(0.04f, map, inpt, Wentworth, player, world, gameStage, gameCamera, map.getBaseX(1,1), map.getBaseY(1,1));
+        EnemyBase JamesCannon0 = new EnemyBase(0.04f, map, inpt, James, player, world, gameStage, gameCamera, map.getBaseX(2,0), map.getBaseY(2,0));
+        EnemyBase JamesCannon1 = new EnemyBase(0.04f, map, inpt, James, player, world, gameStage, gameCamera, map.getBaseX(2,1), map.getBaseY(2,1));
+        EnemyBase VanbrughCannon0 = new EnemyBase(0.04f, map, inpt, Vanbrugh, player, world, gameStage, gameCamera, map.getBaseX(3,0), map.getBaseY(3,0));
+        EnemyBase VanbrughCannon1 = new EnemyBase(0.04f, map, inpt, Vanbrugh, player, world, gameStage, gameCamera, map.getBaseX(3,1), map.getBaseY(3,1));
+        EnemyBase AlcuinCannon0 = new EnemyBase(0.04f, map, inpt, Alcuin, player, world, gameStage, gameCamera, map.getBaseX(4,0), map.getBaseY(4,0));
+        EnemyBase AlcuinCannon1 = new EnemyBase(0.04f, map, inpt, Alcuin, player, world, gameStage, gameCamera, map.getBaseX(4,1), map.getBaseY(4,1));
+        EnemyBase DerwentCannon0 = new EnemyBase(0.04f, map, inpt, Derwent, player, world, gameStage, gameCamera, map.getBaseX(5,0), map.getBaseY(5,0));
+        EnemyBase DerwentCannon1 = new EnemyBase(0.04f, map, inpt, Derwent, player, world, gameStage, gameCamera, map.getBaseX(5,1), map.getBaseY(5,1));
+
 
         map.setName("map");
         player.setName("player");
@@ -111,6 +120,14 @@ public class MainScreen implements Screen {
         gameStage.addActor(HalifaxCannon0);
         gameStage.addActor(WentworthCannon0);
         gameStage.addActor(WentworthCannon1);
+        gameStage.addActor(JamesCannon0);
+        gameStage.addActor(JamesCannon1);
+        gameStage.addActor(VanbrughCannon0);
+        gameStage.addActor(VanbrughCannon1);
+        gameStage.addActor(AlcuinCannon0);
+        gameStage.addActor(AlcuinCannon1);
+        gameStage.addActor(DerwentCannon0);
+        gameStage.addActor(DerwentCannon1);
 
         debugRenderer = new Box2DDebugRenderer(true, false, false, false, true, true);
     }
