@@ -17,26 +17,13 @@ public class Map extends Actor {
     private Body body;
     private float sizeX;
     private float sizeY;
-    private float spawnPosX = 0.18f; // As percentage of x across map to scale
-    private float spawnPosY = 0.16f; // As percentage of y across map to scale
-    private float halifaxCannon0PosX = 0.19f;
-    private float wentworthCannon0PosX = 0.185f;
-    private float wentworthCannon1PosX = 0.155f;
-    private float halifaxPosX = 0.17f;
-    private float wentworthPosX = 0.17f;
-    private float jamesPosX = 0.34f;
-    private float vanbrughPosX = 0.29f;
-    private float alcuinPosX = 0.62f;
-    private float derwentPosX = 0.92f;
-    private float halifaxCannon0PosY = 0.11f;
-    private float wentworthCannon0PosY = 0.36f;
-    private float wentworthCannon1PosY = 0.36f;
-    private float halifaxPosY = 0.11f;
-    private float wentworthPosY = 0.36f;
-    private float jamesPosY = 0.53f;
-    private float vanbrughPosY = 0.63f;
-    private float alcuinPosY = 0.48f;
-    private float derwentPosY = 0.46f;
+    private float spawnPosX = 0.34f; // As percentage of x across map to scale .18
+    private float spawnPosY = 0.56f; // As percentage of y across map to scale .16
+
+    private float[][] enemyBasesX = {{0.19f},{0.185f,0.157f},{0.33f,0.365f},{0.28f,0.31f},{0.61f,0.63f},{0.91f,0.93f}}; //order: halifax, wentworth, james, vanbrugh, alcuin, derwent
+    private float[][] enemyBasesY = {{0.11f},{0.36f,0.357f},{0.55f,0.53f},{0.62f,0.63f},{0.485f,0.48f},{0.46f,0.44f}};
+    private float[] collegesX = {0.17f, 0.17f, 0.34f, 0.29f, 0.62f, 0.92f};
+    private float[] collegesY = {0.11f, 0.36f, 0.53f, 0.63f, 0.48f, 0.46f};
 
     public Map(World world, float sizeX, float sizeY) {
         this.world = world;
@@ -81,68 +68,17 @@ public class Map extends Actor {
         return (spawnPosY * sizeY);
     }
 
-    public float getCollegeX(String collegeName) {
-        if(collegeName == "HalifaxCannon0"){
-            return halifaxCannon0PosX*sizeX;
-        }
-        if(collegeName == "WentworthCannon0"){
-            return wentworthCannon0PosX*sizeX;
-        }
-        if(collegeName == "WentworthCannon1"){
-            return wentworthCannon1PosX*sizeX;
-        }
-
-        if(collegeName == "Halifax"){
-            return halifaxPosX*sizeX;
-        }
-        if(collegeName == "Wentworth"){
-            return wentworthPosX*sizeX;
-        }
-        if(collegeName == "James"){
-            return jamesPosX*sizeX;
-        }
-        if(collegeName == "Vanbrugh"){
-            return vanbrughPosX*sizeX;
-        }
-        if(collegeName == "Alcuin"){
-            return alcuinPosX*sizeX;
-        }
-        if(collegeName == "Derwent"){
-            return derwentPosX*sizeX;
-        }
-        return derwentPosX;
+    public float getCollegeX(int college){ 
+        return collegesX[college]*sizeX;
     }
-
-    public float getCollegeY(String collegeName) {
-        if(collegeName == "HalifaxCannon0"){
-            return halifaxCannon0PosY*sizeY;
-        }
-        if(collegeName == "WentworthCannon0"){
-            return wentworthCannon0PosY*sizeY;
-        }
-        if(collegeName == "WentworthCannon1"){
-            return wentworthCannon1PosY*sizeY;
-        }
-
-        if(collegeName == "Halifax"){
-            return halifaxPosY*sizeY;
-        }
-        if(collegeName == "Wentworth"){
-            return wentworthPosY*sizeY;
-        }
-        if(collegeName == "James"){
-            return jamesPosY*sizeY;
-        }
-        if(collegeName == "Vanbrugh"){
-            return vanbrughPosY*sizeY;
-        }
-        if(collegeName == "Alcuin"){
-            return alcuinPosY*sizeY;
-        }
-        if(collegeName == "Derwent"){
-            return derwentPosY*sizeY;
-        }
-        return derwentPosY;
+    public float getCollegeY(int college){ 
+        return collegesY[college]*sizeY;
+    }
+    public float getBaseX(int college, int base){
+        return enemyBasesX[college][base]*sizeX;
+    }
+    public float getBaseY(int college, int base){
+        return enemyBasesY[college][base]*sizeY;
     }
 
 }
