@@ -17,8 +17,8 @@ public class Map extends Actor {
     private Body body;
     private float sizeX;
     private float sizeY;
-    private float spawnPosX = 0.34f; // As percentage of x across map to scale .18
-    private float spawnPosY = 0.56f; // As percentage of y across map to scale .16
+    private float spawnPosX = 0.18f; // As percentage of x across map to scale
+    private float spawnPosY = 0.16f; // As percentage of y across map to scale
 
     private float[][] enemyBasesX = {{0.19f},{0.185f,0.157f},{0.33f,0.365f},{0.28f,0.31f},{0.61f,0.63f},{0.91f,0.93f}}; //order: halifax, wentworth, james, vanbrugh, alcuin, derwent
     private float[][] enemyBasesY = {{0.11f},{0.36f,0.357f},{0.55f,0.53f},{0.62f,0.63f},{0.485f,0.48f},{0.46f,0.44f}};
