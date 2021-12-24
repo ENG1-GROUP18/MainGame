@@ -68,8 +68,10 @@ public class EnemyBase extends Group {
         fixtureDef.density = 1f;
         fixtureDef.friction = 0.2f;
         fixtureDef.restitution = 0f;
-        body.createFixture(fixtureDef);
-        body.setUserData("EnemyBase");
+        fixtureDef.filter.maskBits = 0x0004;
+        fixtureDef.filter.categoryBits = 0x0002;
+        body.createFixture(fixtureDef).setUserData("EnemyBase");
+
 
 
         // Dispose shapes used to create fixtures

@@ -167,7 +167,7 @@ public class Cannon extends Image {
         float myX = this.localToScreenCoordinates(new Vector2(this.getOriginX(),this.getOriginY())).x;
         float myY = this.localToScreenCoordinates(new Vector2(this.getOriginX(),this.getOriginY())).y;
 
-        // Get coords of mouse in screen coords
+        //gets player coords
         float playerX = player.localToScreenCoordinates(new Vector2(this.getOriginX(),this.getOriginY())).x;
         float playerY = player.localToScreenCoordinates(new Vector2(this.getOriginX(),this.getOriginY())).y;
 

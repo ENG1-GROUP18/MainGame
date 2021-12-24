@@ -20,10 +20,13 @@ import com.badlogic.gdx.utils.TimeUtils;
 import york.eng1.team18.Orchestrator;
 
 import javax.swing.text.html.parser.Entity;
+import java.awt.*;
+import java.awt.image.ImageObserver;
+import java.awt.image.ImageProducer;
 import java.util.ArrayList;
 
 
-public class CannonBall  extends Group {
+public class CannonBall  extends Image {
     private SpriteBatch batch;
     public final static int SPEED = 500;
     private static Texture sprite;
@@ -59,10 +62,7 @@ public class CannonBall  extends Group {
             sprite = new Texture("images/small_cannonball.png");
         }
 
-        this.setPosition(this.x,this.y);
-        this.setOrigin(x/2,y/2);
 
-        System.out.println(angle);
 
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
@@ -77,13 +77,20 @@ public class CannonBall  extends Group {
         fixtureDef.density = 1f;
         fixtureDef.friction = 0.2f;
         fixtureDef.restitution = 0f;
-        fixtureDef.filter.maskBits = (short) 2;
-        body.createFixture(fixtureDef);
-        body.setUserData("Cannon ball");
+        if (leftFacing != 0){
+            fixtureDef.filter.maskBits = 0x0002;
+            fixtureDef.filter.categoryBits = 0x0004;
+        }else{
+            fixtureDef.filter.maskBits = 0x0006;
+            fixtureDef.filter.categoryBits = 0x0008;
+        }
+
+        body.createFixture(fixtureDef).setUserData("Cannon ball");
+
+
 
         this.body = body;
 
-        //TODO clean up code, make angles and velocities match
 
         float angle_x = (float)Math.cos( body_player.getAngle()+ Math.toRadians(angle));
         float angle_y = (float)Math.sin( body_player.getAngle()+ Math.toRadians(angle));
@@ -91,18 +98,18 @@ public class CannonBall  extends Group {
         float vel_y = 0;
         if (leftFacing == 2){
 
-            vel_x = (Math.abs (body_player.getLinearVelocity().x) + 50) * (angle_x);
+            vel_x = (Math.abs (body_player.getLinearVelocity().x) + 50) * (angle_x); //TODO change added velocities so it works properly
             vel_y = (Math.abs (body_player.getLinearVelocity().y) + 50) * (angle_y);
 
         }else if (leftFacing == 1){
             vel_x = (Math.abs (body_player.getLinearVelocity().x) + 50) * -(angle_x);
             vel_y = (Math.abs (body_player.getLinearVelocity().y) + 50) * -(angle_y);
 
-        } else{
+        } else{     //if the cannon is not on the player
             angle_x = (float)Math.cos(Math.toRadians(angle));
             angle_y = (float)Math.sin(Math.toRadians(angle));
-            vel_x = (100) * (angle_x );
-            vel_y = (100) * (angle_y);
+            vel_x = (75) * (angle_x ); // adjust the value to reduce or increase speed of cannonballs
+            vel_y = (75) * (angle_y);
         }
 
 
@@ -114,7 +121,7 @@ public class CannonBall  extends Group {
     public void update(float deltaTime){
         float x_vel = body.getLinearVelocity().x;
         float y_val = body.getLinearVelocity().y;
-        if (x_vel < 1 && x_vel > -1 && y_val< 1 && y_val > -1){
+        if (x_vel < 2 && x_vel > -2 && y_val< 2 && y_val > -2){
             remove = true;
             world.destroyBody(body);
         }
@@ -131,5 +138,30 @@ public class CannonBall  extends Group {
         batch.draw(sprite, body.getPosition().x - 0.5f, body.getPosition().y - 0.5f , 1 , 1);
         //super.draw(batch,1);
 
+    }
+
+    @Override
+    public int getWidth(ImageObserver observer) {
+        return 0;
+    }
+
+    @Override
+    public int getHeight(ImageObserver observer) {
+        return 0;
+    }
+
+    @Override
+    public ImageProducer getSource() {
+        return null;
+    }
+
+    @Override
+    public Graphics getGraphics() {
+        return null;
+    }
+
+    @Override
+    public Object getProperty(String name, ImageObserver observer) {
+        return null;
     }
 }

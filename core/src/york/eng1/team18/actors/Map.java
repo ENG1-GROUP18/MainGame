@@ -38,6 +38,8 @@ public class Map extends Actor {
 
         FixtureDef fd = new FixtureDef();
         fd.friction = 0.5f;
+        //fd.filter.maskBits = 0x0006;
+        fd.filter.categoryBits = 0x0008;
 
         body = world.createBody(bd);
         body.setUserData("Map");

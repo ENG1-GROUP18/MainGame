@@ -55,8 +55,10 @@ public class College extends Group {
         fixtureDef.density = 1f;
         fixtureDef.friction = 0.2f;
         fixtureDef.restitution = 0f;
-        body.createFixture(fixtureDef);
-        body.setUserData("Collage"); //Will need to have the collage name later, can just be passed in as variable
+        fixtureDef.filter.maskBits = 0x0004;
+        fixtureDef.filter.categoryBits = 0x0002;
+        body.createFixture(fixtureDef).setUserData("Collage");
+
 
 
         // Dispose shapes used to create fixtures
