@@ -84,19 +84,19 @@ public class CannonBall  extends Group {
         this.body = body;
 
         //TODO clean up code, make angles and velocities match
-        float angle_x = (float)Math.cos(body_player.getAngle()  + (float)Math.cos(Math.toRadians(angle)- Math.PI));
-        float angle_y = (float)Math.sin(body_player.getAngle() + (float)Math.sin(Math.toRadians(angle)- Math.PI/2));
 
+        float angle_x = (float)Math.cos( body_player.getAngle()+ Math.toRadians(angle));
+        float angle_y = (float)Math.sin( body_player.getAngle()+ Math.toRadians(angle));
         float vel_x = 0;
         float vel_y = 0;
         if (leftFacing == 2){
 
-            vel_x = (Math.abs (body_player.getLinearVelocity().x) + 50) * -(angle_y );
-            vel_y = (Math.abs (body_player.getLinearVelocity().y) + 50) * (angle_x);
+            vel_x = (Math.abs (body_player.getLinearVelocity().x) + 50) * (angle_x);
+            vel_y = (Math.abs (body_player.getLinearVelocity().y) + 50) * (angle_y);
 
         }else if (leftFacing == 1){
-            vel_x = (Math.abs (body_player.getLinearVelocity().x) + 50) * (angle_y );
-            vel_y = (Math.abs (body_player.getLinearVelocity().y) + 50) * -(angle_x);
+            vel_x = (Math.abs (body_player.getLinearVelocity().x) + 50) * -(angle_x);
+            vel_y = (Math.abs (body_player.getLinearVelocity().y) + 50) * -(angle_y);
 
         } else{
             angle_x = (float)Math.cos(Math.toRadians(angle));
