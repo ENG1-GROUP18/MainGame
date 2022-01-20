@@ -7,12 +7,16 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.*;
+import org.w3c.dom.Text;
 import york.eng1.team18.Orchestrator;
 import york.eng1.team18.WorldContactListener;
 import york.eng1.team18.actors.*;
@@ -24,11 +28,12 @@ public class MainScreen implements Screen {
 
     // When true, camera is still and zoomed out, used to debug.
     //----------------------------------
-    private boolean BOX2D_WIREFRAME = false;
+    private boolean BOX2D_WIREFRAME = true;
     //----------------------------------
 
     Color waterCol = new Color(111/255f, 164/255f, 189/255f, 0);
 
+    // private Image mapImage;
     private static final int mapImageX = 1155;  // height of map image
     private static final int mapImageY = 776;   // width of map image
     private float mapSize = 800f;               // map width in world units
@@ -47,6 +52,7 @@ public class MainScreen implements Screen {
 
     public Player player; // made player a public variable
 
+    SpriteBatch batch;
     InputController inpt;
     OrthographicCamera gameCamera;
     OrthographicCamera hudCamera;
@@ -71,10 +77,10 @@ public class MainScreen implements Screen {
         gameViewport = new ExtendViewport(cameraZoom, cameraZoom, gameCamera);
         gameStage = new Stage(gameViewport);
         hudStage = new Stage(new ScreenViewport());
+        batch = new SpriteBatch();
 
         world = new World(new Vector2(0,0), true);
         world.setContactListener(new WorldContactListener(this));
-
 
 
         // Add hud to hud stage
@@ -83,9 +89,27 @@ public class MainScreen implements Screen {
 
 
         // Add objects to world
+        //mapImage = new Image(new Texture("images/Map/BIGMAP.jpg"));
+
         Map map = new Map(world, mapSize, mapSize);
         player = new Player(world,inpt, hud, gameStage, gameCamera, map.getSpawnX(), map.getSpawnY());
         hud.setPlayer(player);
+
+        map.setName("map");
+        player.setName("player");
+
+        waterTrail = new WaterTrail(gameCamera, player);
+
+        //gameStage.addActor(mapImage);
+        gameStage.addActor(map);
+        gameStage.addActor(player);
+
+
+
+
+
+
+
         College Halifax = new College(world, gameStage, gameCamera, map.getCollegeX(0), map.getCollegeY(0), "images/building1.png");
         College Wentworth = new College(world, gameStage, gameCamera, map.getCollegeX(1), map.getCollegeY(1), "images/building2.png");
         College James = new College(world, gameStage, gameCamera, map.getCollegeX(2), map.getCollegeY(2), "images/building4.png");
@@ -104,13 +128,6 @@ public class MainScreen implements Screen {
         EnemyBase DerwentCannon0 = new EnemyBase(0.04f, map, inpt, Derwent, player, world, gameStage, gameCamera, map.getBaseX(5,0), map.getBaseY(5,0));
         EnemyBase DerwentCannon1 = new EnemyBase(0.04f, map, inpt, Derwent, player, world, gameStage, gameCamera, map.getBaseX(5,1), map.getBaseY(5,1));
 
-
-        map.setName("map");
-        player.setName("player");
-
-        waterTrail = new WaterTrail(gameCamera, player);
-        gameStage.addActor(map);
-        gameStage.addActor(player);
         gameStage.addActor(Halifax);
         gameStage.addActor(Wentworth);
         gameStage.addActor(James);
@@ -129,7 +146,7 @@ public class MainScreen implements Screen {
         gameStage.addActor(DerwentCannon0);
         gameStage.addActor(DerwentCannon1);
 
-        debugRenderer = new Box2DDebugRenderer(true, false, false, false, true, true);
+        debugRenderer = new Box2DDebugRenderer(BOX2D_WIREFRAME, false, false, false, BOX2D_WIREFRAME, BOX2D_WIREFRAME);
     }
 
     @Override
@@ -163,11 +180,13 @@ public class MainScreen implements Screen {
         // Update HUD
         hud.updatePointer();
 
-
-
-
         // Draw game
         gameStage.getViewport().apply();
+
+//        batch.begin();
+//        batch.draw(mapImage, 0, 0);
+//        batch.end();
+
         waterTrail.draw(); // Uses shape renderer so needs to be drawn before the stage batch begins.
         gameStage.draw();
         debugRenderer.render(world, gameStage.getCamera().combined);

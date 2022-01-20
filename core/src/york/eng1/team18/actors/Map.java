@@ -1,20 +1,25 @@
 package york.eng1.team18.actors;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import york.eng1.team18.loader.BodyEditorLoader;
 
-public class Map extends Actor {
+public class Map extends Image {
     //TODO create map class
 
     private World world;
     private Body body;
+    private Sprite mapImage;
+
     private float sizeX;
     private float sizeY;
     private float spawnPosX = 0.18f; // As percentage of x across map to scale
@@ -29,6 +34,10 @@ public class Map extends Actor {
         this.world = world;
         this.sizeX = sizeX;
         this.sizeY = sizeY;
+
+        mapImage = new Sprite(new Texture("images/Map/BIGMAP.jpg"));
+        mapImage.setOrigin(0,  0);
+        mapImage.setScale(0.173f);
 
         BodyEditorLoader loader = new BodyEditorLoader(Gdx.files.internal("paths/UniLake.json"));
 
@@ -56,6 +65,7 @@ public class Map extends Actor {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
+        mapImage.draw(batch);
     }
 
     public float getSizeX(){ return sizeX;}
