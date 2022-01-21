@@ -1,7 +1,9 @@
 package york.eng1.team18.actors;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.glutils.ImmediateModeRenderer20;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
@@ -32,8 +34,8 @@ public class WaterTrail {
     public WaterTrail(Camera camera, Actor source) {
         this.source = source;
         this.camera = camera;
-        colorSea = new Color(111/255f, 164/255f, 189/255f, 0);
-        colorTrail = new Color(153/255f, 193/255f, 201/255f, 1);
+        colorSea = new Color(255/255f, 255/255f, 255/255f, 1);
+        colorTrail = new Color(255/255f, 255/255f, 255/255f, 1);
         shapeRenderer = new ShapeRenderer();
 
         // Record start time
@@ -51,8 +53,6 @@ public class WaterTrail {
             trailShapeRight.add(new Vector2(this.source.getX() + this.source.getWidth()/2, this.source.getY() + this.source.getHeight()/2));
             trailShapeLeft.add(new Vector2(this.source.getX() + this.source.getWidth()/2, this.source.getY() + this.source.getHeight()/2));
         }
-
-
     }
 
     public void act() {
@@ -95,6 +95,8 @@ public class WaterTrail {
     }
 
     public void draw() {
+        Gdx.graphics.getGL20().glEnable(GL20.GL_BLEND); //needed for transparency
+
         //super.draw(batch, parentAlpha);
         Color tCol;
         float rDiff = colorSea.r - colorTrail.r;
@@ -104,13 +106,14 @@ public class WaterTrail {
 
         // Draw Trail
         shapeRenderer.setProjectionMatrix(camera.combined);
+
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         for (int i = 0; i < trailSize - 3; i++) {
 
             float newColR = colorTrail.r + (rDiff * i / trailSize);
             float newColG = colorTrail.g + (gDiff * i / trailSize);
             float newColB = colorTrail.b + (bDiff * i / trailSize);
-            float newColA = colorTrail.a + (aDiff * i / trailSize);
+            float newColA = (trailSize - i)/(float)trailSize;
 
             tCol = new Color(newColR, newColG, newColB, newColA);
             Vector2 l1 = trailShapeLeft.get(i);

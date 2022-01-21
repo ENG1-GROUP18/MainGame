@@ -3,20 +3,18 @@ package york.eng1.team18.views;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.*;
-import org.w3c.dom.Text;
 import york.eng1.team18.Orchestrator;
 import york.eng1.team18.WorldContactListener;
 import york.eng1.team18.actors.*;
@@ -28,12 +26,12 @@ public class MainScreen implements Screen {
 
     // When true, camera is still and zoomed out, used to debug.
     //----------------------------------
-    private boolean BOX2D_WIREFRAME = true;
+    private boolean BOX2D_WIREFRAME = false;
     //----------------------------------
 
     Color waterCol = new Color(111/255f, 164/255f, 189/255f, 0);
 
-    // private Image mapImage;
+    private Sprite mapFogImage;
     private static final int mapImageX = 1155;  // height of map image
     private static final int mapImageY = 776;   // width of map image
     private float mapSize = 800f;               // map width in world units
@@ -89,6 +87,9 @@ public class MainScreen implements Screen {
 
 
         // Add objects to world
+        mapFogImage = new Sprite(new Texture("images/Map/MapVersion1_fog.png"));
+        mapFogImage.setOrigin(0, 0);
+        mapFogImage.setScale(0.16f);
         Map map = new Map(world, mapSize, mapSize);
         player = new Player(world,inpt, hud, gameStage, gameCamera, map.getSpawnX(), map.getSpawnY());
         hud.setPlayer(player);
@@ -101,12 +102,6 @@ public class MainScreen implements Screen {
         //gameStage.addActor(mapImage);
         gameStage.addActor(map);
         gameStage.addActor(player);
-
-
-
-
-
-
 
         College Halifax = new College(world, gameStage, gameCamera, map.getCollegeX(0), map.getCollegeY(0), "images/building1.png");
         College Wentworth = new College(world, gameStage, gameCamera, map.getCollegeX(1), map.getCollegeY(1), "images/building2.png");
@@ -156,7 +151,7 @@ public class MainScreen implements Screen {
     @Override
     public void render(float delta) {
         // Clear buffers
-        ScreenUtils.clear(111/255f, 164/255f, 189/255f, 0);
+        ScreenUtils.clear(247/255f, 248/255f, 247/255f, 0);
 
         // Run game logic for each component
         world.step(Gdx.graphics.getDeltaTime(), 6, 2);
@@ -179,24 +174,35 @@ public class MainScreen implements Screen {
         hud.updatePointer();
 
         // Draw game
-        gameStage.getViewport().apply();
+        //gameStage.getViewport().apply(); // cant remember why this was here, doesnt seem to break anything when removed though
 
-//        batch.begin();
-//        batch.draw(mapImage, 0, 0);
-//        batch.end();
+
+        //TODO Tidy this mess up
+
+        gameStage.draw();
+        //debugRenderer.render(world, gameStage.getCamera().combined); // USE FOR DEBUG
 
         waterTrail.draw(); // Uses shape renderer so needs to be drawn before the stage batch begins.
-        gameStage.draw();
-        debugRenderer.render(world, gameStage.getCamera().combined);
+
+
+        batch.setProjectionMatrix(gameStage.getCamera().combined);
+        batch.begin();
+        mapFogImage.draw(batch);
+        batch.end();
+
+
 
         // Draws box2d hitboxes for debug only
         debugRenderer.render(world, gameStage.getCamera().combined);
 
 
+
+
+
+
         // Draw ui
         hudStage.getViewport().apply();
         hudStage.draw();
-
     }
 
     @Override

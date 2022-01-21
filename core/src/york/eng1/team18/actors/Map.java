@@ -35,7 +35,7 @@ public class Map extends Image {
         this.sizeX = sizeX;
         this.sizeY = sizeY;
 
-        mapImage = new Sprite(new Texture("images/Map/MapVersion1.jpg"));
+        mapImage = new Sprite(new Texture("images/Map/MapVersion1_base.jpg"));
         mapImage.setOrigin(0,  0);
         mapImage.setScale(0.16f);
 
