@@ -13,7 +13,7 @@ import york.eng1.team18.Orchestrator;
 
 import java.util.ArrayList;
 
-public class WaterTrail {
+public class WaterTrail extends Actor{
 
     private Actor source;
     private Camera camera;

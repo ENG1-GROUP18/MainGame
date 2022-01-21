@@ -36,7 +36,7 @@ public class MainScreen implements Screen {
     private static final int mapImageY = 776;   // width of map image
     private float mapSize = 800f;               // map width in world units
     private float mapAspectRatio = 1.49f;       // Aspect ratio of image used for map
-    private float cameraZoom = 100;             // ExtendViewport minimum size in world units
+    private float cameraZoom = 60;             // ExtendViewport minimum size in world units
     private Vector2 gameCameraOffset;
 
     private Orchestrator parent;
@@ -156,7 +156,7 @@ public class MainScreen implements Screen {
         // Run game logic for each component
         world.step(Gdx.graphics.getDeltaTime(), 6, 2);
         gameStage.act();
-        waterTrail.act();
+        //waterTrail.act();
         hudStage.act();
 
         // Update camera position
@@ -182,7 +182,7 @@ public class MainScreen implements Screen {
         gameStage.draw();
         //debugRenderer.render(world, gameStage.getCamera().combined); // USE FOR DEBUG
 
-        waterTrail.draw(); // Uses shape renderer so needs to be drawn before the stage batch begins.
+        //waterTrail.draw(); // Uses shape renderer so needs to be drawn before the stage batch begins.
 
 
         batch.setProjectionMatrix(gameStage.getCamera().combined);
