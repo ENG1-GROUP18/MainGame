@@ -37,8 +37,8 @@ public class MainScreen implements Screen {
     private static final int mapImageX = 1155;  // height of map image
     private static final int mapImageY = 776;   // width of map image
     private float mapSize = 800f;               // map width in world units
-    private float mapAspectRatio = 1.49f;        // Aspect ratio of image used for map
-    private float cameraZoom = 60;               // ExtendViewport minimum size in world units
+    private float mapAspectRatio = 1.49f;       // Aspect ratio of image used for map
+    private float cameraZoom = 100;             // ExtendViewport minimum size in world units
     private Vector2 gameCameraOffset;
 
     private Orchestrator parent;
@@ -89,8 +89,6 @@ public class MainScreen implements Screen {
 
 
         // Add objects to world
-        //mapImage = new Image(new Texture("images/Map/BIGMAP.jpg"));
-
         Map map = new Map(world, mapSize, mapSize);
         player = new Player(world,inpt, hud, gameStage, gameCamera, map.getSpawnX(), map.getSpawnY());
         hud.setPlayer(player);

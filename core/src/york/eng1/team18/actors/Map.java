@@ -22,8 +22,8 @@ public class Map extends Image {
 
     private float sizeX;
     private float sizeY;
-    private float spawnPosX = 0.18f; // As percentage of x across map to scale
-    private float spawnPosY = 0.16f; // As percentage of y across map to scale
+    private float spawnPosX = 0.217f; // As percentage of x across map to scale
+    private float spawnPosY = 0.025f; // As percentage of y across map to scale
 
     private float[][] enemyBasesX = {{0.19f},{0.185f,0.157f},{0.33f,0.365f},{0.28f,0.31f},{0.61f,0.63f},{0.91f,0.93f}}; //order: halifax, wentworth, james, vanbrugh, alcuin, derwent
     private float[][] enemyBasesY = {{0.11f},{0.36f,0.357f},{0.55f,0.53f},{0.62f,0.63f},{0.485f,0.48f},{0.46f,0.44f}};
@@ -35,11 +35,11 @@ public class Map extends Image {
         this.sizeX = sizeX;
         this.sizeY = sizeY;
 
-        mapImage = new Sprite(new Texture("images/Map/BIGMAP.jpg"));
+        mapImage = new Sprite(new Texture("images/Map/MapVersion1.jpg"));
         mapImage.setOrigin(0,  0);
-        mapImage.setScale(0.173f);
+        mapImage.setScale(0.16f);
 
-        BodyEditorLoader loader = new BodyEditorLoader(Gdx.files.internal("paths/UniLake.json"));
+        BodyEditorLoader loader = new BodyEditorLoader(Gdx.files.internal("paths/CurrentMap.json"));
 
         BodyDef bd = new BodyDef();
         //bd.position.set(sizeX/2, sizeY/2);
