@@ -37,7 +37,7 @@ public class Map extends Image {
 
         mapImage = new Sprite(new Texture("images/Map/MapVersion1_base.jpg"));
         mapImage.setOrigin(0,  0);
-        mapImage.setScale(0.16f);
+        mapImage.setScale(0.2f);
 
         BodyEditorLoader loader = new BodyEditorLoader(Gdx.files.internal("paths/CurrentMap.json"));
 

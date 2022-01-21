@@ -3,9 +3,10 @@ package york.eng1.team18.actors.HUD;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Align;
 import york.eng1.team18.actors.Map;
 import york.eng1.team18.actors.Player;
@@ -26,6 +27,9 @@ public class HUD extends Group {
     CannonBar cannonBar;
     MiniMap miniMap;
     Image playerPointer;
+    Label debugLabel1;
+    Label debugLabel2;
+
 
     public HUD(MainScreen parent, Player player, float mapSize) {
         super();
@@ -51,17 +55,26 @@ public class HUD extends Group {
         // Create and add minimap
         miniMapGroup = new Group();
         this.addActor(miniMapGroup);
-        miniMapGroup.setPosition(20, 20);
+        miniMapGroup.setPosition(0, 0);
 
         miniMap = new MiniMap();
         miniMapGroup.addActor(miniMap);
-        miniMap.setSize(300, 200);
+        miniMap.setSize(500, 400);
 
         playerPointer = new Image(new Texture(Gdx.files.internal("images/hud/pointer.png")));
-        playerPointer.setPosition(40, 10);
         playerPointer.setScale(0.5f, 0.5f);
         playerPointer.setOrigin(Align.center);
         miniMapGroup.addActor(playerPointer);
+
+
+        //-----------------DEBUG LABELS------------------
+        debugLabel1 = new Label("", new Skin(Gdx.files.internal("skin/customSkin.json")));
+        debugLabel1.setPosition(1200, 150);
+        miniMapGroup.addActor(debugLabel1);
+
+        debugLabel2 = new Label("", new Skin(Gdx.files.internal("skin/customSkin.json")));
+        debugLabel2.setPosition(1200, 50);
+        miniMapGroup.addActor(debugLabel2);
     }
 
     @Override
@@ -77,6 +90,7 @@ public class HUD extends Group {
     public void  recalculatePos() {
         // Centers the HUD horizontally on screen.
         playerStatsGroup.setPosition((Gdx.graphics.getWidth() - playerStatsGroup.getWidth())/2, 20);
+        miniMapGroup.setPosition(Gdx.graphics.getWidth() - 500, Gdx.graphics.getHeight() - 400);
     }
 
 
@@ -99,11 +113,14 @@ public class HUD extends Group {
     }
 
     public void updatePointer() {
-        float x = miniMap.getWidth() * player.getX() / mapSize;
-        float y = miniMap.getHeight() * player.getY() / mapSize;
+        float x = player.getX()/2 - 15 + miniMap.getX();
+        float y = player.getY()/2 - 15 + miniMap.getY();
         float angle = player.getRotation() - 90;
 
-        playerPointer.setPosition(x - 20, y*1.49f - 20);
+        debugLabel1.setText(String.valueOf(player.getX()));
+        debugLabel2.setText(String.valueOf(player.getY()));
+
+        playerPointer.setPosition(x, y);
         playerPointer.setRotation(angle);
 
     }

@@ -34,9 +34,9 @@ public class MainScreen implements Screen {
     private Sprite mapFogImage;
     private static final int mapImageX = 1155;  // height of map image
     private static final int mapImageY = 776;   // width of map image
-    private float mapSize = 800f;               // map width in world units
+    private float mapSize = 1000f;               // map width in world units
     private float mapAspectRatio = 1.49f;       // Aspect ratio of image used for map
-    private float cameraZoom = 60;             // ExtendViewport minimum size in world units
+    private float cameraZoom = 100;             // ExtendViewport minimum size in world units
     private Vector2 gameCameraOffset;
 
     private Orchestrator parent;
@@ -89,7 +89,7 @@ public class MainScreen implements Screen {
         // Add objects to world
         mapFogImage = new Sprite(new Texture("images/Map/MapVersion1_fog.png"));
         mapFogImage.setOrigin(0, 0);
-        mapFogImage.setScale(0.16f);
+        mapFogImage.setScale(0.2f);
         Map map = new Map(world, mapSize, mapSize);
         player = new Player(world,inpt, hud, gameStage, gameCamera, map.getSpawnX(), map.getSpawnY());
         hud.setPlayer(player);
