@@ -3,11 +3,16 @@ package york.eng1.team18.actors.HUD;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.actions.AlphaAction;
+import com.badlogic.gdx.scenes.scene2d.actions.DelayAction;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Align;
+import sun.jvm.hotspot.utilities.BitMap;
 import york.eng1.team18.actors.Map;
 import york.eng1.team18.actors.Player;
 import york.eng1.team18.views.MainScreen;
@@ -61,6 +66,7 @@ public class HUD extends Group {
         miniMapGroup.addActor(miniMap);
         miniMap.setSize(500, 400);
 
+
         playerPointer = new Image(new Texture(Gdx.files.internal("images/hud/pointer.png")));
         playerPointer.setScale(0.5f, 0.5f);
         playerPointer.setOrigin(Align.center);
@@ -68,13 +74,29 @@ public class HUD extends Group {
 
 
         //-----------------DEBUG LABELS------------------
-        debugLabel1 = new Label("", new Skin(Gdx.files.internal("skin/customSkin.json")));
-        debugLabel1.setPosition(1200, 150);
-        miniMapGroup.addActor(debugLabel1);
+        Skin skin = new Skin(Gdx.files.internal("skin/customSkin.json"));
+        // skin.get("default-font", BitmapFont.class).getData().markupEnabled = true;
 
-        debugLabel2 = new Label("", new Skin(Gdx.files.internal("skin/customSkin.json")));
-        debugLabel2.setPosition(1200, 50);
-        miniMapGroup.addActor(debugLabel2);
+
+        debugLabel1 = new Label("debug label 1", skin);
+        debugLabel1.setPosition(300, 150);
+        this.addActor(debugLabel1);
+
+        debugLabel2 = new Label("debug label 2", skin);
+        debugLabel2.setPosition(300, 50);
+        this.addActor(debugLabel2);
+
+        // Reveals hud after delay on game start.
+        DelayAction da = new DelayAction();
+        da.setDuration(33);
+
+        AlphaAction aa = new AlphaAction();
+        aa.setAlpha(1);
+        aa.setDuration(1);
+
+        this.setColor(1, 1, 1, 0);
+        SequenceAction sa = new SequenceAction(da, aa);
+        this.addAction(sa);
     }
 
     @Override
@@ -117,8 +139,8 @@ public class HUD extends Group {
         float y = player.getY()/2 - 15 + miniMap.getY();
         float angle = player.getRotation() - 90;
 
-        debugLabel1.setText(String.valueOf(player.getX()));
-        debugLabel2.setText(String.valueOf(player.getY()));
+        //debugLabel1.setText(String.valueOf(player.getX()));
+       // debugLabel2.setText(String.valueOf(player.getY()));
 
         playerPointer.setPosition(x, y);
         playerPointer.setRotation(angle);
