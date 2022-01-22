@@ -155,7 +155,8 @@ public class Player extends Group {
             } else if(time < 33000) {
                 // Turn Left
                 body.setAngularVelocity(0.1f);
-
+            }else if(time < 34500){
+                ; //Stright Ahead
             } else {
                 inIntro = false;
                 Gdx.input.setInputProcessor(inpt);

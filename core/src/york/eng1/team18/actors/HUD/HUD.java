@@ -88,7 +88,7 @@ public class HUD extends Group {
 
         // Reveals hud after delay on game start.
         DelayAction da = new DelayAction();
-        da.setDuration(33);
+        da.setDuration(36);
 
         AlphaAction aa = new AlphaAction();
         aa.setAlpha(1);

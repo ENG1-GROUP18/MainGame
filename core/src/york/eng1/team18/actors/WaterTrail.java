@@ -125,11 +125,6 @@ public class WaterTrail extends Actor{
             Vector2 r2 = trailShapeRight.get(i + 1);
             Vector2 r3 = trailShapeRight.get(i + 2);
             shapeRenderer.triangle(r1.x, r1.y, r2.x, r2.y, r3.x, r3.y, tCol, tCol, tCol);
-            System.out.println(r1.y);
-            System.out.println(r2.y);
-            System.out.println(r3.y);
-
-
         }
         shapeRenderer.end();
     }

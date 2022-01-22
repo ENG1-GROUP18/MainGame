@@ -99,7 +99,7 @@ public class MainScreen implements Screen {
         fadeImage.setName("fadeImage");
 
         map = new Map(world, mapSize, mapSize);
-        mapFogImage = new Sprite(new Texture("images/Map/MapVersion1_fog.png"));
+        mapFogImage = new Sprite(new Texture("images/Map/fogMapV4.png"));
         mapFogImage.setOrigin(0, 0);
         mapFogImage.setScale(0.2f);
 
