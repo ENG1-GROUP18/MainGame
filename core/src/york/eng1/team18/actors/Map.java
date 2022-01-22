@@ -14,7 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import york.eng1.team18.loader.BodyEditorLoader;
 
 public class Map extends Image {
-    
+
     private World world;
     private Body body;
     private Sprite mapImage;

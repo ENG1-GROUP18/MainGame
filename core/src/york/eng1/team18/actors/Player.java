@@ -145,10 +145,10 @@ public class Player extends Group {
             float time = TimeUtils.timeSinceMillis(creationTime);
             currentSpeed = 5;
 
-            if (time < 20000) {
+            if (time < 19000) {
                 ; // Straight ahead
 
-            } else if (time < 24000) {
+            } else if (time < 23000) {
                 // Turn Right
                 body.setAngularVelocity(-0.1f);
 
