@@ -34,7 +34,7 @@ public class WaterTrail extends Actor{
     public WaterTrail(Camera camera, Actor source) {
         this.source = source;
         this.camera = camera;
-        colorSea = new Color(255/255f, 255/255f, 255/255f, 1);
+        colorSea = new Color(255/255f, 255/255f, 255/255f, 0);
         colorTrail = new Color(255/255f, 255/255f, 255/255f, 1);
         shapeRenderer = new ShapeRenderer();
 
@@ -95,9 +95,9 @@ public class WaterTrail extends Actor{
     }
 
     public void draw() {
-        Gdx.graphics.getGL20().glEnable(GL20.GL_BLEND); //needed for transparency
-
-        //super.draw(batch, parentAlpha);
+      Gdx.graphics.getGL20().glEnable(GL20.GL_BLEND); //needed for transparency
+//
+//        //super.draw(batch, parentAlpha);
         Color tCol;
         float rDiff = colorSea.r - colorTrail.r;
         float gDiff = colorSea.g - colorTrail.g;
@@ -125,6 +125,11 @@ public class WaterTrail extends Actor{
             Vector2 r2 = trailShapeRight.get(i + 1);
             Vector2 r3 = trailShapeRight.get(i + 2);
             shapeRenderer.triangle(r1.x, r1.y, r2.x, r2.y, r3.x, r3.y, tCol, tCol, tCol);
+            System.out.println(r1.y);
+            System.out.println(r2.y);
+            System.out.println(r3.y);
+
+
         }
         shapeRenderer.end();
     }

@@ -9,7 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 public class MiniMap extends Image {
 
     public MiniMap() {
-        super(new Texture(Gdx.files.internal("images/hud/miniMap2.jpg")));
+        super(new Texture(Gdx.files.internal("images/hud/miniMap.jpg")));
     }
 
     @Override

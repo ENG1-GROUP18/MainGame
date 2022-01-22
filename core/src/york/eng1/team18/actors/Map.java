@@ -14,16 +14,15 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import york.eng1.team18.loader.BodyEditorLoader;
 
 public class Map extends Image {
-    //TODO create map class
-
+    
     private World world;
     private Body body;
     private Sprite mapImage;
 
     private float sizeX;
     private float sizeY;
-    private float spawnPosX = 0.217f; // As percentage of x across map to scale
-    private float spawnPosY = 0.025f; // As percentage of y across map to scale
+    private float spawnPosX = 0.222f; // As percentage of x across map to scale
+    private float spawnPosY = 0.026f; // As percentage of y across map to scale
 
     private float[][] enemyBasesX = {{0.19f},{0.185f,0.157f},{0.33f,0.365f},{0.28f,0.31f},{0.61f,0.63f},{0.91f,0.93f}}; //order: halifax, wentworth, james, vanbrugh, alcuin, derwent
     private float[][] enemyBasesY = {{0.11f},{0.36f,0.357f},{0.55f,0.53f},{0.62f,0.63f},{0.485f,0.48f},{0.46f,0.44f}};
@@ -42,7 +41,6 @@ public class Map extends Image {
         BodyEditorLoader loader = new BodyEditorLoader(Gdx.files.internal("paths/CurrentMap.json"));
 
         BodyDef bd = new BodyDef();
-        //bd.position.set(sizeX/2, sizeY/2);
         bd.type = BodyDef.BodyType.StaticBody;
 
         FixtureDef fd = new FixtureDef();
@@ -54,7 +52,6 @@ public class Map extends Image {
         body.setUserData("Map");
 
         loader.attachFixture(body, "Lake", fd, sizeX);
-
     }
 
     @Override

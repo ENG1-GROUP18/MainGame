@@ -12,7 +12,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.MoveByAction;
+import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.*;
 import york.eng1.team18.Orchestrator;
@@ -31,12 +35,14 @@ public class MainScreen implements Screen {
 
     Color waterCol = new Color(111/255f, 164/255f, 189/255f, 0);
 
+    private FadeImage fadeImage;
+    private Map map;
     private Sprite mapFogImage;
     private static final int mapImageX = 1155;  // height of map image
     private static final int mapImageY = 776;   // width of map image
     private float mapSize = 1000f;               // map width in world units
     private float mapAspectRatio = 1.49f;       // Aspect ratio of image used for map
-    private float cameraZoom = 100;             // ExtendViewport minimum size in world units
+    private float cameraZoom = 80;             // ExtendViewport minimum size in world units
     private Vector2 gameCameraOffset;
 
     private Orchestrator parent;
@@ -66,7 +72,7 @@ public class MainScreen implements Screen {
 
         // Set up game camera, viewport, stage, world
         inpt = new InputController();
-        Gdx.input.setInputProcessor(inpt);
+        Gdx.input.setInputProcessor(null); // disables inputs for intro cutscene
 
 
         gameCameraOffset = new Vector2(0, 15);
@@ -87,10 +93,16 @@ public class MainScreen implements Screen {
 
 
         // Add objects to world
+        fadeImage = new FadeImage();
+
+        hudStage.addActor(fadeImage);
+        fadeImage.setName("fadeImage");
+
+        map = new Map(world, mapSize, mapSize);
         mapFogImage = new Sprite(new Texture("images/Map/MapVersion1_fog.png"));
         mapFogImage.setOrigin(0, 0);
         mapFogImage.setScale(0.2f);
-        Map map = new Map(world, mapSize, mapSize);
+
         player = new Player(world,inpt, hud, gameStage, gameCamera, map.getSpawnX(), map.getSpawnY());
         hud.setPlayer(player);
 
@@ -100,7 +112,7 @@ public class MainScreen implements Screen {
         waterTrail = new WaterTrail(gameCamera, player);
 
         //gameStage.addActor(mapImage);
-        gameStage.addActor(map);
+        //gameStage.addActor(map);
         gameStage.addActor(player);
 
         College Halifax = new College(world, gameStage, gameCamera, map.getCollegeX(0), map.getCollegeY(0), "images/building1.png");
@@ -140,11 +152,34 @@ public class MainScreen implements Screen {
         gameStage.addActor(DerwentCannon1);
 
         debugRenderer = new Box2DDebugRenderer(BOX2D_WIREFRAME, false, false, false, BOX2D_WIREFRAME, BOX2D_WIREFRAME);
+
+//        // Runnable used to run code after animation finished
+//        RunnableAction ra = new RunnableAction();
+//        ra.setRunnable(new Runnable() {
+//            @Override
+//            public void run() {
+//                // changes screen
+//                player.setPositionSync(true);
+//            }
+//        });
+//
+//        MoveByAction mba = new MoveByAction();
+//        mba.setDuration(15);
+//        mba.setAmount(0,80);
+//
+//        SequenceAction sa = new SequenceAction(mba, ra);
+//        player.addAction(sa);
+
+
+
+
+
     }
 
     @Override
     public void show() {
-
+        fadeImage.setAlpha(1);
+        fadeImage.fadeIn();
     }
 
 
@@ -156,7 +191,7 @@ public class MainScreen implements Screen {
         // Run game logic for each component
         world.step(Gdx.graphics.getDeltaTime(), 6, 2);
         gameStage.act();
-        //waterTrail.act();
+        waterTrail.act();
         hudStage.act();
 
         // Update camera position
@@ -173,22 +208,32 @@ public class MainScreen implements Screen {
         // Update HUD
         hud.updatePointer();
 
-        // Draw game
-        //gameStage.getViewport().apply(); // cant remember why this was here, doesnt seem to break anything when removed though
-
-
         //TODO Tidy this mess up
 
-        gameStage.draw();
         //debugRenderer.render(world, gameStage.getCamera().combined); // USE FOR DEBUG
 
-        //waterTrail.draw(); // Uses shape renderer so needs to be drawn before the stage batch begins.
-
-
         batch.setProjectionMatrix(gameStage.getCamera().combined);
+
+        // Draw map base
+        batch.begin();
+        map.draw(batch, 1);
+        batch.end();
+
+        // Draw water trail
+        gameStage.getViewport().apply(); // cant remember why this was here, doesnt seem to break anything when removed though
+        waterTrail.draw();
+
+        // Draw game objects
+        gameStage.draw();
+
+
+        // Draw map fog
         batch.begin();
         mapFogImage.draw(batch);
         batch.end();
+
+
+
 
 
 

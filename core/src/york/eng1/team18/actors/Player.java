@@ -1,5 +1,6 @@
 package york.eng1.team18.actors;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.MathUtils;
@@ -11,8 +12,6 @@ import com.badlogic.gdx.utils.TimeUtils;
 import york.eng1.team18.actors.HUD.HUD;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import york.eng1.team18.Orchestrator;
 
 import york.eng1.team18.controller.InputController;
 
@@ -34,6 +33,8 @@ public class Player extends Group {
     private float rateOfDeceleration = 0.03f;
     private float maxRateOfTurn = 1.8f;
 
+    private Boolean inIntro = true;
+    private long creationTime;
     private long fireLimitTimer;
     private float ammoReplenishTimer;
     private float ammoReplenishRate = 1f;
@@ -58,6 +59,7 @@ public class Player extends Group {
         bodyDef.position.set(pos_x, pos_y);
         body = world.createBody(bodyDef);
         body.setTransform(pos_x, pos_y, (float)Math.PI/2);
+//        this.setRotation(90);
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(size_x/2, size_y/2);
 
@@ -101,7 +103,8 @@ public class Player extends Group {
         // For rotation around center
         this.setOrigin(this.getWidth()/2, this.getHeight()/2);
 
-        // Record start time
+        // Record start times
+        creationTime = TimeUtils.millis();
         fireLimitTimer = TimeUtils.nanoTime();
     }
 
@@ -137,18 +140,43 @@ public class Player extends Group {
             body.setAngularVelocity(0f);
         }
 
+        // For intro cutscene
+        if (inIntro) {
+            float time = TimeUtils.timeSinceMillis(creationTime);
+            currentSpeed = 5;
+
+            if (time < 20000) {
+                ; // Straight ahead
+
+            } else if (time < 24000) {
+                // Turn Right
+                body.setAngularVelocity(-0.1f);
+
+            } else if(time < 33000) {
+                // Turn Left
+                body.setAngularVelocity(0.1f);
+
+            } else {
+                inIntro = false;
+                Gdx.input.setInputProcessor(inpt);
+            }
+        }
+
         // Update position of box2d body based on updated movement properties.
         float velX = MathUtils.cos(angle) * currentSpeed;
         float velY = MathUtils.sin(angle) * currentSpeed;
         body.setLinearVelocity((velX + body.getLinearVelocity().x)/2f, (velY + body.getLinearVelocity().y)/2f);
 
+//        if(positionSynced){
+            this.setRotation(body.getAngle() * MathUtils.radiansToDegrees);
+            this.setPosition(body.getPosition().x - this.getWidth()/2,
+                    body.getPosition().y - this.getHeight()/2);
+//        }
 
-        this.setRotation(body.getAngle() * MathUtils.radiansToDegrees);
-        this.setPosition(body.getPosition().x - this.getWidth()/2,
-                body.getPosition().y - this.getHeight()/2);
+
+
 
         // Handle cannon firing
-
         ammoReplenishTimer += delta;
         if (ammoReplenishTimer > ammoReplenishRate) {
             // Replenish ammo
@@ -171,11 +199,16 @@ public class Player extends Group {
             }
         }
 
-
-
-
         super.act(delta);
     }
+
+//    public void setPositionSync(Boolean bool) {
+//        // When positionSync is set true, the players position is synced with its body in box2d
+//        // When toggled, the box2d body is updated to the actors position.
+//        this.positionSynced = bool;
+//        body.setTransform(this.getX(), this.getY(), this.getRotation() * MathUtils.degreesToRadians);
+//    }
+
 
     @Override
     public void draw(Batch batch, float parentAlpha) {

@@ -8,6 +8,9 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.AlphaAction;
+import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -16,12 +19,14 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import york.eng1.team18.Orchestrator;
+import york.eng1.team18.actors.FadeImage;
 
 
 public class MenuScreen implements Screen {
 
     private Orchestrator parent;
     private Stage stage;
+    private FadeImage fadeImage;
 
     public MenuScreen(Orchestrator orchestrator) {
         parent = orchestrator;
@@ -36,6 +41,9 @@ public class MenuScreen implements Screen {
         stage.addActor(table);
         Gdx.input.setInputProcessor(stage);
 
+        fadeImage = new FadeImage();
+        stage.addActor(fadeImage);
+        fadeImage.setAlpha(1);
 
         // temp
         Skin skin = new Skin(Gdx.files.internal("skin/customSkin.json"));
@@ -55,7 +63,24 @@ public class MenuScreen implements Screen {
         playBtn.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                parent.changeScreen(Orchestrator.APPLICATION);
+
+                // fades screen out
+                AlphaAction aa = new AlphaAction();
+                aa.setDuration(1);
+                aa.setAlpha(1);
+
+                // Runnable used to run code after animation finished
+                RunnableAction ra = new RunnableAction();
+                ra.setRunnable(new Runnable() {
+                   @Override
+                   public void run() {
+                      // changes screen
+                      parent.changeScreen(Orchestrator.APPLICATION);
+                   }
+                });
+
+                SequenceAction sa = new SequenceAction(aa, ra);
+                fadeImage.addAction(sa);
             }
         });
 
@@ -74,6 +99,8 @@ public class MenuScreen implements Screen {
                 Gdx.app.exit();
             }
         });
+
+        fadeImage.fadeIn();
     }
 
     @Override

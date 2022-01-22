@@ -147,9 +147,12 @@ public class Cannon extends Image {
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
 
+
+        //TODO no idea why this is being renderer here, its the reason cannonballs dont render will fix another time.
+        // There is literally a render function right below...
+
         for (CannonBall cannonBall : CannonBalls){
             cannonBall.render(batch);
-
 
         }
         batch.end();
