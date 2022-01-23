@@ -70,7 +70,8 @@ public class EnemyBase extends Group {
         fixtureDef.restitution = 0f;
         fixtureDef.filter.maskBits = 0x0004;
         fixtureDef.filter.categoryBits = 0x0002;
-        body.createFixture(fixtureDef).setUserData("EnemyBase");
+        body.createFixture(fixtureDef).setUserData("Enemy Base");
+        body.setUserData("Enemy Base");
 
 
 

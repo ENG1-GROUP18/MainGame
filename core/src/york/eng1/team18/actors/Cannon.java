@@ -49,7 +49,6 @@ public class Cannon extends Image {
     private float posY;
 
     public ArrayList<CannonBall> CannonBalls;
-    private SpriteBatch batch;
     private Body body;
 
     private long fireLimitTimer;
@@ -90,7 +89,6 @@ public class Cannon extends Image {
         }
         CannonBalls = new ArrayList<CannonBall>();
 
-        batch = new SpriteBatch();
 
 
     }
@@ -137,31 +135,20 @@ public class Cannon extends Image {
 
         ArrayList<CannonBall> toRemove = new ArrayList<CannonBall>();
         for (CannonBall cannonBall : CannonBalls){
-            cannonBall.update(delta);
+            cannonBall.act(delta);
             if (cannonBall.remove){
                 toRemove.add(cannonBall);
             }
         }
         CannonBalls.removeAll(toRemove);
 
-        batch.setProjectionMatrix(camera.combined);
-        batch.begin();
-
-
-        //TODO no idea why this is being renderer here, its the reason cannonballs dont render will fix another time.
-        // There is literally a render function right below...
-
-        for (CannonBall cannonBall : CannonBalls){
-            cannonBall.render(batch);
-
-        }
-        batch.end();
 
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
+
 
     }
 

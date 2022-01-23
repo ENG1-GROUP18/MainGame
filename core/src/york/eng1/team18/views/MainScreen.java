@@ -9,7 +9,9 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Action;
@@ -17,6 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveByAction;
 import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.*;
 import york.eng1.team18.Orchestrator;
@@ -55,6 +58,7 @@ public class MainScreen implements Screen {
     private WaterTrail waterTrail;
 
     public Player player; // made player a public variable
+    private Array<Body> tempBodies = new Array<Body>();
 
     SpriteBatch batch;
     InputController inpt;
@@ -226,11 +230,28 @@ public class MainScreen implements Screen {
         // Draw game objects
         gameStage.draw();
 
+        //Draw cannonBalls
+        batch.begin();
+        world.getBodies(tempBodies);
+        for (Body body : tempBodies) {
+            if(body.getUserData() != null && body.getUserData() instanceof Sprite){
+                //System.out.println("here");
+                Sprite sprite = (Sprite) body.getUserData();
+                sprite.setPosition(body.getPosition().x-4.5f,body.getPosition().y-5);
+                sprite.setRotation(body.getAngle() * MathUtils.radiansToDegrees);
+                sprite.draw(batch);
+            }
+        }
+        batch.end();
+
 
         // Draw map fog
         batch.begin();
         mapFogImage.draw(batch);
         batch.end();
+
+
+
 
 
 

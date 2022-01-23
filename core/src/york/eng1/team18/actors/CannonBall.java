@@ -16,6 +16,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.TimeUtils;
 import york.eng1.team18.Orchestrator;
 
@@ -26,10 +27,10 @@ import java.awt.image.ImageProducer;
 import java.util.ArrayList;
 
 
-public class CannonBall  extends Image {
+public class CannonBall{
     private SpriteBatch batch;
     public final static int SPEED = 500;
-    private static Texture sprite;
+    private static Sprite sprite;
 
     World world;
     Camera camera;
@@ -41,6 +42,10 @@ public class CannonBall  extends Image {
     private Body body;
     private Body body_player;
 
+    Vector2 original_position;
+
+    SpriteBatch batch_;
+
 
 
     public boolean remove = false;
@@ -48,6 +53,11 @@ public class CannonBall  extends Image {
     float x,y;
 
     public CannonBall(Group player, World world, Camera camera, Body body_player, float angle, Cannon parent, float leftFacing){
+        sprite = new Sprite(new Texture("images/small_cannonball.png"));
+        sprite.setScale(0.1f);
+        sprite.setOrigin(sprite.getHeight()/2, sprite.getWidth()/2);
+
+
         this.x = parent.localToStageCoordinates(new Vector2(parent.getOriginX(), parent.getOriginY())).x;
         this.y = parent.localToStageCoordinates(new Vector2(parent.getOriginX(), parent.getOriginY())).y;
         this.stage = stage;
@@ -57,11 +67,11 @@ public class CannonBall  extends Image {
         this.parent = parent;
         this.angle = angle;
 
-
-        if (sprite == null){
-            sprite = new Texture("images/small_cannonball.png");
-        }
-
+//        this.setSize(500,500);
+//        System.out.println(body_player.getPosition().x);
+//        this.setPosition(-body_player.getPosition().x , -body_player.getPosition().y );
+//
+//        this.setOrigin(this.getWidth()/2, this.getHeight()/2);
 
 
         BodyDef bodyDef = new BodyDef();
@@ -85,7 +95,8 @@ public class CannonBall  extends Image {
             fixtureDef.filter.categoryBits = 0x0008;
         }
 
-        body.createFixture(fixtureDef).setUserData("Cannon ball");
+        body.createFixture(fixtureDef).setUserData("CannonBall");
+        body.setUserData(sprite);
 
 
 
@@ -116,9 +127,24 @@ public class CannonBall  extends Image {
 
         body.setLinearVelocity(vel_x,vel_y);
         body.setLinearDamping(1);
+
+        this.original_position = body.getPosition();
+
+        this.batch_ = new SpriteBatch();
     }
 
-    public void update(float deltaTime){
+//    public void update(float deltaTime){
+//        float x_vel = body.getLinearVelocity().x;
+//        float y_val = body.getLinearVelocity().y;
+//        if (x_vel < 2 && x_vel > -2 && y_val< 2 && y_val > -2){
+//            remove = true;
+//            world.destroyBody(body);
+//        }
+//
+//    }
+
+
+    public void act(float delta) {
         float x_vel = body.getLinearVelocity().x;
         float y_val = body.getLinearVelocity().y;
         if (x_vel < 2 && x_vel > -2 && y_val< 2 && y_val > -2){
@@ -129,39 +155,33 @@ public class CannonBall  extends Image {
     }
 
 
-
-
     public void render (Batch batch) {
         //Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); // This cryptic line clears the screen.
         //batch.setProjectionMatrix(camera.combined);
         //sprite.setPosition(body.getPosition().x,body.getPosition().y);
-        batch.draw(sprite, body.getPosition().x - 0.5f, body.getPosition().y - 0.5f , 1 , 1);
+        //batch.draw(super., body.getPosition().x - 0.5f, body.getPosition().y - 0.5f , 1 , 1);
+//        System.out.println(body.getPosition().x - 0.5f);
+//        sprite.setPosition(body.getPosition().x - 0.5f, body.getPosition().y - 0.5f);
+//        sprite.setScale(10);
+//        sprite.draw(batch);
+
         //super.draw(batch,1);
 
     }
 
-    @Override
-    public int getWidth(ImageObserver observer) {
-        return 0;
+
+    public void draw(Batch batch, float parentAlpha) {
+        //batch_.begin();
+        //batch.draw(sprite,this.x-body.getPosition().x - 0.5f,this.y-body.getPosition().y - 0.5f);
+        //batch.draw(sprite, body.getPosition().x - 0.5f, body.getPosition().y - 0.5f , 1 , 1);
+        //sprite.setPosition(body.getPosition().x - 0.5f, body.getPosition().y - 0.5f);
+
+        sprite.setPosition(this.x-body.getPosition().x - 0.5f,this.y-body.getPosition().y - 0.5f);
+        sprite.draw(batch);
+        //batch_.end();
+        System.out.println(original_position.x);
+        System.out.println(this.x);
+        //super.draw(batch,1);
     }
 
-    @Override
-    public int getHeight(ImageObserver observer) {
-        return 0;
-    }
-
-    @Override
-    public ImageProducer getSource() {
-        return null;
-    }
-
-    @Override
-    public Graphics getGraphics() {
-        return null;
-    }
-
-    @Override
-    public Object getProperty(String name, ImageObserver observer) {
-        return null;
-    }
 }
