@@ -235,9 +235,8 @@ public class MainScreen implements Screen {
         world.getBodies(tempBodies);
         for (Body body : tempBodies) {
             if(body.getUserData() != null && body.getUserData() instanceof Sprite){
-                //System.out.println("here");
                 Sprite sprite = (Sprite) body.getUserData();
-                sprite.setPosition(body.getPosition().x-4.5f,body.getPosition().y-5);
+                sprite.setPosition(body.getPosition().x- (sprite.getHeight()/2),body.getPosition().y-(sprite.getWidth()/2));
                 sprite.setRotation(body.getAngle() * MathUtils.radiansToDegrees);
                 sprite.draw(batch);
             }

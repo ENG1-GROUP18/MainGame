@@ -125,7 +125,7 @@ public class Cannon extends Image {
             } else{
                 angle = this.getRotation() - 90;
             }
-            CannonBalls.add(new CannonBall(parent, world, camera, body, angle, this, leftFacing));
+            CannonBalls.add(new CannonBall(world, body, angle, this, leftFacing));
             fireLimitTimer = TimeUtils.nanoTime();
             balls-=1; // change variable name
             //ball = new CannonBall(this, this.getOriginX(),this.getOriginY(), world, camera, stage);
@@ -135,7 +135,7 @@ public class Cannon extends Image {
 
         ArrayList<CannonBall> toRemove = new ArrayList<CannonBall>();
         for (CannonBall cannonBall : CannonBalls){
-            cannonBall.act(delta);
+            cannonBall.act();
             if (cannonBall.remove){
                 toRemove.add(cannonBall);
             }
