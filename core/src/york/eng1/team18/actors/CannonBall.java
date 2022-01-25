@@ -121,7 +121,7 @@ public class CannonBall{
         } else{     //if the cannon is not on the player
             angle_x = (float)Math.cos(Math.toRadians(angle));
             angle_y = (float)Math.sin(Math.toRadians(angle));
-            vel_x = (75) * (angle_x ); // adjust the value to reduce or increase speed of cannonballs //TODO make this variable at top of class.
+            vel_x = (75) * (angle_x ); // adjust the value to reduce or increase speed of cannonballs //TODO make this an instance variable at top of class - easier to modify properties.
             vel_y = (75) * (angle_y);
         }
 
