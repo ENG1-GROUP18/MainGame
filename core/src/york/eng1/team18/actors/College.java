@@ -22,7 +22,7 @@ public class College extends Group {
     private boolean isConquered;
     private int numCannons;
 
-    private long fireLimitTimer;
+    private long fireLimitTimer; //TODO so many unused variable that are copied from another class.
     private float ammoReplenishTimer;
     private float ammoReplenishRate = 2f;
 
@@ -55,7 +55,7 @@ public class College extends Group {
         fixtureDef.density = 1f;
         fixtureDef.friction = 0.2f;
         fixtureDef.restitution = 0f;
-        fixtureDef.filter.maskBits = 0x0004;
+        fixtureDef.filter.maskBits = 0x0004; //TODO comment what this is all about. Its non self-explanatory.
         fixtureDef.filter.categoryBits = 0x0002;
         body.createFixture(fixtureDef).setUserData("Collage");
 
@@ -65,7 +65,7 @@ public class College extends Group {
         shape.dispose();
 
         // Add components to college
-        this.addActor(new Building(this, imagePath));
+        this.addActor(new Building(this, imagePath)); //TODO remove building class. Move its code to here.
         //this.addActor(new Cannon(this, this.getWidth()*2/5, this.getHeight()/4, false , world, camera, stage, body));
         //this.addActor(new Cannon(this, this.getWidth()*2/5, this.getHeight()*3/4, true, world, camera, stage, body));
 
@@ -75,6 +75,8 @@ public class College extends Group {
         // Record start time
         //fireLimitTimer = TimeUtils.nanoTime();
     }
+
+    //TODO should be private? Only time its conquered is from decrementCannons function.
     public void conquer() {
         isConquered = true;
     }

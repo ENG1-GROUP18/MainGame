@@ -35,7 +35,7 @@ public class CannonBall{
     World world;
     Camera camera;
     Stage stage;
-    Group player;
+    Group player; //TODO loads of unused variables clearly copy pasted from another class.
     Cannon parent;
     float angle;
     float leftFacing;
@@ -44,16 +44,18 @@ public class CannonBall{
 
     Vector2 original_position;
 
-    SpriteBatch batch_;
+    SpriteBatch batch_;//TODO already a spritebatch defined, weird naming aswell. The entire point of a batch is that
+                       // a group of sprites are renderer as a BATCH. makes no sense for each cannonball to have its own batch as in this case
+                       // each batch only has one sprite.
 
 
 
     public boolean remove = false;
 
-    float x,y;
+    float x,y;//
 
     public CannonBall(Group player, World world, Camera camera, Body body_player, float angle, Cannon parent, float leftFacing){
-        sprite = new Sprite(new Texture("images/small_cannonball.png"));
+        sprite = new Sprite(new Texture("images/8x8ball.png")); //TODO behaviour of ball changed when different sized image is provided, worth looking into.
         sprite.setScale(0.1f);
         sprite.setOrigin(sprite.getHeight()/2, sprite.getWidth()/2);
 
@@ -109,7 +111,7 @@ public class CannonBall{
         float vel_y = 0;
         if (leftFacing == 2){
 
-            vel_x = (Math.abs (body_player.getLinearVelocity().x) + 50) * (angle_x); //TODO change added velocities so it works properly
+            vel_x = (Math.abs (body_player.getLinearVelocity().x) + 50) * (angle_x); //TODO lots of magic numbers here
             vel_y = (Math.abs (body_player.getLinearVelocity().y) + 50) * (angle_y);
 
         }else if (leftFacing == 1){
@@ -119,7 +121,7 @@ public class CannonBall{
         } else{     //if the cannon is not on the player
             angle_x = (float)Math.cos(Math.toRadians(angle));
             angle_y = (float)Math.sin(Math.toRadians(angle));
-            vel_x = (75) * (angle_x ); // adjust the value to reduce or increase speed of cannonballs
+            vel_x = (75) * (angle_x ); // adjust the value to reduce or increase speed of cannonballs //TODO make this variable at top of class.
             vel_y = (75) * (angle_y);
         }
 
@@ -128,9 +130,9 @@ public class CannonBall{
         body.setLinearVelocity(vel_x,vel_y);
         body.setLinearDamping(1);
 
-        this.original_position = body.getPosition();
+        this.original_position = body.getPosition(); //TODO Never used, remove.
 
-        this.batch_ = new SpriteBatch();
+        this.batch_ = new SpriteBatch(); //TODO each ball has its own sprite batch, this is really inefficient. They should use the same one.
     }
 
 //    public void update(float deltaTime){
@@ -145,7 +147,7 @@ public class CannonBall{
 
 
     public void act(float delta) {
-        float x_vel = body.getLinearVelocity().x;
+        float x_vel = body.getLinearVelocity().x; //TODO vel or val? Inconsistent variable names.
         float y_val = body.getLinearVelocity().y;
         if (x_vel < 2 && x_vel > -2 && y_val< 2 && y_val > -2){
             remove = true;
@@ -154,7 +156,7 @@ public class CannonBall{
 
     }
 
-
+    //TODO class has a render and a draw function???
     public void render (Batch batch) {
         //Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); // This cryptic line clears the screen.
         //batch.setProjectionMatrix(camera.combined);
@@ -179,8 +181,6 @@ public class CannonBall{
         sprite.setPosition(this.x-body.getPosition().x - 0.5f,this.y-body.getPosition().y - 0.5f);
         sprite.draw(batch);
         //batch_.end();
-        System.out.println(original_position.x);
-        System.out.println(this.x);
         //super.draw(batch,1);
     }
 
