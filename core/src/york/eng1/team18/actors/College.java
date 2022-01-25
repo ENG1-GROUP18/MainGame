@@ -11,13 +11,13 @@ import com.badlogic.gdx.utils.TimeUtils;
 
 public class College extends Group {
 
-    private World world;
+    private World world; //TODO never used
     private Body body;
 
     // COLLEGE PROPERTIES:
     private float size_x = 6;
     private float size_y = 6;
-    private float pos_x;
+    private float pos_x; //TODO never used
     private float pos_y;
     private boolean isConquered;
     private int numCannons;
@@ -26,7 +26,7 @@ public class College extends Group {
     private float ammoReplenishTimer;
     private float ammoReplenishRate = 2f;
 
-    public boolean is_contact = false;
+    public boolean is_contact = false; //TODO these are never used?
     public String contact_side = "";
 
 
@@ -70,7 +70,7 @@ public class College extends Group {
         //this.addActor(new Cannon(this, this.getWidth()*2/5, this.getHeight()*3/4, true, world, camera, stage, body));
 
         // For rotation around center
-        this.setOrigin(this.getWidth()/2, this.getHeight()/2);
+        this.setOrigin(this.getWidth()/2, this.getHeight()/2); //TODO college group doesnt rotate? Code was needed for player, not this.
 
         // Record start time
         //fireLimitTimer = TimeUtils.nanoTime();
