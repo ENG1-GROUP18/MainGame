@@ -108,7 +108,6 @@ public class Cannon extends Image {
             // Replenish ammo
             if ( balls < 6){
                 balls+=1;
-                System.out.println(ammoReplenishTimer);
             }
             // Reset Replenish Timer
             ammoReplenishTimer = 0;

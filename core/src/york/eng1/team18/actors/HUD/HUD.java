@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.AlphaAction;
@@ -65,13 +66,13 @@ public class HUD extends Group {
 
         miniMap = new MiniMap();
         miniMapGroup.addActor(miniMap);
-        //miniMapGroup.setSize((float) (Gdx.graphics.getWidth() *0.1) , (float) (Gdx.graphics.getHeight() - 400* 0.1));
-
+        miniMap.setSize((500f/1920f)*Gdx.graphics.getWidth(), (400f/1080f)*Gdx.graphics.getHeight());
 
         playerPointer = new Image(new Texture(Gdx.files.internal("images/hud/pointer.png")));
         playerPointer.setScale(0.5f, 0.5f);
         playerPointer.setOrigin(Align.center);
         miniMapGroup.addActor(playerPointer);
+
 
 
         //-----------------DEBUG LABELS------------------
@@ -113,11 +114,15 @@ public class HUD extends Group {
     public void  recalculatePos() {
         // Centers the HUD horizontally on screen.
         playerStatsGroup.setPosition((Gdx.graphics.getWidth() - playerStatsGroup.getWidth())/2, 20);
-        //miniMapGroup.setPosition(Gdx.graphics.getWidth()-500,Gdx.graphics.getHeight()-400);
-        miniMapGroup.setPosition((float) (Gdx.graphics.getWidth() - (Gdx.graphics.getWidth()*0.2)), (float) (Gdx.graphics.getHeight() - (Gdx.graphics.getHeight()*0.2)));
-//        miniMapGroup.getChild(0).setSize((float) (Gdx.graphics.getWidth() *0.1) , (float) (Gdx.graphics.getHeight()* 0.1));
-//        miniMapGroup.getChild(1).setSize((float) (Gdx.graphics.getWidth() *0.1) , (float) (Gdx.graphics.getHeight()* 0.1));
-        //miniMapGroup.setSize((float) (Gdx.graphics.getWidth() *0.1) , (float) (Gdx.graphics.getHeight()* 0.1));
+
+        //Sets position relative to aspect ratio, values to normalise for 1080p, works for any 16:9 resolution
+        /*Formula for calculating relative size of UI:
+            (ImageSize/1920)* WindowSize
+        */
+        Vector2 relativeMapSizeToWindow = new Vector2((500f/1920f)*Gdx.graphics.getWidth(),(400f/1080f)*Gdx.graphics.getHeight());
+        miniMapGroup.setPosition(Gdx.graphics.getWidth() - relativeMapSizeToWindow.x, Gdx.graphics.getHeight() - relativeMapSizeToWindow.y);
+        playerPointer.setSize((32f/1920f)*Gdx.graphics.getWidth(), (32f/1080f)*Gdx.graphics.getHeight());
+        miniMap.setSize(relativeMapSizeToWindow.x, relativeMapSizeToWindow.y);
 
     }
 
@@ -146,9 +151,10 @@ public class HUD extends Group {
         float angle = player.getRotation() - 90;
 
         //debugLabel1.setText(String.valueOf(player.getX()));
-       // debugLabel2.setText(String.valueOf(player.getY()));
+        //debugLabel2.setText(String.valueOf(player.getY()));
 
-        playerPointer.setPosition(x, y);
+        //sets position relative to aspect ratio
+        playerPointer.setPosition(x * 1f/(500f/Gdx.graphics.getWidth())*(25f/96f) , y * 1f/(400f/Gdx.graphics.getHeight())*(10f/27f));
         playerPointer.setRotation(angle);
 
     }

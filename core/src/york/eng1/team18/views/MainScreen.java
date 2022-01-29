@@ -82,7 +82,7 @@ public class MainScreen implements Screen {
         hudCamera = new OrthographicCamera();
         gameViewport = new ExtendViewport(cameraZoom, cameraZoom, gameCamera);
         gameStage = new Stage(gameViewport);
-        hudStage = new Stage(new StretchViewport(Gdx.graphics.getWidth(),Gdx.graphics.getHeight(),hudCamera));
+        hudStage = new Stage(new ScreenViewport()); // Gdx.graphics.getWidth(), Gdx.graphics.getHeight()
         batch = new SpriteBatch();
 
         world = new World(new Vector2(0,0), true);
@@ -246,7 +246,9 @@ public class MainScreen implements Screen {
     public void resize(int width, int height) {
         gameViewport.update(width, height);
         hudStage.getViewport().update(width, height, true);
-        hudStage.getViewport().apply();
+        hudCamera.position.set(hudCamera.viewportWidth/2,hudCamera.viewportHeight/2,0);
+
+
         hud.recalculatePos();
     }
 
