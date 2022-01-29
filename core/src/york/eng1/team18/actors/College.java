@@ -59,14 +59,11 @@ public class College extends Group {
 
         // Add components to college
         this.addActor(new Building(this, imagePath)); //TODO remove building class. Move its code to here.
-        //this.addActor(new Cannon(this, this.getWidth()*2/5, this.getHeight()/4, false , world, camera, stage, body));
-        //this.addActor(new Cannon(this, this.getWidth()*2/5, this.getHeight()*3/4, true, world, camera, stage, body));
+
 
         // For rotation around center
         this.setOrigin(this.getWidth()/2, this.getHeight()/2); //TODO college group doesnt rotate? Code was needed for player, not this.
 
-        // Record start time
-        //fireLimitTimer = TimeUtils.nanoTime();
     }
 
     //TODO should be private? Only time its conquered is from decrementCannons function.
