@@ -90,9 +90,9 @@ public class HUD extends Group {
         debugLabel2.setPosition(Gdx.graphics.getWidth() -(300f/1920f)*Gdx.graphics.getWidth(), Gdx.graphics.getHeight() -(50f/1080f)*Gdx.graphics.getHeight());
         this.addActor(debugLabel2);
 
-        // Reveals hud after delay on game start. //TODO uncomment this
+        // Reveals hud after delay on game start.
         DelayAction da = new DelayAction();
-        da.setDuration(36);
+        da.setDuration(36); // TODO Change back to 36
 
         AlphaAction aa = new AlphaAction();
         aa.setAlpha(1);
@@ -142,9 +142,8 @@ public class HUD extends Group {
         cannonBar.decreaseActiveTicks();
     }
 
-    public void changeHealthBy(int value) {
-
-        healthBar.setValue(healthBar.getValue() + value);
+    public int getHealth() {
+        return healthBar.getValue();
     }
 
     public void changeHealthTo(int value) {

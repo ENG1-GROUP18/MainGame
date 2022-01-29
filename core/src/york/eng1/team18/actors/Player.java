@@ -31,12 +31,13 @@ public class Player extends Group {
     private float size_y = 3;
     private float maxSpeed = 16;
     private float maxReverseSpeed = -8f;
-    public float currentSpeed = 0f; // changed to public
+    public float currentSpeed = 0f;
     private float rateOfAcceleration = 0.05f;
     private float rateOfDeceleration = 0.03f;
     private float maxRateOfTurn = 1.8f;
+    public int health;
 
-    private Boolean inIntro = true;
+    private Boolean inIntro = true; //TODO Change back to true
     private long creationTime;
     private long fireLimitTimer;
     private float ammoReplenishTimer;
@@ -45,7 +46,7 @@ public class Player extends Group {
 
     public boolean is_contact = false;
     public String contact_side = "";
-    public boolean hit;
+    public boolean hit = false;
 
 
 
@@ -59,6 +60,8 @@ public class Player extends Group {
         this.setPosition(pos_x, pos_y);
         this.setSize(size_x, size_y);
         this.orchestrator = orchestrator;
+
+        this.health = 100;
 
         // Create body
         BodyDef bodyDef = new BodyDef();
@@ -170,6 +173,8 @@ public class Player extends Group {
             }
         }
 
+//        Gdx.input.setInputProcessor(inpt); //TODO remove this line
+
         // Update position of box2d body based on updated movement properties.
         float velX = MathUtils.cos(angle) * currentSpeed;
         float velY = MathUtils.sin(angle) * currentSpeed;
@@ -180,7 +185,17 @@ public class Player extends Group {
         this.setPosition(body.getPosition().x - this.getWidth()/2, body.getPosition().y - this.getHeight()/2);
 
 
+        //Handle getting hit
+        if (hit == true){
+            health = hud.getHealth();
+            hud.changeHealthTo(health - 10);
+            hit = false;
+        }
 
+        //Handle death
+        if (health <= 0){
+            orchestrator.changeScreen(Orchestrator.GAMEOVER);
+        }
 
 
         // Handle cannon firing
@@ -205,6 +220,7 @@ public class Player extends Group {
         //Escape key to go back to main menu
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
             orchestrator.changeScreen(Orchestrator.MENU);
+            orchestrator.dispose();
         }
 
 

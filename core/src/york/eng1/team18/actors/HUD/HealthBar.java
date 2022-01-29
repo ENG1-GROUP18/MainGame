@@ -15,6 +15,7 @@ public class HealthBar extends Group {
     private int barMaxValue = 100;
     private int barWidth;
     private int barHeight = 16;
+    private Image bar;
 
     public HealthBar(int posX, int posY, int maxHealth, int barLength) {
         super();
@@ -24,7 +25,7 @@ public class HealthBar extends Group {
 
 
         // Create health bar
-        Image bar = new Image(new Texture(Gdx.files.internal("images/WhiteSquare.png")));
+        this.bar = new Image(new Texture(Gdx.files.internal("images/WhiteSquare.png")));
         bar.setPosition(posX, posY);
         bar.setSize(barWidth, barHeight);
         this.addActor(bar);
@@ -34,6 +35,7 @@ public class HealthBar extends Group {
     @Override
     public void act(float delta) {
         super.act(delta);
+        this.bar.setSize(barWidth*( (float) barCurrentValue/(float) barMaxValue),barHeight);
 
     }
 
@@ -42,14 +44,7 @@ public class HealthBar extends Group {
         super.draw(batch, parentAlpha);
         batch.end();
 
-
-
-
-
-
         batch.begin();
-
-
     }
 
     public void setValue(int value) {

@@ -15,11 +15,13 @@ public class Orchestrator extends Game {
 	private LeaderBoardScreen leaderBoardScreen;
 	private MainScreen mainScreen;
 	private EndScreen endScreen;
+	private GameOverScreen gameOverScreen;
 
 	public final static int MENU = 0;
 	public final static int APPLICATION = 1;
 	public final static int ENDGAME = 2;
 	public final static int LEADERBOARD = 3;
+	public final static int GAMEOVER = 4;
 
 	@Override
 	public void create() {
@@ -48,6 +50,10 @@ public class Orchestrator extends Game {
 				if(mainScreen == null) {
 					mainScreen = new MainScreen(this);
 					this.setScreen(mainScreen);
+				} else{
+					mainScreen.dispose();
+					mainScreen = new MainScreen(this);
+					this.setScreen(mainScreen);
 				}
 				break;
 			// Shown after the player has ended a game
@@ -63,6 +69,12 @@ public class Orchestrator extends Game {
 					leaderBoardScreen = new LeaderBoardScreen(this);
 				}
 				this.setScreen(leaderBoardScreen);
+				break;
+			case GAMEOVER:
+				if(gameOverScreen == null) {
+					gameOverScreen = new GameOverScreen(this);
+				}
+				this.setScreen(gameOverScreen);
 				break;
 		}
 	}

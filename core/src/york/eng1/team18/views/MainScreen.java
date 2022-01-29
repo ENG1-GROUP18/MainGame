@@ -59,7 +59,7 @@ public class MainScreen implements Screen {
     private Box2DDebugRenderer debugRenderer;
     private WaterTrail waterTrail;
 
-    public Player player; // made player a public variable
+    public Player player;
     private Array<Body> tempBodies = new Array<Body>();
 
     SpriteBatch batch;
@@ -86,7 +86,7 @@ public class MainScreen implements Screen {
         hudStage = new Stage(new ScreenViewport()); // Gdx.graphics.getWidth(), Gdx.graphics.getHeight()
         batch = new SpriteBatch();
 
-        world = new World(new Vector2(0,0), true);
+        this.world = new World(new Vector2(0,0), true);
         world.setContactListener(new WorldContactListener(this));
 
 
@@ -270,5 +270,11 @@ public class MainScreen implements Screen {
     @Override
     public void dispose() {
         debugRenderer.dispose();
+        gameStage.dispose();
+        hudStage.dispose();
+        world.getBodies(tempBodies);
+        for (Body body : tempBodies) {
+            world.destroyBody(body);
+        }
     }
 }
