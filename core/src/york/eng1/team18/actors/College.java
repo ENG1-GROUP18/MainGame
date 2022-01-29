@@ -11,13 +11,13 @@ import com.badlogic.gdx.utils.TimeUtils;
 
 public class College extends Group {
 
-    private World world; //TODO never used ... wut? used on line 41
+    private World world; //TODO never used
     private Body body;
 
     // COLLEGE PROPERTIES:
     private float size_x = 6;
     private float size_y = 6;
-    private float pos_x; //TODO never used .. used on line 32
+    private float pos_x; //TODO never used
     private float pos_y;
     private boolean isConquered;
     private int numCannons;
