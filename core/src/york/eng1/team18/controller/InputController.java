@@ -14,6 +14,8 @@ public class InputController implements InputProcessor {
     public boolean leftClick;
     public boolean rightClick;
 
+    public boolean escape;
+
 
     @Override
     public boolean keyDown(int keycode) {
@@ -39,6 +41,11 @@ public class InputController implements InputProcessor {
                 space = true;
                 keyProcessed = true;
                 break;
+            case Input.Keys.ESCAPE:
+                escape = true;
+                keyProcessed = true;
+                break;
+
 
         }
         return keyProcessed;
@@ -66,6 +73,10 @@ public class InputController implements InputProcessor {
                 break;
             case Input.Keys.SPACE:
                 space = false;
+                keyProcessed = true;
+                break;
+            case Input.Keys.ESCAPE:
+                escape = false;
                 keyProcessed = true;
                 break;
         }

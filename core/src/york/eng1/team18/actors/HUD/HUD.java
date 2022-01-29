@@ -81,24 +81,26 @@ public class HUD extends Group {
 
 
         debugLabel1 = new Label("debug label 1", skin);
-        debugLabel1.setPosition(300, 150);
+        //debugLabel1.setPosition(300, 150);
+        debugLabel1.setPosition((300f/1920f)*Gdx.graphics.getWidth(), (150f/1080f)*Gdx.graphics.getHeight());
         this.addActor(debugLabel1);
 
         debugLabel2 = new Label("debug label 2", skin);
-        debugLabel2.setPosition(300, 50);
+        //debugLabel2.setPosition(300, 50);
+        debugLabel2.setPosition(Gdx.graphics.getWidth() -(300f/1920f)*Gdx.graphics.getWidth(), Gdx.graphics.getHeight() -(50f/1080f)*Gdx.graphics.getHeight());
         this.addActor(debugLabel2);
 
         // Reveals hud after delay on game start. //TODO uncomment this
-//        DelayAction da = new DelayAction();
-//        da.setDuration(36);
-//
-//        AlphaAction aa = new AlphaAction();
-//        aa.setAlpha(1);
-//        aa.setDuration(1);
-//
-//        this.setColor(1, 1, 1, 0);
-//        SequenceAction sa = new SequenceAction(da, aa);
-//        this.addAction(sa);
+        DelayAction da = new DelayAction();
+        da.setDuration(36);
+
+        AlphaAction aa = new AlphaAction();
+        aa.setAlpha(1);
+        aa.setDuration(1);
+
+        this.setColor(1, 1, 1, 0);
+        SequenceAction sa = new SequenceAction(da, aa);
+        this.addAction(sa);
     }
 
     @Override
@@ -121,8 +123,13 @@ public class HUD extends Group {
         */
         Vector2 relativeMapSizeToWindow = new Vector2((500f/1920f)*Gdx.graphics.getWidth(),(400f/1080f)*Gdx.graphics.getHeight());
         miniMapGroup.setPosition(Gdx.graphics.getWidth() - relativeMapSizeToWindow.x, Gdx.graphics.getHeight() - relativeMapSizeToWindow.y);
-        playerPointer.setSize((32f/1920f)*Gdx.graphics.getWidth(), (32f/1080f)*Gdx.graphics.getHeight());
         miniMap.setSize(relativeMapSizeToWindow.x, relativeMapSizeToWindow.y);
+        playerPointer.setSize((32f/1920f)*Gdx.graphics.getWidth(), (32f/1080f)*Gdx.graphics.getHeight());
+        debugLabel1.setPosition((300f/1920f)*Gdx.graphics.getWidth(), (150f/1080f)*Gdx.graphics.getHeight());
+        debugLabel2.setPosition((300f/1920f)*Gdx.graphics.getWidth(), (50f/1080f)*Gdx.graphics.getHeight());
+        debugLabel1.setFontScale(1f/(500f/Gdx.graphics.getWidth())*(25f/96f), 1f/(400f/Gdx.graphics.getHeight())*(10f/27f));
+        debugLabel2.setFontScale(1f/(500f/Gdx.graphics.getWidth())*(25f/96f) , 1f/(400f/Gdx.graphics.getHeight())*(10f/27f));
+
 
     }
 

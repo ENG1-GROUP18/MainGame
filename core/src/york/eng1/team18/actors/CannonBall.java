@@ -11,8 +11,6 @@ import com.badlogic.gdx.physics.box2d.*;
 
 public class CannonBall{
 
-
-
     public final static int speed = 50;
     private static Sprite sprite;
 

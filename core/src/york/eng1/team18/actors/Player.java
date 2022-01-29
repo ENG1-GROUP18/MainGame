@@ -1,6 +1,7 @@
 package york.eng1.team18.actors;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.MathUtils;
@@ -9,11 +10,13 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Group;
 
 import com.badlogic.gdx.utils.TimeUtils;
+import york.eng1.team18.Orchestrator;
 import york.eng1.team18.actors.HUD.HUD;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 import york.eng1.team18.controller.InputController;
+import york.eng1.team18.views.MenuScreen;
 
 public class Player extends Group {
 
@@ -38,12 +41,15 @@ public class Player extends Group {
     private long fireLimitTimer;
     private float ammoReplenishTimer;
     private float ammoReplenishRate = 1f;
+    private Orchestrator orchestrator;
 
     public boolean is_contact = false;
     public String contact_side = "";
+    public boolean hit;
 
 
-    public Player(World world, InputController inpt, HUD hud , Stage stage, Camera camera, float pos_x, float pos_y){
+
+    public Player(World world, InputController inpt, HUD hud , Stage stage, Camera camera, float pos_x, float pos_y,Orchestrator orchestrator){
 
        // Set image, position and world reference
         super();
@@ -52,6 +58,7 @@ public class Player extends Group {
         this.hud = hud;
         this.setPosition(pos_x, pos_y);
         this.setSize(size_x, size_y);
+        this.orchestrator = orchestrator;
 
         // Create body
         BodyDef bodyDef = new BodyDef();
@@ -168,11 +175,10 @@ public class Player extends Group {
         float velY = MathUtils.sin(angle) * currentSpeed;
         body.setLinearVelocity((velX + body.getLinearVelocity().x)/2f, (velY + body.getLinearVelocity().y)/2f);
 
-//        if(positionSynced){
-            this.setRotation(body.getAngle() * MathUtils.radiansToDegrees);
-            this.setPosition(body.getPosition().x - this.getWidth()/2,
-                    body.getPosition().y - this.getHeight()/2);
-//        }
+
+        this.setRotation(body.getAngle() * MathUtils.radiansToDegrees);
+        this.setPosition(body.getPosition().x - this.getWidth()/2, body.getPosition().y - this.getHeight()/2);
+
 
 
 
@@ -195,6 +201,12 @@ public class Player extends Group {
             }
 
         }
+
+        //Escape key to go back to main menu
+        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
+            orchestrator.changeScreen(Orchestrator.MENU);
+        }
+
 
         super.act(delta);
     }

@@ -2,6 +2,7 @@ package york.eng1.team18.views;
 
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -106,7 +107,7 @@ public class MainScreen implements Screen {
         mapFogImage.setOrigin(0, 0);
         mapFogImage.setScale(0.2f);
 
-        player = new Player(world,inpt, hud, gameStage, gameCamera, map.getSpawnX(), map.getSpawnY());
+        player = new Player(world,inpt, hud, gameStage, gameCamera, map.getSpawnX(), map.getSpawnY(),parent);
         hud.setPlayer(player);
 
         map.setName("map");
@@ -158,7 +159,6 @@ public class MainScreen implements Screen {
 //
 //        SequenceAction sa = new SequenceAction(mba, ra);
 //        player.addAction(sa);
-
 
 
 

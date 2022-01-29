@@ -34,6 +34,10 @@ public class WorldContactListener implements ContactListener {
                 parent.player.contact_side = "";
 
             }
+        } else{
+            if (fa.getUserData() == "Player" ){
+                parent.player.hit = true;
+            }
         }
         System.out.println(fa.getUserData());
         System.out.println(fb.getUserData());
