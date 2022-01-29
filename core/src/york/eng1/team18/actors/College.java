@@ -63,6 +63,9 @@ public class College extends Group {
 
         // For rotation around center
         this.setOrigin(this.getWidth()/2, this.getHeight()/2); //TODO college group doesnt rotate? Code was needed for player, not this.
+        
+        // Add college to stage
+        stage.addActor(this);
 
     }
 

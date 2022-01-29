@@ -86,6 +86,9 @@ public class EnemyBase extends Group {
 
         // Record start time
         fireLimitTimer = TimeUtils.nanoTime();
+        
+        // Add base to stage
+        stage.addActor(this);
     }
 
     @Override

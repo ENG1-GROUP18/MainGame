@@ -139,23 +139,6 @@ public class MainScreen implements Screen {
         EnemyBase DerwentCannon0 = new EnemyBase(0.04f, map, inpt, Derwent, player, world, gameStage, gameCamera, map.getBaseX(5,0), map.getBaseY(5,0));
         EnemyBase DerwentCannon1 = new EnemyBase(0.04f, map, inpt, Derwent, player, world, gameStage, gameCamera, map.getBaseX(5,1), map.getBaseY(5,1));
 
-        gameStage.addActor(Halifax);
-        gameStage.addActor(Wentworth);
-        gameStage.addActor(James);
-        gameStage.addActor(Vanbrugh);
-        gameStage.addActor(Alcuin);
-        gameStage.addActor(Derwent);
-        gameStage.addActor(HalifaxCannon0);
-        gameStage.addActor(WentworthCannon0);
-        gameStage.addActor(WentworthCannon1);
-        gameStage.addActor(JamesCannon0);
-        gameStage.addActor(JamesCannon1);
-        gameStage.addActor(VanbrughCannon0);
-        gameStage.addActor(VanbrughCannon1);
-        gameStage.addActor(AlcuinCannon0);
-        gameStage.addActor(AlcuinCannon1);
-        gameStage.addActor(DerwentCannon0);
-        gameStage.addActor(DerwentCannon1);
 
         debugRenderer = new Box2DDebugRenderer(BOX2D_WIREFRAME, false, false, false, BOX2D_WIREFRAME, BOX2D_WIREFRAME);
 
