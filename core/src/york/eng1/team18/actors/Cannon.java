@@ -54,7 +54,7 @@ public class Cannon extends Image {
     private long fireLimitTimer;
     private int balls;
     private float ammoReplenishTimer;
-    private float ammoReplenishRate = 2f;
+    private float ammoReplenishRate = 1f;
     private InputController inpt;
     private boolean belongsToPlayer;
 
@@ -95,7 +95,7 @@ public class Cannon extends Image {
 
     @Override
     public void act(float delta) {
-        super.act(delta);
+
         if (belongsToPlayer){playerHandleRotation();}
         else {collegeHandleRotation();
             isInRange = enemyBase.isInRange();
@@ -106,17 +106,16 @@ public class Cannon extends Image {
         ammoReplenishTimer += delta;
         if (ammoReplenishTimer > ammoReplenishRate) {
             // Replenish ammo
+            if ( balls < 6){
+                balls+=1;
+                System.out.println(ammoReplenishTimer);
+            }
+            // Reset Replenish Timer
             ammoReplenishTimer = 0;
-            balls+=1;
         }
 
-        /**if(!belongsToPlayer && TimeUtils.timeSinceNanos(fireLimitTimer) > 500000000) {
-            angle = this.getRotation()+90;
-            CannonBalls.add(new CannonBall(parent, world, camera, body, angle, this, leftFacing));
-            fireLimitTimer = TimeUtils.nanoTime();
-        }**/
-
-        if (((!belongsToPlayer && isInRange)||(belongsToPlayer && inpt.leftClick)) && activated && TimeUtils.timeSinceNanos(fireLimitTimer) > 500000000 && balls> 0){
+        //If conditions are met then shoot cannonball
+        if (((!belongsToPlayer && isInRange)||(belongsToPlayer && inpt.leftClick)) && activated && TimeUtils.timeSinceNanos(fireLimitTimer) > 500000000 && balls > 0){
 
             if (leftFacing == 2) {
                 angle = this.getRotation() +90;
@@ -127,9 +126,9 @@ public class Cannon extends Image {
             }
             CannonBalls.add(new CannonBall(world, body, angle, this, leftFacing));
             fireLimitTimer = TimeUtils.nanoTime();
-            balls-=1; // change variable name
-            //ball = new CannonBall(this, this.getOriginX(),this.getOriginY(), world, camera, stage);
-            //stage.addActor(ball);
+            balls-=1;
+            ammoReplenishTimer = 0;
+
 
         }
 
@@ -142,7 +141,7 @@ public class Cannon extends Image {
         }
         CannonBalls.removeAll(toRemove);
 
-
+        super.act(delta);
     }
 
     @Override

@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.AlphaAction;
 import com.badlogic.gdx.scenes.scene2d.actions.DelayAction;
@@ -64,7 +65,7 @@ public class HUD extends Group {
 
         miniMap = new MiniMap();
         miniMapGroup.addActor(miniMap);
-        miniMap.setSize(500, 400);
+        //miniMapGroup.setSize((float) (Gdx.graphics.getWidth() *0.1) , (float) (Gdx.graphics.getHeight() - 400* 0.1));
 
 
         playerPointer = new Image(new Texture(Gdx.files.internal("images/hud/pointer.png")));
@@ -86,17 +87,17 @@ public class HUD extends Group {
         debugLabel2.setPosition(300, 50);
         this.addActor(debugLabel2);
 
-        // Reveals hud after delay on game start.
-        DelayAction da = new DelayAction();
-        da.setDuration(36);
-
-        AlphaAction aa = new AlphaAction();
-        aa.setAlpha(1);
-        aa.setDuration(1);
-
-        this.setColor(1, 1, 1, 0);
-        SequenceAction sa = new SequenceAction(da, aa);
-        this.addAction(sa);
+        // Reveals hud after delay on game start. //TODO uncomment this
+//        DelayAction da = new DelayAction();
+//        da.setDuration(36);
+//
+//        AlphaAction aa = new AlphaAction();
+//        aa.setAlpha(1);
+//        aa.setDuration(1);
+//
+//        this.setColor(1, 1, 1, 0);
+//        SequenceAction sa = new SequenceAction(da, aa);
+//        this.addAction(sa);
     }
 
     @Override
@@ -112,7 +113,12 @@ public class HUD extends Group {
     public void  recalculatePos() {
         // Centers the HUD horizontally on screen.
         playerStatsGroup.setPosition((Gdx.graphics.getWidth() - playerStatsGroup.getWidth())/2, 20);
-        miniMapGroup.setPosition(Gdx.graphics.getWidth() - 500, Gdx.graphics.getHeight() - 400);
+        //miniMapGroup.setPosition(Gdx.graphics.getWidth()-500,Gdx.graphics.getHeight()-400);
+        miniMapGroup.setPosition((float) (Gdx.graphics.getWidth() - (Gdx.graphics.getWidth()*0.2)), (float) (Gdx.graphics.getHeight() - (Gdx.graphics.getHeight()*0.2)));
+//        miniMapGroup.getChild(0).setSize((float) (Gdx.graphics.getWidth() *0.1) , (float) (Gdx.graphics.getHeight()* 0.1));
+//        miniMapGroup.getChild(1).setSize((float) (Gdx.graphics.getWidth() *0.1) , (float) (Gdx.graphics.getHeight()* 0.1));
+        //miniMapGroup.setSize((float) (Gdx.graphics.getWidth() *0.1) , (float) (Gdx.graphics.getHeight()* 0.1));
+
     }
 
 

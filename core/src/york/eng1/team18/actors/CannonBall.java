@@ -26,6 +26,9 @@ public class CannonBall{
 
     float x,y;
 
+    float vel_x =0;
+    float vel_y =0;
+
     /**
      * Creates a new CannonBall object depending on the inputted variables
      * @param world a World object which holds the Box2D body's in the game
@@ -79,8 +82,7 @@ public class CannonBall{
         //Calculates the angle of the cannons by adding the angle of the
         float angle_x = (float)Math.cos( body_player.getAngle()+ Math.toRadians(angle));
         float angle_y = (float)Math.sin( body_player.getAngle()+ Math.toRadians(angle));
-        float vel_x = 0;
-        float vel_y = 0;
+
 
         if (leftFacing == 2){ // If cannon on the right side of the ship
 

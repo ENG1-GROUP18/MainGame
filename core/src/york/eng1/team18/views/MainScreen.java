@@ -20,6 +20,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.MoveByAction;
 import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.*;
 import york.eng1.team18.Orchestrator;
@@ -67,9 +68,6 @@ public class MainScreen implements Screen {
     ExtendViewport gameViewport;
 
 
-//    ArrayList<CannonBall> cannonBalls = new ArrayList<CannonBall>();
-//    float timeSinceLastShot = 0;
-//    public CannonBall cann;
 
     public MainScreen(Orchestrator orchestrator) {
         parent = orchestrator;
@@ -84,7 +82,7 @@ public class MainScreen implements Screen {
         hudCamera = new OrthographicCamera();
         gameViewport = new ExtendViewport(cameraZoom, cameraZoom, gameCamera);
         gameStage = new Stage(gameViewport);
-        hudStage = new Stage(new ScreenViewport());
+        hudStage = new Stage(new StretchViewport(Gdx.graphics.getWidth(),Gdx.graphics.getHeight(),hudCamera));
         batch = new SpriteBatch();
 
         world = new World(new Vector2(0,0), true);
@@ -93,6 +91,7 @@ public class MainScreen implements Screen {
 
         // Add hud to hud stage
         hud = new HUD(this, player, mapSize);
+
         hudStage.addActor(hud);
 
 
@@ -252,21 +251,8 @@ public class MainScreen implements Screen {
         mapFogImage.draw(batch);
         batch.end();
 
-
-
-
-
-
-
-
-
         // Draws box2d hitboxes for debug only
         debugRenderer.render(world, gameStage.getCamera().combined);
-
-
-
-
-
 
         // Draw ui
         hudStage.getViewport().apply();
@@ -277,6 +263,7 @@ public class MainScreen implements Screen {
     public void resize(int width, int height) {
         gameViewport.update(width, height);
         hudStage.getViewport().update(width, height, true);
+        hudStage.getViewport().apply();
         hud.recalculatePos();
     }
 

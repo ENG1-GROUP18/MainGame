@@ -194,10 +194,6 @@ public class Player extends Group {
                 ammoReplenishTimer = 0;
             }
 
-            if (inpt.rightClick) {
-                hud.increaseCannonTicks();
-                fireLimitTimer = TimeUtils.nanoTime();
-            }
         }
 
         super.act(delta);
