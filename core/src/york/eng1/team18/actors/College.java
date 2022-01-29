@@ -22,13 +22,6 @@ public class College extends Group {
     private boolean isConquered;
     private int numCannons;
 
-    private long fireLimitTimer; //TODO so many unused variable that are copied from another class.
-    private float ammoReplenishTimer;
-    private float ammoReplenishRate = 2f;
-
-    public boolean is_contact = false; //TODO these are never used?
-    public String contact_side = "";
-
 
     public College(World world, Stage stage, Camera camera, float pos_x, float pos_y, String imagePath){
 
