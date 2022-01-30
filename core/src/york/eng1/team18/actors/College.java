@@ -11,14 +11,11 @@ import com.badlogic.gdx.utils.TimeUtils;
 
 public class College extends Group {
 
-    private World world; //TODO never used
     private Body body;
 
     // COLLEGE PROPERTIES:
     private float size_x = 6;
     private float size_y = 6;
-    private float pos_x; //TODO never used
-    private float pos_y;
     private boolean isConquered;
     private int numCannons;
     private Building building;
@@ -32,7 +29,6 @@ public class College extends Group {
 
         // Set image, position, image path, conquered state and world reference
         super();
-        this.world = world;
         this.setPosition(pos_x, pos_y);
         this.setSize(size_x, size_y);
         this.isConquered = false;
@@ -72,16 +68,12 @@ public class College extends Group {
         this.addActor(building); //TODO remove building class. Move its code to here.
 
 
-        // For rotation around center
-        this.setOrigin(this.getWidth()/2, this.getHeight()/2); //TODO college group doesnt rotate? Code was needed for player, not this.
-        
         // Add college to stage
         stage.addActor(this);
 
     }
 
-    //TODO should be private? Only time its conquered is from decrementCannons function.
-    public void conquer() {
+    private void conquer() {
         isConquered = true;
     }
 

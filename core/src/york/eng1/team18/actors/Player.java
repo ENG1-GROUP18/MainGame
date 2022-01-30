@@ -37,6 +37,7 @@ public class Player extends Group {
     private float maxRateOfTurn = 1.8f;
     public int health;
     public int points;
+    public int numCollageDestroyed;
 
     private Boolean inIntro = true; //TODO Change back to true
     private long creationTime;
@@ -66,6 +67,7 @@ public class Player extends Group {
 
         this.health = 100;
         this.points = 0;
+        this.numCollageDestroyed = 0;
 
         // Create body
         BodyDef bodyDef = new BodyDef();
@@ -209,6 +211,7 @@ public class Player extends Group {
 
         //Handle hitting Collage
         if (hit_collage){
+            this.numCollageDestroyed+=1;
             this.points+=100;
             hud.setPoints(points);
             hit_collage = false;
