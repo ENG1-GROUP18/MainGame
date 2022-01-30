@@ -36,6 +36,7 @@ public class Player extends Group {
     private float rateOfDeceleration = 0.03f;
     private float maxRateOfTurn = 1.8f;
     public int health;
+    public int points;
 
     private Boolean inIntro = true; //TODO Change back to true
     private long creationTime;
@@ -47,6 +48,8 @@ public class Player extends Group {
     public boolean is_contact = false;
     public String contact_side = "";
     public boolean hit = false;
+    public boolean hit_enemyBase = false;
+    public boolean hit_collage = false;
 
 
 
@@ -62,6 +65,7 @@ public class Player extends Group {
         this.orchestrator = orchestrator;
 
         this.health = 100;
+        this.points = 0;
 
         // Create body
         BodyDef bodyDef = new BodyDef();
@@ -69,7 +73,6 @@ public class Player extends Group {
         bodyDef.position.set(pos_x, pos_y);
         body = world.createBody(bodyDef);
         body.setTransform(pos_x, pos_y, (float)Math.PI/2);
-//        this.setRotation(90);
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(size_x/2, size_y/2);
 
@@ -156,7 +159,7 @@ public class Player extends Group {
             currentSpeed = 5;
 
             if (time < 19000) {
-                ; // Straight ahead
+                 // Straight ahead
 
             } else if (time < 23000) {
                 // Turn Right
@@ -166,14 +169,14 @@ public class Player extends Group {
                 // Turn Left
                 body.setAngularVelocity(0.1f);
             }else if(time < 34500){
-                ; //Stright Ahead
+                 //Straight Ahead
             } else {
                 inIntro = false;
                 Gdx.input.setInputProcessor(inpt);
             }
         }
 
-//        Gdx.input.setInputProcessor(inpt); //TODO remove this line
+        //Gdx.input.setInputProcessor(inpt); //TODO remove this line
 
         // Update position of box2d body based on updated movement properties.
         float velX = MathUtils.cos(angle) * currentSpeed;
@@ -190,11 +193,28 @@ public class Player extends Group {
             health = hud.getHealth();
             hud.changeHealthTo(health - 10);
             hit = false;
+            if (this.points >= 10) {
+                this.points -= 10;
+            }
+            hud.setPoints(points);
         }
 
         //Handle death
         if (health <= 0){
             orchestrator.changeScreen(Orchestrator.GAMEOVER);
+        }
+
+        //Handle hitting Collage
+        if (hit_collage){
+            this.points+=100;
+            hud.setPoints(points);
+            hit_collage = false;
+        }
+
+        if (hit_enemyBase){
+            this.points+=10;
+            hud.setPoints(points);
+            hit_enemyBase = false;
         }
 
 

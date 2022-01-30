@@ -49,6 +49,7 @@ public class Cannon extends Image {
     private float posY;
 
     public ArrayList<CannonBall> CannonBalls;
+    private boolean stop = false;
     private Body body;
 
     private long fireLimitTimer;
@@ -114,7 +115,7 @@ public class Cannon extends Image {
         }
 
         //If conditions are met then shoot cannonball
-        if (((!belongsToPlayer && isInRange)||(belongsToPlayer && inpt.leftClick)) && activated && TimeUtils.timeSinceNanos(fireLimitTimer) > 500000000 && balls > 0){
+        if (((!belongsToPlayer && isInRange)||(belongsToPlayer && inpt.leftClick)) && activated && TimeUtils.timeSinceNanos(fireLimitTimer) > 500000000 && balls > 0 && !stop){
 
             if (leftFacing == 2) {
                 angle = this.getRotation() +90;
@@ -232,6 +233,12 @@ public class Cannon extends Image {
                 this.setRotation(targetAngle);
             }
         }
-
     }
+
+    public void delete(){
+        stop = true;
+        this.clear();
+        this.setVisible(false);
+    }
+
 }

@@ -38,9 +38,17 @@ public class WorldContactListener implements ContactListener {
             if (fa.getUserData() == "Player" ){
                 parent.player.hit = true;
             }
+            if (fa.getUserData() == "Collage"){
+                parent.player.hit_collage = true;
+                //fa.getBody().destroyFixture(fa);
+            }
+            if (fa.getUserData() == "Enemy Base"){
+                parent.player.hit_enemyBase = true;
+                fa.getBody().setUserData("Hit");
+            }
         }
-        System.out.println(fa.getUserData());
-        System.out.println(fb.getUserData());
+//        System.out.println(fa.getUserData());
+//        System.out.println(fb.getUserData());
     }
 
     @Override

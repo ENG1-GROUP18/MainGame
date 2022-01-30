@@ -36,6 +36,7 @@ public class HUD extends Group {
     Image playerPointer;
     Label debugLabel1;
     Label debugLabel2;
+    Label points;
 
 
     public HUD(MainScreen parent, Player player, float mapSize) {
@@ -87,8 +88,13 @@ public class HUD extends Group {
 
         debugLabel2 = new Label("debug label 2", skin);
         //debugLabel2.setPosition(300, 50);
-        debugLabel2.setPosition(Gdx.graphics.getWidth() -(300f/1920f)*Gdx.graphics.getWidth(), Gdx.graphics.getHeight() -(50f/1080f)*Gdx.graphics.getHeight());
+        debugLabel2.setPosition((300f/1920f)*Gdx.graphics.getWidth(), (50f/1080f)*Gdx.graphics.getHeight());
         this.addActor(debugLabel2);
+
+        points = new Label("Points: 0", skin);
+        //debugLabel2.setPosition(300, 50);
+        points.setPosition((300f/1920f)*Gdx.graphics.getWidth(), Gdx.graphics.getHeight() -(50f/1080f)*Gdx.graphics.getHeight());
+        this.addActor(points);
 
         // Reveals hud after delay on game start.
         DelayAction da = new DelayAction();
@@ -127,9 +133,10 @@ public class HUD extends Group {
         playerPointer.setSize((32f/1920f)*Gdx.graphics.getWidth(), (32f/1080f)*Gdx.graphics.getHeight());
         debugLabel1.setPosition((300f/1920f)*Gdx.graphics.getWidth(), (150f/1080f)*Gdx.graphics.getHeight());
         debugLabel2.setPosition((300f/1920f)*Gdx.graphics.getWidth(), (50f/1080f)*Gdx.graphics.getHeight());
+        points.setPosition((50f/1920f)*Gdx.graphics.getWidth(), Gdx.graphics.getHeight() -(150f/1080f)*Gdx.graphics.getHeight());
         debugLabel1.setFontScale(1f/(500f/Gdx.graphics.getWidth())*(25f/96f), 1f/(400f/Gdx.graphics.getHeight())*(10f/27f));
         debugLabel2.setFontScale(1f/(500f/Gdx.graphics.getWidth())*(25f/96f) , 1f/(400f/Gdx.graphics.getHeight())*(10f/27f));
-
+        points.setFontScale(1f/(500f/Gdx.graphics.getWidth())*(25f/96f) , 1f/(400f/Gdx.graphics.getHeight())*(10f/27f));
 
     }
 
@@ -173,6 +180,10 @@ public class HUD extends Group {
     public void setMap(Map map) {
         this.map = map;
 
+    }
+
+    public void setPoints(int points){
+        this.points.setText("Points: "+ points);
     }
 
 }

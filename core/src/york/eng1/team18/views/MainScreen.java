@@ -16,6 +16,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Action;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveByAction;
 import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
@@ -29,6 +30,8 @@ import york.eng1.team18.WorldContactListener;
 import york.eng1.team18.actors.*;
 import york.eng1.team18.actors.HUD.HUD;
 import york.eng1.team18.controller.InputController;
+
+import java.util.ArrayList;
 
 
 public class MainScreen implements Screen {
@@ -61,6 +64,7 @@ public class MainScreen implements Screen {
 
     public Player player;
     private Array<Body> tempBodies = new Array<Body>();
+    ArrayList<EnemyBase> enemyBases = new ArrayList<EnemyBase>();
 
     SpriteBatch batch;
     InputController inpt;
@@ -128,17 +132,17 @@ public class MainScreen implements Screen {
         College Vanbrugh = new College(world, gameStage, gameCamera, map.getCollegeX(3), map.getCollegeY(3), "images/building3.png");
         College Alcuin = new College(world, gameStage, gameCamera, map.getCollegeX(4), map.getCollegeY(4), "images/building5.png");
         College Derwent = new College(world, gameStage, gameCamera, map.getCollegeX(5), map.getCollegeY(5), "images/building6.png");
-        EnemyBase HalifaxCannon0 = new EnemyBase(0.03f, map, inpt, Halifax, player, world, gameStage, gameCamera, map.getBaseX(0,0), map.getBaseY(0,0));
-        EnemyBase WentworthCannon0 = new EnemyBase(0.04f, map, inpt, Wentworth, player, world, gameStage, gameCamera, map.getBaseX(1,0), map.getBaseY(1,0));
-        EnemyBase WentworthCannon1 = new EnemyBase(0.04f, map, inpt, Wentworth, player, world, gameStage, gameCamera, map.getBaseX(1,1), map.getBaseY(1,1));
-        EnemyBase JamesCannon0 = new EnemyBase(0.04f, map, inpt, James, player, world, gameStage, gameCamera, map.getBaseX(2,0), map.getBaseY(2,0));
-        EnemyBase JamesCannon1 = new EnemyBase(0.04f, map, inpt, James, player, world, gameStage, gameCamera, map.getBaseX(2,1), map.getBaseY(2,1));
-        EnemyBase VanbrughCannon0 = new EnemyBase(0.04f, map, inpt, Vanbrugh, player, world, gameStage, gameCamera, map.getBaseX(3,0), map.getBaseY(3,0));
-        EnemyBase VanbrughCannon1 = new EnemyBase(0.04f, map, inpt, Vanbrugh, player, world, gameStage, gameCamera, map.getBaseX(3,1), map.getBaseY(3,1));
-        EnemyBase AlcuinCannon0 = new EnemyBase(0.04f, map, inpt, Alcuin, player, world, gameStage, gameCamera, map.getBaseX(4,0), map.getBaseY(4,0));
-        EnemyBase AlcuinCannon1 = new EnemyBase(0.04f, map, inpt, Alcuin, player, world, gameStage, gameCamera, map.getBaseX(4,1), map.getBaseY(4,1));
-        EnemyBase DerwentCannon0 = new EnemyBase(0.04f, map, inpt, Derwent, player, world, gameStage, gameCamera, map.getBaseX(5,0), map.getBaseY(5,0));
-        EnemyBase DerwentCannon1 = new EnemyBase(0.04f, map, inpt, Derwent, player, world, gameStage, gameCamera, map.getBaseX(5,1), map.getBaseY(5,1));
+        enemyBases.add( new EnemyBase(0.03f, map, inpt, Halifax, player, world, gameStage, gameCamera, map.getBaseX(0,0), map.getBaseY(0,0)));
+        enemyBases.add( new EnemyBase(0.04f, map, inpt, Wentworth, player, world, gameStage, gameCamera, map.getBaseX(1,0), map.getBaseY(1,0)));
+        enemyBases.add( new EnemyBase( 0.04f, map, inpt, Wentworth, player, world, gameStage, gameCamera, map.getBaseX(1,1), map.getBaseY(1,1)));
+        enemyBases.add( new EnemyBase( 0.04f, map, inpt, James, player, world, gameStage, gameCamera, map.getBaseX(2,0), map.getBaseY(2,0)));
+        enemyBases.add( new EnemyBase( 0.04f, map, inpt, James, player, world, gameStage, gameCamera, map.getBaseX(2,1), map.getBaseY(2,1)));
+        enemyBases.add( new EnemyBase( 0.04f, map, inpt, Vanbrugh, player, world, gameStage, gameCamera, map.getBaseX(3,0), map.getBaseY(3,0)));
+        enemyBases.add( new EnemyBase( 0.04f, map, inpt, Vanbrugh, player, world, gameStage, gameCamera, map.getBaseX(3,1), map.getBaseY(3,1)));
+        enemyBases.add( new EnemyBase( 0.04f, map, inpt, Alcuin, player, world, gameStage, gameCamera, map.getBaseX(4,0), map.getBaseY(4,0)));
+        enemyBases.add( new EnemyBase( 0.04f, map, inpt, Alcuin, player, world, gameStage, gameCamera, map.getBaseX(4,1), map.getBaseY(4,1)));
+        enemyBases.add( new EnemyBase( 0.04f, map, inpt, Derwent, player, world, gameStage, gameCamera, map.getBaseX(5,0), map.getBaseY(5,0)));
+        enemyBases.add( new EnemyBase( 0.04f, map, inpt, Derwent, player, world, gameStage, gameCamera, map.getBaseX(5,1), map.getBaseY(5,1)));
 
 
         debugRenderer = new Box2DDebugRenderer(BOX2D_WIREFRAME, false, false, false, BOX2D_WIREFRAME, BOX2D_WIREFRAME);
@@ -215,9 +219,10 @@ public class MainScreen implements Screen {
         // Draw game objects
         gameStage.draw();
 
-        //Draw cannonBalls
+        //Draw cannonBalls and gets dead bodies
         batch.begin();
         world.getBodies(tempBodies);
+        Array<Body> toRemoveBody = new Array<Body>();
         for (Body body : tempBodies) {
             if(body.getUserData() != null && body.getUserData() instanceof Sprite){
                 Sprite sprite = (Sprite) body.getUserData();
@@ -225,8 +230,17 @@ public class MainScreen implements Screen {
                 sprite.setRotation(body.getAngle() * MathUtils.radiansToDegrees);
                 sprite.draw(batch);
             }
+            //
+            if (body.getUserData() != null && body.getUserData() == "Dead"){
+                toRemoveBody.add(body);
+            }
         }
         batch.end();
+
+        //Removes dead bodies
+        for (Body body: toRemoveBody){
+            world.destroyBody(body);
+        }
 
 
         // Draw map fog
@@ -270,11 +284,12 @@ public class MainScreen implements Screen {
     @Override
     public void dispose() {
         debugRenderer.dispose();
-        gameStage.dispose();
-        hudStage.dispose();
+        gameStage.clear();
+        hudStage.clear();
         world.getBodies(tempBodies);
         for (Body body : tempBodies) {
             world.destroyBody(body);
         }
+
     }
 }

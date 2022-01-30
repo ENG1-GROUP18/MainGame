@@ -34,8 +34,14 @@ public class EnemyBase extends Group {
     private float ammoReplenishTimer;
     private float ammoReplenishRate = 1f;
 
+    private float health;
+
     public boolean is_contact = false;
     public String contact_side = "";
+
+    public boolean remove = false;
+
+    private Cannon cannon;
 
     public EnemyBase(Map map, InputController inpt, College college, Player player, World world, Stage stage, Camera camera, float pos_x, float pos_y) {
         this(0.03f, map, inpt, college, player, world, stage, camera,pos_x, pos_y); //TODO this is so messy
@@ -53,6 +59,9 @@ public class EnemyBase extends Group {
         this.range = range;
         this.college = college;
         college.incrementCannons();
+
+        //Enemy bases have to be hit twice to be destroyed
+        this.health = 20;
 
         // Create body
         BodyDef bodyDef = new BodyDef();
@@ -79,7 +88,8 @@ public class EnemyBase extends Group {
         shape.dispose();
 
         // Add components to player
-        this.addActor(new Cannon(false, player, this, this.getWidth()*0.5f, this.getHeight()*0.5f, 0, world, camera, stage, body,inpt));
+        cannon = new Cannon(false, player, this, this.getWidth()*0.5f, this.getHeight()*0.5f, 0, world, camera, stage, body,inpt);
+        this.addActor(cannon);
 
         // For rotation around center
         this.setOrigin(this.getWidth()/2, this.getHeight()/2);
@@ -98,7 +108,22 @@ public class EnemyBase extends Group {
         this.setPosition(body.getPosition().x - this.getWidth()/2,
                 body.getPosition().y - this.getHeight()/2);
 
+        if (body.getUserData() == "Hit"){
+            this.health -=10;
+            body.setUserData("Enemy Base");
+        }
+        if (this.health <= 0){
+            for (Fixture fixture : body.getFixtureList()){
+                body.destroyFixture(fixture);
+            }
+            cannon.delete();
+            if (cannon.CannonBalls.isEmpty()){
+                System.out.println(cannon.CannonBalls.isEmpty());
+                body.setUserData("Dead");
+                this.remove();
+            }
 
+        }
 
         super.act(delta);
     }
