@@ -21,6 +21,10 @@ public class College extends Group {
     private float pos_y;
     private boolean isConquered;
     private int numCannons;
+    private Building building;
+
+    private float health;
+
 
 
     public College(World world, Stage stage, Camera camera, float pos_x, float pos_y, String imagePath){
@@ -33,6 +37,9 @@ public class College extends Group {
         this.setSize(size_x, size_y);
         this.isConquered = false;
         this.numCannons = 0;
+
+        //Colleges have to be hit 5 times to be destroyed
+        this.health = 50;
 
         // Create body
         BodyDef bodyDef = new BodyDef();
@@ -48,17 +55,21 @@ public class College extends Group {
         fixtureDef.density = 1f;
         fixtureDef.friction = 0.2f;
         fixtureDef.restitution = 0f;
-        fixtureDef.filter.maskBits = 0x0004; //TODO comment what this is all about. Its non self-explanatory.
+        //Uses contact filtering bits to state what can and the body can and can't interact with
+        //So maskBits = 4 means it can collide with other bodies of bit 4, in the game means it can collide with player cannonballs
+        //And categoryBits = 2 means it will accept other bodies of type 2 for collisions
+        fixtureDef.filter.maskBits = 0x0004;
         fixtureDef.filter.categoryBits = 0x0002;
         body.createFixture(fixtureDef).setUserData("Collage");
-
+        body.setUserData("Collage");
 
 
         // Dispose shapes used to create fixtures
         shape.dispose();
 
         // Add components to college
-        this.addActor(new Building(this, imagePath)); //TODO remove building class. Move its code to here.
+        building = new Building(this, imagePath);
+        this.addActor(building); //TODO remove building class. Move its code to here.
 
 
         // For rotation around center
@@ -81,6 +92,25 @@ public class College extends Group {
     public void decrementCannons(){
         numCannons -= 1;
         if (numCannons == 0){this.conquer();}
+    }
+
+    @Override
+    public void act(float delta) {
+        if (body.getUserData() == "Hit"){
+            this.health -=10;
+            body.setUserData("Enemy Base");
+        }
+        if (this.health <= 0){
+            for (Fixture fixture : body.getFixtureList()){
+                body.destroyFixture(fixture);
+            }
+            building.delete();
+            this.remove();
+
+        }
+
+
+        super.act(delta);
     }
 
     @Override

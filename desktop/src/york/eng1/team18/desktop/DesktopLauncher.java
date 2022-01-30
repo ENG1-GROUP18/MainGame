@@ -16,6 +16,7 @@ public class DesktopLauncher {
 		Graphics.Monitor primaryMonitor = Lwjgl3ApplicationConfiguration.getPrimaryMonitor();
 		Graphics.DisplayMode desktopMode = Lwjgl3ApplicationConfiguration.getDisplayMode(primaryMonitor);
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
+		System.setProperty("org.lwjgl.opengl.Display.enableOSXFullscreenModeAPI", "true");
 		config.setTitle("Sea Dogs Game");
 		config.setWindowIcon("images/appIcon.png");
 

@@ -81,6 +81,9 @@ public class Player extends Group {
         fixtureDef.density = 1f;
         fixtureDef.friction = 0.2f;
         fixtureDef.restitution = 0f;
+        //Uses contact filtering bits to state what can and the body can and can't interact with
+        //So maskBits = 8 means it can collide with other bodies of bit 8,  means it can collide with enemy cannonballs, map, ect
+        //And categoryBits = 6 means it will accept other bodies of type 6 for collisions
         fixtureDef.filter.maskBits = 0x0008;
         fixtureDef.filter.categoryBits = 0x0006;
         body.createFixture(fixtureDef).setUserData("Player");
@@ -211,6 +214,7 @@ public class Player extends Group {
             hit_collage = false;
         }
 
+        //Handle hitting Enemy base
         if (hit_enemyBase){
             this.points+=10;
             hud.setPoints(points);

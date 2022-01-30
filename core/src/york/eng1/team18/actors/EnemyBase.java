@@ -77,6 +77,9 @@ public class EnemyBase extends Group {
         fixtureDef.density = 1f;
         fixtureDef.friction = 0.2f;
         fixtureDef.restitution = 0f;
+        //Uses contact filtering bits to state what can and the body can and can't interact with
+        //So maskBits = 4 means it can collide with other bodies of bit 4, in the game means it can collide with cannonballs
+        //And categoryBits = 2 means it will accept other bodies of type 2 for collisions
         fixtureDef.filter.maskBits = 0x0004;
         fixtureDef.filter.categoryBits = 0x0002;
         body.createFixture(fixtureDef).setUserData("Enemy Base");

@@ -19,6 +19,10 @@ public class Building extends Image {
         this.setSize(parent.getWidth(), parent.getHeight());
     }
 
+    public void delete(){
+        this.clear();
+    }
+
     @Override
     public void act(float delta) {
         super.act(delta);

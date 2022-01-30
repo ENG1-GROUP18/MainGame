@@ -40,7 +40,7 @@ public class WorldContactListener implements ContactListener {
             }
             if (fa.getUserData() == "Collage"){
                 parent.player.hit_collage = true;
-                //fa.getBody().destroyFixture(fa);
+                fa.getBody().setUserData("Hit");
             }
             if (fa.getUserData() == "Enemy Base"){
                 parent.player.hit_enemyBase = true;
