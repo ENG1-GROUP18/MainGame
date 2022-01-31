@@ -187,7 +187,7 @@ public class HUD extends Group {
     }
 
     public void setPoints(int points){
-        this.points.setText("Points: "+ points);
+        this.points.setText("Points: "+ Integer.toString(points));
     }
 
 }
