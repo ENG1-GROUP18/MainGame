@@ -42,9 +42,7 @@ public class HealthBar extends Group {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        batch.end();
 
-        batch.begin();
     }
 
     public void setValue(int value) {
