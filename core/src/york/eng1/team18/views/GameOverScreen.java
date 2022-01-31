@@ -5,6 +5,9 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.AlphaAction;
+import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -25,18 +28,24 @@ public class GameOverScreen implements Screen {
         this.parent = orchestrator;
         this.stage = new Stage(new ScreenViewport());
 
+
+
     }
     @Override
     public void show() {
+
         Table table = new Table();
         table.setFillParent(true);
         table.setDebug(parent.DEBUG_TABLES);
         stage.addActor(table);
         Gdx.input.setInputProcessor(stage);
 
-//        fadeImage = new FadeImage();
-//        stage.addActor(fadeImage);
-//        fadeImage.setAlpha(1);
+        fadeImage = new FadeImage();
+        stage.addActor(fadeImage);
+        fadeImage.setAlpha(1);
+
+
+
 
         Skin skin = new Skin(Gdx.files.internal("skin/customSkin.json"));
 
@@ -51,13 +60,26 @@ public class GameOverScreen implements Screen {
         restart.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                parent.changeScreen(Orchestrator.MENU);
+                AlphaAction aa = new AlphaAction();
+                aa.setDuration(1);
+                aa.setAlpha(1);
+                RunnableAction ra = new RunnableAction();
+                ra.setRunnable(new Runnable() {
+                    @Override
+                    public void run() {
+                        // changes screen
+                        parent.changeScreen(Orchestrator.MENU);
+                    }
+                });
+                SequenceAction sa = new SequenceAction(aa, ra);
+                fadeImage.addAction(sa);
             }
         });
     }
 
     @Override
     public void render(float delta) {
+        fadeImage.fadeIn();
         Gdx.gl.glClearColor(30/255f, 30/255f, 30/255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act(Gdx.graphics.getDeltaTime());
