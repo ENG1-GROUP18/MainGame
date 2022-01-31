@@ -16,7 +16,7 @@ public class WorldContactListener implements ContactListener {
     public void beginContact(Contact contact) {
         Fixture fa = contact.getFixtureA();
         Fixture fb = contact.getFixtureB();
-        if (fb.getType() != Shape.Type.Circle) {
+        if (fb.getType() != Shape.Type.Circle && fb.getUserData() != "Enemy Boat") {
             if (fb.getUserData() == "top" || fb.getUserData() == "bottom") {
                 parent.player.currentSpeed = 0;
                 fb.getBody().applyForceToCenter(new Vector2(-1000, -1000), true);
@@ -35,7 +35,7 @@ public class WorldContactListener implements ContactListener {
 
             }
         } else{
-            if (fa.getUserData() == "Player" ){
+            if (fa.getUserData() == "Player" && fb.getUserData() != "Enemy Boat" ){
                 parent.player.hit = true;
             }
             if (fa.getUserData() == "Collage"){
@@ -47,8 +47,8 @@ public class WorldContactListener implements ContactListener {
                 fa.getBody().setUserData("Hit");
             }
         }
-//        System.out.println(fa.getUserData());
-//        System.out.println(fb.getUserData());
+        System.out.println(fa.getUserData());
+        System.out.println(fb.getUserData());
     }
 
     @Override

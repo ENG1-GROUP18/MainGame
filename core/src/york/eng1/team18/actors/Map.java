@@ -45,7 +45,7 @@ public class Map extends Image {
 
         FixtureDef fd = new FixtureDef();
         fd.friction = 0.5f;
-        //fd.filter.maskBits = 0x0006;
+
         fd.filter.categoryBits = 0x0008;
 
         body = world.createBody(bd);

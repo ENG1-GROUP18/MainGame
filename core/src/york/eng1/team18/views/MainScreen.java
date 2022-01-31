@@ -38,7 +38,7 @@ public class MainScreen implements Screen {
 
     // When true, camera is still and zoomed out, used to debug.
     //----------------------------------
-    private boolean BOX2D_WIREFRAME = false;
+    private boolean BOX2D_WIREFRAME = true;
     //----------------------------------
 
     Color waterCol = new Color(111/255f, 164/255f, 189/255f, 0);
@@ -144,6 +144,9 @@ public class MainScreen implements Screen {
         enemyBases.add( new EnemyBase( 0.04f, map, inpt, Derwent, player, world, gameStage, gameCamera, map.getBaseX(5,0), map.getBaseY(5,0)));
         enemyBases.add( new EnemyBase( 0.04f, map, inpt, Derwent, player, world, gameStage, gameCamera, map.getBaseX(5,1), map.getBaseY(5,1)));
 
+
+        EnemyBoat enemyBoat = new EnemyBoat(world,gameStage,0.16f*map.getSizeX(),0.35f*map.getSizeY());
+        //gameStage.addActor(enemyBoat);
 
         debugRenderer = new Box2DDebugRenderer(BOX2D_WIREFRAME, false, false, false, BOX2D_WIREFRAME, BOX2D_WIREFRAME);
 

@@ -121,7 +121,6 @@ public class EnemyBase extends Group {
             }
             cannon.delete();
             if (cannon.CannonBalls.isEmpty()){
-                System.out.println(cannon.CannonBalls.isEmpty());
                 body.setUserData("Dead");
                 this.remove();
             }
