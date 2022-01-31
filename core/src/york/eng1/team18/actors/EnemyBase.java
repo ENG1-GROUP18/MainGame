@@ -44,7 +44,7 @@ public class EnemyBase extends Group {
     private Cannon cannon;
 
     public EnemyBase(Map map, InputController inpt, College college, Player player, World world, Stage stage, Camera camera, float pos_x, float pos_y) {
-        this(0.03f, map, inpt, college, player, world, stage, camera,pos_x, pos_y); //TODO this is so messy
+        this(0.03f, map, inpt, college, player, world, stage, camera,pos_x, pos_y); 
     }
     public EnemyBase(float range, Map map, InputController inpt, College college, Player player, World world, Stage stage, Camera camera, float pos_x, float pos_y){
 
