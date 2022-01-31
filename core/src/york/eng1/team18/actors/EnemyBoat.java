@@ -17,6 +17,7 @@ public class EnemyBoat extends Group {
     // Boat PROPERTIES:
     private float size_x = 6;
     private float size_y = 3;
+    private int speed = 10;
 
     public EnemyBoat(World world, Stage stage , float pos_x, float pos_y){
         super();
@@ -61,7 +62,6 @@ public class EnemyBoat extends Group {
 
     @Override
     public void act(float delta) {
-        int speed = 10;
 
         body.setAngularVelocity(1);
         float velX = MathUtils.cos(body.getAngle()) * speed;
@@ -71,8 +71,7 @@ public class EnemyBoat extends Group {
         this.setRotation(body.getAngle() * MathUtils.radiansToDegrees);
         this.setPosition(body.getPosition().x - this.getWidth()/2, body.getPosition().y - this.getHeight()/2);
 
-
-        super.act(delta);
+        
 
     }
 
