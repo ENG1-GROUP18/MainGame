@@ -90,7 +90,7 @@ public class EnemyBase extends Group {
         // Dispose shapes used to create fixtures
         shape.dispose();
 
-        // Add components to player
+        // Add components to base
         cannon = new Cannon(false, player, this, this.getWidth()*0.5f, this.getHeight()*0.5f, 0, world, camera, stage, body,inpt);
         this.addActor(cannon);
 
