@@ -120,23 +120,27 @@ public class HUD extends Group {
     }
 
     public void  recalculatePos() {
-        // Centers the HUD horizontally on screen.
-        playerStatsGroup.setPosition((Gdx.graphics.getWidth() - playerStatsGroup.getWidth())/2, 20);
+        // Checks if the game is tabbed in if in fullscreen
+        if (Gdx.graphics.getWidth() !=0 && Gdx.graphics.getHeight() != 0){
+            // Centers the HUD horizontally on screen.
+            playerStatsGroup.setPosition((Gdx.graphics.getWidth() - playerStatsGroup.getWidth())/2, 20);
 
-        //Sets position relative to aspect ratio, values to normalise for 1080p, works for any 16:9 resolution
-        /*Formula for calculating relative size of UI:
-            (ImageSize/1920)* WindowSize
-        */
-        Vector2 relativeMapSizeToWindow = new Vector2((500f/1920f)*Gdx.graphics.getWidth(),(400f/1080f)*Gdx.graphics.getHeight());
-        miniMapGroup.setPosition(Gdx.graphics.getWidth() - relativeMapSizeToWindow.x, Gdx.graphics.getHeight() - relativeMapSizeToWindow.y);
-        miniMap.setSize(relativeMapSizeToWindow.x, relativeMapSizeToWindow.y);
-        playerPointer.setSize((32f/1920f)*Gdx.graphics.getWidth(), (32f/1080f)*Gdx.graphics.getHeight());
-        debugLabel1.setPosition((300f/1920f)*Gdx.graphics.getWidth(), (150f/1080f)*Gdx.graphics.getHeight());
-        debugLabel2.setPosition((300f/1920f)*Gdx.graphics.getWidth(), (50f/1080f)*Gdx.graphics.getHeight());
-        points.setPosition((50f/1920f)*Gdx.graphics.getWidth(), Gdx.graphics.getHeight() -(150f/1080f)*Gdx.graphics.getHeight());
-        debugLabel1.setFontScale(1f/(500f/Gdx.graphics.getWidth())*(25f/96f), 1f/(400f/Gdx.graphics.getHeight())*(10f/27f));
-        debugLabel2.setFontScale(1f/(500f/Gdx.graphics.getWidth())*(25f/96f) , 1f/(400f/Gdx.graphics.getHeight())*(10f/27f));
-        points.setFontScale(1f/(500f/Gdx.graphics.getWidth())*(25f/96f) , 1f/(400f/Gdx.graphics.getHeight())*(10f/27f));
+            //Sets position relative to aspect ratio, values to normalise for 1080p, works for any 16:9 resolution
+            /*Formula for calculating relative size of UI:
+                (ImageSize/1920)* WindowSize
+            */
+            Vector2 relativeMapSizeToWindow = new Vector2((500f/1920f)*Gdx.graphics.getWidth(),(400f/1080f)*Gdx.graphics.getHeight());
+            miniMapGroup.setPosition(Gdx.graphics.getWidth() - relativeMapSizeToWindow.x, Gdx.graphics.getHeight() - relativeMapSizeToWindow.y);
+            miniMap.setSize(relativeMapSizeToWindow.x, relativeMapSizeToWindow.y);
+            playerPointer.setSize((32f/1920f)*Gdx.graphics.getWidth(), (32f/1080f)*Gdx.graphics.getHeight());
+            debugLabel1.setPosition((300f/1920f)*Gdx.graphics.getWidth(), (150f/1080f)*Gdx.graphics.getHeight());
+            debugLabel2.setPosition((300f/1920f)*Gdx.graphics.getWidth(), (50f/1080f)*Gdx.graphics.getHeight());
+            points.setPosition((50f/1920f)*Gdx.graphics.getWidth(), Gdx.graphics.getHeight() -(150f/1080f)*Gdx.graphics.getHeight());
+            debugLabel1.setFontScale(1f/(500f/Gdx.graphics.getWidth())*(25f/96f), 1f/(400f/Gdx.graphics.getHeight())*(10f/27f));
+            debugLabel2.setFontScale(1f/(500f/Gdx.graphics.getWidth())*(25f/96f) , 1f/(400f/Gdx.graphics.getHeight())*(10f/27f));
+            points.setFontScale(1f/(500f/Gdx.graphics.getWidth())*(25f/96f) , 1f/(400f/Gdx.graphics.getHeight())*(10f/27f));
+        }
+
 
     }
 
