@@ -50,7 +50,7 @@ public class EnemyBoat extends Group {
         shape.dispose();
         Image image = new Image(new Texture(Gdx.files.internal("images/enemyShip.png")));
         image.setSize(this.getWidth(),this.getHeight());
-        this.addActor(image); //TODO replace with different image
+        this.addActor(image);
 
         this.setOrigin(this.getWidth()/2, this.getHeight()/2);
 
