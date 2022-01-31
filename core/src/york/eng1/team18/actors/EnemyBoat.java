@@ -61,9 +61,9 @@ public class EnemyBoat extends Group {
 
     @Override
     public void act(float delta) {
-        int speed = 5;
+        int speed = 10;
 
-        body.setAngularVelocity(2);
+        body.setAngularVelocity(1);
         float velX = MathUtils.cos(body.getAngle()) * speed;
         float velY = MathUtils.sin(body.getAngle()) * speed;
         body.setLinearVelocity((velX + body.getLinearVelocity().x)/2f, (velY + body.getLinearVelocity().y)/2f);
