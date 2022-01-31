@@ -53,7 +53,7 @@ public class HUD extends Group {
         backPlate = new BackPlate();
         playerStatsGroup.addActor(backPlate);
 
-        healthBar = new HealthBar(22, 61, 100, 256);
+        healthBar = new HealthBar(22, 61, 200, 256);
         playerStatsGroup.addActor(healthBar);
 
         cannonBar = new CannonBar(34, 14, 6);

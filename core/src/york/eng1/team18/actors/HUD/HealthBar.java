@@ -12,7 +12,7 @@ import org.w3c.dom.Text;
 public class HealthBar extends Group {
 
     private int barCurrentValue;
-    private int barMaxValue = 100;
+    private int barMaxValue;
     private int barWidth;
     private int barHeight = 16;
     private Image bar;
