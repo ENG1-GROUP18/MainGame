@@ -38,7 +38,7 @@ public class MainScreen implements Screen {
 
     // When true, camera is still and zoomed out, used to debug.
     //----------------------------------
-    private boolean BOX2D_WIREFRAME = true;
+    private boolean BOX2D_WIREFRAME = false;
     //----------------------------------
 
     Color waterCol = new Color(111/255f, 164/255f, 189/255f, 0);

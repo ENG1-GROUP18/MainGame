@@ -39,7 +39,7 @@ public class Player extends Group {
     public int points;
     public int numCollageDestroyed;
 
-    private Boolean inIntro = false; //TODO Change back to true
+    private Boolean inIntro = true; //TODO Change back to true
     private long creationTime;
     private long fireLimitTimer;
     private float ammoReplenishTimer;
@@ -181,7 +181,7 @@ public class Player extends Group {
             }
         }
 
-        Gdx.input.setInputProcessor(inpt); //TODO remove this line
+        //Gdx.input.setInputProcessor(inpt); //TODO remove this line
 
         // Update position of box2d body based on updated movement properties.
         float velX = MathUtils.cos(angle) * currentSpeed;
