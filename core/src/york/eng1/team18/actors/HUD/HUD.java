@@ -196,8 +196,6 @@ public class HUD extends Group {
         this.addActor(popUp);
     }
 
-    }
-
     public void setPlayer(Player player) {
         this.player = player;
 
