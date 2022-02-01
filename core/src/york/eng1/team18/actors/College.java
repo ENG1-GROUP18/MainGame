@@ -1,12 +1,16 @@
 package york.eng1.team18.actors;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.TimeUtils;
+
+import java.awt.*;
 
 
 public class College extends Group {
@@ -92,12 +96,14 @@ public class College extends Group {
             this.health -=10;
             body.setUserData("Enemy Base");
         }
-        if (this.health <= 0){
+        if (this.health <= 0 && !isConquered){
             for (Fixture fixture : body.getFixtureList()){
                 body.destroyFixture(fixture);
             }
-            building.delete();
-            this.remove();
+            Image tick = new Image(new Texture( "images/conquered.png"));
+            tick.setSize(this.size_x,this.size_y);
+            this.addActor(tick);
+            conquer();
 
         }
 
