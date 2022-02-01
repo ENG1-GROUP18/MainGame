@@ -35,8 +35,8 @@ public class HUD extends Group {
     CannonBar cannonBar;
     MiniMap miniMap;
     Image playerPointer;
-    Label debugLabel1;
-    Label debugLabel2;
+    //Label debugLabel1;
+    //Label debugLabel2;
     Label points;
     public Label popUp;
     public boolean startstatus = false;
@@ -85,15 +85,15 @@ public class HUD extends Group {
         // skin.get("default-font", BitmapFont.class).getData().markupEnabled = true;
 
 
-        debugLabel1 = new Label("debug label 1", skin);
+        //debugLabel1 = new Label("debug label 1", skin);
         //debugLabel1.setPosition(300, 150);
-        debugLabel1.setPosition((300f/1920f)*Gdx.graphics.getWidth(), (150f/1080f)*Gdx.graphics.getHeight());
-        this.addActor(debugLabel1);
+        //debugLabel1.setPosition((300f/1920f)*Gdx.graphics.getWidth(), (150f/1080f)*Gdx.graphics.getHeight());
+        //this.addActor(debugLabel1);
 
-        debugLabel2 = new Label("debug label 2", skin);
+        //debugLabel2 = new Label("debug label 2", skin);
         //debugLabel2.setPosition(300, 50);
-        debugLabel2.setPosition((300f/1920f)*Gdx.graphics.getWidth(), (50f/1080f)*Gdx.graphics.getHeight());
-        this.addActor(debugLabel2);
+        //debugLabel2.setPosition((300f/1920f)*Gdx.graphics.getWidth(), (50f/1080f)*Gdx.graphics.getHeight());
+        //this.addActor(debugLabel2);
 
         points = new Label("Points: 0", skin);
         //debugLabel2.setPosition(300, 50);
