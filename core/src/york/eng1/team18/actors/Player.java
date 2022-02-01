@@ -244,6 +244,18 @@ public class Player extends Group {
 
         }
 
+        //pop up
+        //at the start
+        if (body.getPosition().x > 210f && body.getPosition().x < 212f && body.getPosition().y > 199f && body.getPosition().y < 202f){
+            hud.instructionPopup("Use WASD to move, the longer you hold W the faster you accelerate!");
+            //popUp_status = true;
+        }
+
+        //at first college
+        if (body.getPosition().x > 175f && body.getPosition().x < 215f && body.getPosition().y > 220f && body.getPosition().y < 250f){
+            hud.instructionPopup("Click the mouse in the direction you want to fire!");
+        }
+
         //Escape key to go back to main menu
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
             orchestrator.changeScreen(Orchestrator.MENU);

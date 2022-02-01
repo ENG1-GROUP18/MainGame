@@ -37,6 +37,7 @@ public class HUD extends Group {
     Label debugLabel1;
     Label debugLabel2;
     Label points;
+    public Label popUp;
 
 
     public HUD(MainScreen parent, Player player, float mapSize) {
@@ -169,6 +170,18 @@ public class HUD extends Group {
         //sets position relative to aspect ratio
         playerPointer.setPosition(x * 1f/(500f/Gdx.graphics.getWidth())*(25f/96f) , y * 1f/(400f/Gdx.graphics.getHeight())*(10f/27f));
         playerPointer.setRotation(angle);
+
+    }
+
+    public void instructionPopup(String text1){
+        //bool popUp_status = false;
+        Skin skin = new Skin(Gdx.files.internal("skin/customSkin.json"));
+        popUp = new Label(text1, skin);
+        //coordinates are 400 ,300
+        popUp.setPosition((50f/1920f)*Gdx.graphics.getWidth(), (400f/1920f)*Gdx.graphics.getHeight());
+        popUp.setFontScale(1f/(600f/Gdx.graphics.getWidth())*(25f/96f) , 1f/(500f/Gdx.graphics.getHeight())*(10f/27f));
+        popUp.setAlignment(Align.left);
+        this.addActor(popUp);
 
     }
 
