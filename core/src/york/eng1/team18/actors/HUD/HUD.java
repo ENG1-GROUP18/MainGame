@@ -39,6 +39,8 @@ public class HUD extends Group {
     //Label debugLabel2;
     Label points;
     public Label popUp;
+    public Label objectiveLabel;
+    public Label objectiveLabel2;
     public boolean startstatus = false;
     public boolean shootstatus = false;
 
@@ -137,11 +139,11 @@ public class HUD extends Group {
             miniMapGroup.setPosition(Gdx.graphics.getWidth() - relativeMapSizeToWindow.x, Gdx.graphics.getHeight() - relativeMapSizeToWindow.y);
             miniMap.setSize(relativeMapSizeToWindow.x, relativeMapSizeToWindow.y);
             playerPointer.setSize((32f/1920f)*Gdx.graphics.getWidth(), (32f/1080f)*Gdx.graphics.getHeight());
-            debugLabel1.setPosition((300f/1920f)*Gdx.graphics.getWidth(), (150f/1080f)*Gdx.graphics.getHeight());
-            debugLabel2.setPosition((300f/1920f)*Gdx.graphics.getWidth(), (50f/1080f)*Gdx.graphics.getHeight());
+            //debugLabel1.setPosition((300f/1920f)*Gdx.graphics.getWidth(), (150f/1080f)*Gdx.graphics.getHeight());
+            //debugLabel2.setPosition((300f/1920f)*Gdx.graphics.getWidth(), (50f/1080f)*Gdx.graphics.getHeight());
             points.setPosition((50f/1920f)*Gdx.graphics.getWidth(), Gdx.graphics.getHeight() -(150f/1080f)*Gdx.graphics.getHeight());
-            debugLabel1.setFontScale(1f/(500f/Gdx.graphics.getWidth())*(25f/96f), 1f/(400f/Gdx.graphics.getHeight())*(10f/27f));
-            debugLabel2.setFontScale(1f/(500f/Gdx.graphics.getWidth())*(25f/96f) , 1f/(400f/Gdx.graphics.getHeight())*(10f/27f));
+            //debugLabel1.setFontScale(1f/(500f/Gdx.graphics.getWidth())*(25f/96f), 1f/(400f/Gdx.graphics.getHeight())*(10f/27f));
+            //debugLabel2.setFontScale(1f/(500f/Gdx.graphics.getWidth())*(25f/96f) , 1f/(400f/Gdx.graphics.getHeight())*(10f/27f));
             points.setFontScale(1f/(500f/Gdx.graphics.getWidth())*(25f/96f) , 1f/(400f/Gdx.graphics.getHeight())*(10f/27f));
         }
 
@@ -179,6 +181,32 @@ public class HUD extends Group {
         playerPointer.setRotation(angle);
 
     }
+    
+public void objectivePopup(boolean start_status){
+        if(start_status == true){
+            startstatus = true;
+        }
+        Skin skin = new Skin(Gdx.files.internal("skin/customSkin.json"));
+        objectiveLabel = new Label("New Objective", skin);
+        objectiveLabel2 = new Label("Conquer all opposing Colleges", skin);
+        objectiveLabel.setPosition((750f/1920f)*Gdx.graphics.getWidth(), (600f/1080f)*Gdx.graphics.getHeight());
+        objectiveLabel2.setPosition((550f/1920f)*Gdx.graphics.getWidth(), (500f/1080f)*Gdx.graphics.getHeight());
+        this.addActor(objectiveLabel);
+        this.addActor(objectiveLabel2);
+        Timer.schedule(new com.badlogic.gdx.utils.Timer.Task() {
+                @Override
+                public void run() {
+                    objectiveLabel.remove();
+                }
+            },6);
+        Timer.schedule(new com.badlogic.gdx.utils.Timer.Task() {
+            @Override
+            public void run() {
+                objectiveLabel2.remove();
+            }
+        },6);
+
+    }
 
     public void instructionPopup(String text1, boolean start_status, boolean shoot_status){
         if(start_status == true){
@@ -203,6 +231,7 @@ public class HUD extends Group {
                     popUp.remove();
                 }
             },4);
+            objectivePopup(start_status);
         }
     }
 
