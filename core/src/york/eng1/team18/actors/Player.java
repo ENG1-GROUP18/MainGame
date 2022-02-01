@@ -35,6 +35,7 @@ public class Player extends Group {
     private float rateOfAcceleration = 0.05f;
     private float rateOfDeceleration = 0.03f;
     private float maxRateOfTurn = 1.8f;
+    public int health;
     public int points;
     public int numCollageDestroyed;
 
@@ -64,6 +65,7 @@ public class Player extends Group {
         this.setSize(size_x, size_y);
         this.orchestrator = orchestrator;
 
+        this.health = 100;
         this.points = 0;
         this.numCollageDestroyed = 0;
 
@@ -192,8 +194,8 @@ public class Player extends Group {
 
 
         //Handle getting hit
-        int health = hud.getHealth();
         if (hit == true){
+            health = hud.getHealth();
             hud.changeHealthTo(health - 10);
             hit = false;
             if (this.points >= 10) {
@@ -205,7 +207,6 @@ public class Player extends Group {
         //Handle death
         if (health <= 0){
             orchestrator.changeScreen(Orchestrator.GAMEOVER);
-            orchestrator.dispose();
         }
 
         //Handle hitting Collage
@@ -258,12 +259,6 @@ public class Player extends Group {
         //Escape key to go back to main menu
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
             orchestrator.changeScreen(Orchestrator.MENU);
-            orchestrator.dispose();
-        }
-
-        // If win condition met then go to win screen
-        if (body.getPosition().x > 928 && numCollageDestroyed >= 5){
-            orchestrator.changeScreen(Orchestrator.ENDGAME);
             orchestrator.dispose();
         }
 

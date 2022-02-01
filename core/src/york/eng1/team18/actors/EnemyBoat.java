@@ -17,7 +17,6 @@ public class EnemyBoat extends Group {
     // Boat PROPERTIES:
     private float size_x = 6;
     private float size_y = 3;
-    private int speed = 10;
 
     public EnemyBoat(World world, Stage stage , float pos_x, float pos_y){
         super();
@@ -51,7 +50,7 @@ public class EnemyBoat extends Group {
         shape.dispose();
         Image image = new Image(new Texture(Gdx.files.internal("images/enemyShip.png")));
         image.setSize(this.getWidth(),this.getHeight());
-        this.addActor(image);
+        this.addActor(image); //TODO replace with different image
 
         this.setOrigin(this.getWidth()/2, this.getHeight()/2);
 
@@ -62,8 +61,9 @@ public class EnemyBoat extends Group {
 
     @Override
     public void act(float delta) {
+        int speed = 5;
 
-        body.setAngularVelocity(1);
+        body.setAngularVelocity(2);
         float velX = MathUtils.cos(body.getAngle()) * speed;
         float velY = MathUtils.sin(body.getAngle()) * speed;
         body.setLinearVelocity((velX + body.getLinearVelocity().x)/2f, (velY + body.getLinearVelocity().y)/2f);
@@ -71,7 +71,8 @@ public class EnemyBoat extends Group {
         this.setRotation(body.getAngle() * MathUtils.radiansToDegrees);
         this.setPosition(body.getPosition().x - this.getWidth()/2, body.getPosition().y - this.getHeight()/2);
 
-        
+
+        super.act(delta);
 
     }
 

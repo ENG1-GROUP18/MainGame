@@ -24,10 +24,10 @@ public class Map extends Image {
     private float spawnPosX = 0.222f; // As percentage of x across map to scale
     private float spawnPosY = 0.026f; // As percentage of y across map to scale
 
-    private float[][] enemyBasesX = {{0.16f},{0.200f,0.220f},{0.33f,0.365f},{0.28f,0.31f},{0.61f,0.63f},{0.82f,0.83f}}; //order: halifax, wentworth, james, vanbrugh, alcuin, derwent
-    private float[][] enemyBasesY = {{0.24f},{0.36f,0.370f},{0.58f,0.56f},{0.64f,0.66f},{0.48f,0.48f},{0.495f,0.48f}};
-    private float[] collegesX = {0.15f, 0.210f, 0.34f, 0.29f, 0.62f, 0.82f};
-    private float[] collegesY = {0.24f, 0.36f, 0.56f, 0.66f, 0.48f, 0.48f};
+    private float[][] enemyBasesX = {{0.19f},{0.200f,0.220f},{0.33f,0.365f},{0.28f,0.31f},{0.61f,0.63f},{0.91f,0.93f}}; //order: halifax, wentworth, james, vanbrugh, alcuin, derwent
+    private float[][] enemyBasesY = {{0.11f},{0.36f,0.370f},{0.55f,0.53f},{0.62f,0.63f},{0.485f,0.48f},{0.46f,0.44f}};
+    private float[] collegesX = {0.17f, 0.210f, 0.34f, 0.29f, 0.62f, 0.92f};
+    private float[] collegesY = {0.11f, 0.36f, 0.53f, 0.63f, 0.48f, 0.46f};
 
     public Map(World world, float sizeX, float sizeY) {
         this.world = world;

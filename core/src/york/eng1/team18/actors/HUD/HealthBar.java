@@ -12,7 +12,7 @@ import org.w3c.dom.Text;
 public class HealthBar extends Group {
 
     private int barCurrentValue;
-    private int barMaxValue;
+    private int barMaxValue = 100;
     private int barWidth;
     private int barHeight = 16;
     private Image bar;
@@ -42,7 +42,9 @@ public class HealthBar extends Group {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
+        batch.end();
 
+        batch.begin();
     }
 
     public void setValue(int value) {
