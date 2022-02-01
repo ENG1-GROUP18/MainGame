@@ -25,6 +25,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.*;
+import york.eng1.team18.GameModel;
 import york.eng1.team18.Orchestrator;
 import york.eng1.team18.WorldContactListener;
 import york.eng1.team18.actors.*;
@@ -149,6 +150,8 @@ public class MainScreen implements Screen {
         //gameStage.addActor(enemyBoat);
 
         debugRenderer = new Box2DDebugRenderer(BOX2D_WIREFRAME, false, false, false, BOX2D_WIREFRAME, BOX2D_WIREFRAME);
+
+        GameModel qw = new GameModel();
 
 //        // Runnable used to run code after animation finished
 //        RunnableAction ra = new RunnableAction();

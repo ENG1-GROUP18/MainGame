@@ -8,7 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 public class BackPlate extends Image {
     public BackPlate() {
-        super(new Texture(Gdx.files.internal("images/hud/BackPlate.png")));
+        super(new Texture(Gdx.files.internal("images/hud/HUDBACKPLATEV2.jpg")));
 
     }
 
