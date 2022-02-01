@@ -18,6 +18,7 @@ import sun.jvm.hotspot.utilities.BitMap;
 import york.eng1.team18.actors.Map;
 import york.eng1.team18.actors.Player;
 import york.eng1.team18.views.MainScreen;
+import com.badlogic.gdx.utils.Timer;
 
 public class HUD extends Group {
 
@@ -194,6 +195,15 @@ public class HUD extends Group {
         popUp.setFontScale(1f/(600f/Gdx.graphics.getWidth())*(25f/96f) , 1f/(500f/Gdx.graphics.getHeight())*(10f/27f));
         popUp.setAlignment(Align.left);
         this.addActor(popUp);
+        //timed remove after popup
+        if(shoot_status == true){
+            Timer.schedule(new com.badlogic.gdx.utils.Timer.Task() {
+                @Override
+                public void run() {
+                    popUp.remove();
+                }
+            },4);
+        }
     }
 
     public void setPlayer(Player player) {
