@@ -145,7 +145,7 @@ public class MainScreen implements Screen {
         enemyBases.add( new EnemyBase( 0.04f, map, inpt, Derwent, player, world, gameStage, gameCamera, map.getBaseX(5,1), map.getBaseY(5,1)));
 
 
-        EnemyBoat enemyBoat = new EnemyBoat(world,gameStage,0.16f*map.getSizeX(),0.35f*map.getSizeY());
+        EnemyBoat enemyBoat = new EnemyBoat(world,gameStage,0.14f*map.getSizeX(),0.37f*map.getSizeY());
         //gameStage.addActor(enemyBoat);
 
         debugRenderer = new Box2DDebugRenderer(BOX2D_WIREFRAME, false, false, false, BOX2D_WIREFRAME, BOX2D_WIREFRAME);

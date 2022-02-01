@@ -44,7 +44,7 @@ public class EnemyBase extends Group {
     private Cannon cannon;
 
     public EnemyBase(Map map, InputController inpt, College college, Player player, World world, Stage stage, Camera camera, float pos_x, float pos_y) {
-        this(0.03f, map, inpt, college, player, world, stage, camera,pos_x, pos_y); //TODO this is so messy
+        this(0.03f, map, inpt, college, player, world, stage, camera,pos_x, pos_y); 
     }
     public EnemyBase(float range, Map map, InputController inpt, College college, Player player, World world, Stage stage, Camera camera, float pos_x, float pos_y){
 
@@ -90,7 +90,7 @@ public class EnemyBase extends Group {
         // Dispose shapes used to create fixtures
         shape.dispose();
 
-        // Add components to player
+        // Add components to base
         cannon = new Cannon(false, player, this, this.getWidth()*0.5f, this.getHeight()*0.5f, 0, world, camera, stage, body,inpt);
         this.addActor(cannon);
 

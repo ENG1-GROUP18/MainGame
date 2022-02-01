@@ -17,6 +17,7 @@ public class WorldContactListener implements ContactListener {
         Fixture fa = contact.getFixtureA();
         Fixture fb = contact.getFixtureB();
         if (fb.getType() != Shape.Type.Circle && fb.getUserData() != "Enemy Boat") {
+            //Takes which side the ship has contact with and reduces its speed accordingly
             if (fb.getUserData() == "top" || fb.getUserData() == "bottom") {
                 parent.player.currentSpeed = 0;
                 fb.getBody().applyForceToCenter(new Vector2(-1000, -1000), true);
@@ -35,14 +36,17 @@ public class WorldContactListener implements ContactListener {
 
             }
         } else{
-            if (fa.getUserData() == "Player" && fb.getUserData() != "Enemy Boat" ){
+            //Game logic on what occurs when
+            if (fa.getUserData() == "Player" && fb.getUserData() == "CannonBall" ){
                 parent.player.hit = true;
+                //Once cannonball hits player its velocity is set to 0 so, it gets deleted
+                fb.getBody().setLinearVelocity(0,0);
             }
-            if (fa.getUserData() == "Collage"){
+            if (fa.getUserData() == "Collage"&& fb.getUserData() == "CannonBall"){
                 parent.player.hit_collage = true;
                 fa.getBody().setUserData("Hit");
             }
-            if (fa.getUserData() == "Enemy Base"){
+            if (fa.getUserData() == "Enemy Base"&& fb.getUserData() == "CannonBall"){
                 parent.player.hit_enemyBase = true;
                 fa.getBody().setUserData("Hit");
             }
