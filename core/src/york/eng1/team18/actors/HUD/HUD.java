@@ -184,6 +184,7 @@ public class HUD extends Group {
             startstatus = true;
         }
         if(shoot_status == true){
+            popUp.remove();
             shootstatus = true;
         }
         Skin skin = new Skin(Gdx.files.internal("skin/customSkin.json"));
