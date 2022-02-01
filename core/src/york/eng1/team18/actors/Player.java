@@ -243,16 +243,15 @@ public class Player extends Group {
 
         }
 
-        //pop up
         //at the start
-        if (body.getPosition().x > 210f && body.getPosition().x < 212f && body.getPosition().y > 199f && body.getPosition().y < 202f){
-            hud.instructionPopup("Use WASD to move, the longer you hold W the faster you accelerate!");
-            //popUp_status = true;
+        if(hud.startstatus == false && (body.getPosition().x > 210f && body.getPosition().x < 212f && body.getPosition().y > 199f && body.getPosition().y < 202f)) {
+            hud.instructionPopup("Use WASD to move, the longer you hold W the faster you accelerate!", true, false);
         }
 
+
         //at first college
-        if (body.getPosition().x > 175f && body.getPosition().x < 215f && body.getPosition().y > 220f && body.getPosition().y < 250f){
-            hud.instructionPopup("Click the mouse in the direction you want to fire!");
+        if(hud.shootstatus == false && (body.getPosition().x > 175f && body.getPosition().x < 215f && body.getPosition().y > 220f && body.getPosition().y < 250f)  ) {
+            hud.instructionPopup("Click the mouse in the direction you want to fire!", false, true);
         }
 
         //Escape key to go back to main menu

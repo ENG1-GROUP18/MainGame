@@ -38,6 +38,8 @@ public class HUD extends Group {
     Label debugLabel2;
     Label points;
     public Label popUp;
+    public boolean startstatus = false;
+    public boolean shootstatus = false;
 
 
     public HUD(MainScreen parent, Player player, float mapSize) {
@@ -177,8 +179,13 @@ public class HUD extends Group {
 
     }
 
-    public void instructionPopup(String text1){
-        //bool popUp_status = false;
+    public void instructionPopup(String text1, boolean start_status, boolean shoot_status){
+        if(start_status == true){
+            startstatus = true;
+        }
+        if(shoot_status == true){
+            shootstatus = true;
+        }
         Skin skin = new Skin(Gdx.files.internal("skin/customSkin.json"));
         popUp = new Label(text1, skin);
         //coordinates are 400 ,300
@@ -186,6 +193,7 @@ public class HUD extends Group {
         popUp.setFontScale(1f/(600f/Gdx.graphics.getWidth())*(25f/96f) , 1f/(500f/Gdx.graphics.getHeight())*(10f/27f));
         popUp.setAlignment(Align.left);
         this.addActor(popUp);
+    }
 
     }
 
