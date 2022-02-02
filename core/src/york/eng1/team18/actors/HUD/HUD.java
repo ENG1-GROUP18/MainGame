@@ -214,6 +214,13 @@ public void objectivePopup(boolean start_status){
 
     }
 
+    /**
+     * instructionPopup() creates a label on the screen based off of the text1 parameter entered.
+     * In our case it is used to show tutorial hints at the start of a game when a player reaches a specific coord range
+     * @param text1 A string containing the text to be displayed on the label.
+     * @param start_status A boolean value which shows if a game has started or not.
+     * @param shoot_status A boolean value that determines whether a cannonball has been fired.
+     */
     public void instructionPopup(String text1, boolean start_status, boolean shoot_status){
         if(start_status == true){
             startstatus = true;
