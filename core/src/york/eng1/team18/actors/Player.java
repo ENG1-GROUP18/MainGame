@@ -35,6 +35,7 @@ public class Player extends Group {
     private float rateOfDeceleration = 0.03f;
     private float maxRateOfTurn = 1.8f;
     public int points;
+    private float pointsTimer;
     public int numCollageDestroyed;
 
     private Boolean inIntro = true;
@@ -285,6 +286,15 @@ public class Player extends Group {
             orchestrator.changeScreen(Orchestrator.ENDGAME);
             orchestrator.dispose();
         }
+
+        // Tick down players points over time
+        pointsTimer += delta;
+        if(pointsTimer > 5) {
+            points = Math.max(points - 5, 0);
+            hud.setPoints(points);
+            pointsTimer = 0;
+        }
+
 
 
         super.act(delta);
