@@ -184,6 +184,12 @@ public class HUD extends Group {
 
     }
     
+    /**
+     * objectivePopup() creates two labels, objectiveLabel and objectiveLabel2
+     * Theses are displayed on the screen to notify the user of their objective
+     * The labels will then be removed from the screen after 6 seconds
+     * @param start_status A boolean value which shows if a game has started or not.
+     */
 public void objectivePopup(boolean start_status){
         if(start_status == true){
             startstatus = true;
