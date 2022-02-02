@@ -58,7 +58,6 @@ public class MenuScreen implements Screen {
 
         // Create button objects
         TextButton playBtn = new TextButton("PLAY", skin);
-        TextButton leaderboardBtn = new TextButton("LEADERBOARD", skin);
         final TextButton fullScrn = new TextButton("SET FULLSCREEN",skin);
         if (Gdx.graphics.isFullscreen()){
             fullScrn.setText("SET WINDOWED");
@@ -68,8 +67,7 @@ public class MenuScreen implements Screen {
 
         // Add button objects to table
         table.add(playBtn).height(playBtn.getHeight() -20).row();
-        table.add(leaderboardBtn).height(leaderboardBtn.getHeight()-20).row();
-        table.add(fullScrn).height(leaderboardBtn.getHeight()-20).row();
+        table.add(fullScrn).height(playBtn.getHeight()-20).row();
         table.add(quitBtn).height(fullScrn.getHeight()-20).row();
 
 
@@ -98,13 +96,7 @@ public class MenuScreen implements Screen {
             }
         });
 
-        // LEADERBOARD BUTTON
-        leaderboardBtn.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                parent.changeScreen(Orchestrator.LEADERBOARD);
-            }
-        });
+
 
         //TOGGLE FULLSCREEN
         fullScrn.addListener((new ChangeListener() {
