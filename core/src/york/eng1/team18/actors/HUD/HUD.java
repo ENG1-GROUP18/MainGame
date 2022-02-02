@@ -120,6 +120,12 @@ public class HUD extends Group {
         super.draw(batch, parentAlpha);
     }
 
+    /**
+     * recalculatePos() ensures that the HUD fits for different aspect ratios
+     * It takes the measurements, and centres the hud relative to the aspect ratio.
+     * (ImageSize/1920)* WindowSize
+     */
+    
     public void  recalculatePos() {
         // Checks if the game is tabbed in if in fullscreen
         if (Gdx.graphics.getWidth() !=0 && Gdx.graphics.getHeight() != 0){
@@ -166,6 +172,10 @@ public class HUD extends Group {
 
     }
 
+    /**
+     * updatePointer() is used for the minimap
+     * It takes the players coordinates and sets the pointer relative to the minimap
+     */
     public void updatePointer() {
         float x = player.getX()/2 - 15 + miniMap.getX();
         float y = player.getY()/2 - 15 + miniMap.getY();
@@ -180,7 +190,14 @@ public class HUD extends Group {
 
     }
     
-    public void objectivePopup(boolean start_status){
+
+    /**
+     * objectivePopup() creates two labels, objectiveLabel and objectiveLabel2
+     * Theses are displayed on the screen to notify the user of their objective
+     * The labels will then be removed from the screen after 6 seconds
+     * @param start_status A boolean value which shows if a game has started or not.
+     */
+public void objectivePopup(boolean start_status){
         if(start_status == true){
             objectivestatus = true;
         }
@@ -231,6 +248,13 @@ public class HUD extends Group {
         },6);
     }
 
+    /**
+     * instructionPopup() creates a label on the screen based off of the text1 parameter entered.
+     * In our case it is used to show tutorial hints at the start of a game when a player reaches a specific coord range
+     * @param text1 A string containing the text to be displayed on the label.
+     * @param start_status A boolean value which shows if a game has started or not.
+     * @param shoot_status A boolean value that determines whether a cannonball has been fired.
+     */
     public void instructionPopup(String text1, boolean start_status, boolean shoot_status){
         if(start_status == true){
             startstatus = true;

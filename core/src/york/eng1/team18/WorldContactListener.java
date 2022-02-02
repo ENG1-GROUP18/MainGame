@@ -12,6 +12,12 @@ public class WorldContactListener implements ContactListener {
         this.parent = parent;
     }
 
+    /**
+     * For each collision which occurs in the world, it checks which objects have collided and performs the
+     * appropriate procedure
+     * @param contact a Contact object which holds the data for the collision
+     */
+
     @Override
     public void beginContact(Contact contact) {
         Fixture fa = contact.getFixtureA();
