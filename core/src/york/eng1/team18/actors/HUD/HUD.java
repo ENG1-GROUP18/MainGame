@@ -98,8 +98,8 @@ public class HUD extends Group {
         miniMapGroup.addActor(playerPointer);
 
 
-
-        Skin skin = new Skin(Gdx.files.internal("skin/customSkin.json"));
+        Skin skin = new Skin(Gdx.files.internal("skin/tipsSkin.json"));
+       // Skin skin = new Skin(Gdx.files.internal("skin/customSkin.json"));
 
         points = new Label("Points: 0", skin);
 
@@ -107,7 +107,13 @@ public class HUD extends Group {
         this.addActor(points);
 
         objectiveLabel = new Label("", skin);
+        objectiveLabel.setAlignment(Align.center);
+        objectiveLabel.setColor(0,0,0,1);
+
         objectiveLabel2 = new Label("", skin);
+        objectiveLabel2.setAlignment(Align.center);
+        objectiveLabel2.setColor(0,0,0,1);
+
 
         // Reveals hud after delay on game start.
         DelayAction da = new DelayAction();
@@ -121,6 +127,8 @@ public class HUD extends Group {
         SequenceAction sa = new SequenceAction(da, aa);
         this.addAction(sa);
 
+        // Used to align labels.
+        recalculatePos();
     }
 
     @Override
@@ -157,8 +165,9 @@ public class HUD extends Group {
             points.setPosition((50f/1920f)*Gdx.graphics.getWidth(), Gdx.graphics.getHeight() -(150f/1080f)*Gdx.graphics.getHeight());
             points.setFontScale(1f/(500f/Gdx.graphics.getWidth())*(25f/96f) , 1f/(400f/Gdx.graphics.getHeight())*(10f/27f));
 
-            objectiveLabel.setPosition((300f/1920f)*Gdx.graphics.getWidth(), (600f/1080f)*Gdx.graphics.getHeight());
-            objectiveLabel2.setPosition((300f/1920f)*Gdx.graphics.getWidth(), (400f/1080f)*Gdx.graphics.getHeight());
+
+            objectiveLabel.setPosition(Gdx.graphics.getWidth()/2f, (600f/1080f)*Gdx.graphics.getHeight());
+            objectiveLabel2.setPosition(Gdx.graphics.getWidth()/2f, (400f/1080f)*Gdx.graphics.getHeight());
 
             objectiveLabel.setFontScale(1f/(500f/Gdx.graphics.getWidth())*(25f/96f) , 1f/(400f/Gdx.graphics.getHeight())*(10f/27f));
             objectiveLabel2.setFontScale(1f/(500f/Gdx.graphics.getWidth())*(25f/96f) , 1f/(400f/Gdx.graphics.getHeight())*(10f/27f));
@@ -194,9 +203,6 @@ public class HUD extends Group {
         float y = player.getY()/2 - 15 + miniMap.getY();
         float angle = player.getRotation() - 90;
 
-        //debugLabel1.setText(String.valueOf(player.getX()));
-        //debugLabel2.setText(String.valueOf(player.getY()));
-
         //sets position relative to aspect ratio
         playerPointer.setPosition(x * 1f/(500f/Gdx.graphics.getWidth())*(25f/96f) , y * 1f/(400f/Gdx.graphics.getHeight())*(10f/27f));
         playerPointer.setRotation(angle);
@@ -214,11 +220,10 @@ public void objectivePopup(boolean start_status){
         if(start_status == true){
             objectivestatus = true;
         }
-        Skin skin = new Skin(Gdx.files.internal("skin/customSkin.json"));
         objectiveLabel.setText("New Objective");
         objectiveLabel2.setText("Conquer all opposing Colleges");
-        objectiveLabel.setPosition((300f/1920f)*Gdx.graphics.getWidth(), (600f/1080f)*Gdx.graphics.getHeight());
-        objectiveLabel2.setPosition((300f/1920f)*Gdx.graphics.getWidth(), (400f/1080f)*Gdx.graphics.getHeight());
+        objectiveLabel.setPosition(Gdx.graphics.getWidth()/2f, (600f/1080f)*Gdx.graphics.getHeight());
+        objectiveLabel2.setPosition(Gdx.graphics.getWidth()/2f, (400f/1080f)*Gdx.graphics.getHeight());
         objectiveLabel.setColor(0,0,0,1);
         objectiveLabel2.setColor(0,0,0,1);
         this.getStage().addActor(objectiveLabel);
@@ -276,12 +281,14 @@ public void objectivePopup(boolean start_status){
             popUp.remove();
             shootstatus = true;
         }
-        Skin skin = new Skin(Gdx.files.internal("skin/customSkin.json"));
+        Skin skin = new Skin(Gdx.files.internal("skin/tipsSkin.json"));
         popUp = new Label(text1, skin);
+        popUp.setAlignment(Align.center);
+
         //coordinates are 400 ,300
         popUp.setPosition((50f/1920f)*Gdx.graphics.getWidth(), (400f/1920f)*Gdx.graphics.getHeight());
         popUp.setFontScale(1f/(600f/Gdx.graphics.getWidth())*(25f/96f), 1f/(500f/Gdx.graphics.getHeight())*(10f/27f));
-        popUp.setAlignment(Align.left);
+        //popUp.setAlignment(Align.left);
         this.addActor(popUp);
         //timed remove after popup
         if(shoot_status == true){

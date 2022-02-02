@@ -10,8 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 public class Building extends Image {
 
-    Group parent; //TODO Why do we have a class for an image? cant this code be moved into parent class?
-                  // the act and draw functions arent modified at all, not sure why this needs to be a class tbh.
+    Group parent;
 
     public Building(Group parent, String imagePath) {
         super(new Texture(Gdx.files.internal(imagePath)));

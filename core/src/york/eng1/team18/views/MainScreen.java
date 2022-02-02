@@ -130,8 +130,6 @@ public class MainScreen implements Screen {
         gameStage.addActor(player);
 
 
-        //TODO colleges are Group objects but seem to just be an image???? And the cannon is the enemy base? this is such a bad way if implementing, needs changing.
-        // Entire point of a group is that you can add child actors. College could be a group that is parent to cannons and an image.
         College Halifax = new College(world, gameStage, gameCamera, map.getCollegeX(0), map.getCollegeY(0), "images/building1.png");
         College Wentworth = new College(world, gameStage, gameCamera, map.getCollegeX(1), map.getCollegeY(1), "images/building2.png");
         College James = new College(world, gameStage, gameCamera, map.getCollegeX(2), map.getCollegeY(2), "images/building4.png");
@@ -155,26 +153,6 @@ public class MainScreen implements Screen {
         //gameStage.addActor(enemyBoat);
 
         debugRenderer = new Box2DDebugRenderer(BOX2D_WIREFRAME, false, false, false, BOX2D_WIREFRAME, BOX2D_WIREFRAME);
-
-//        // Runnable used to run code after animation finished
-//        RunnableAction ra = new RunnableAction();
-//        ra.setRunnable(new Runnable() {
-//            @Override
-//            public void run() {
-//                // changes screen
-//                player.setPositionSync(true);
-//            }
-//        });
-//
-//        MoveByAction mba = new MoveByAction();
-//        mba.setDuration(15);
-//        mba.setAmount(0,80);
-//
-//        SequenceAction sa = new SequenceAction(mba, ra);
-//        player.addAction(sa);
-
-
-
 
     }
 

@@ -1,0 +1,26 @@
+{
+com.badlogic.gdx.graphics.g2d.BitmapFont: {
+	EastSeaDokdo-Regular: {
+		file: EastSeaDokdo-Regular.fnt
+	}
+}
+com.badlogic.gdx.graphics.Color: {
+	RGBA_255_255_255_255: {
+		r: 1
+		g: 1
+		b: 1
+		a: 1
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
+	default: {
+		font: EastSeaDokdo-Regular
+		fontColor: RGBA_255_255_255_255
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle: {
+	default: {
+		label: default
+	}
+}
+}

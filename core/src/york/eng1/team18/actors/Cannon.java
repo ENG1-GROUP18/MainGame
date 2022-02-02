@@ -166,7 +166,6 @@ public class Cannon extends Image {
     }
 
 
-    //TODO Repeated Code. just make target argument of function
     private void collegeHandleRotation(){
         float myX = this.localToScreenCoordinates(new Vector2(this.getOriginX(),this.getOriginY())).x;
         float myY = this.localToScreenCoordinates(new Vector2(this.getOriginX(),this.getOriginY())).y;
