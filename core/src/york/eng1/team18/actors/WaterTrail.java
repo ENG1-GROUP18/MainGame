@@ -19,7 +19,6 @@ public class WaterTrail extends Actor{
     private Camera camera;
     private Color colorSea;
     private Color colorTrail;
-    private ImmediateModeRenderer20 imr;
     ShapeRenderer shapeRenderer;
 
     long logTime;
@@ -28,9 +27,13 @@ public class WaterTrail extends Actor{
     private ArrayList<Vector2> trailPoints= new ArrayList<>();
     private ArrayList<Vector2> trailShapeRight = new ArrayList<Vector2>();
     private ArrayList<Vector2> trailShapeLeft = new ArrayList<Vector2>();
-    ArrayList<Color> pointColors = new ArrayList<Color>();
 
 
+    /**
+     * Creates an object which creates a trail/wave behind the player
+     * @param camera a Camera object for use in the shape renderer
+     * @param source an Actor object to hold info on where the player ship is
+     */
     public WaterTrail(Camera camera, Actor source) {
         this.source = source;
         this.camera = camera;
@@ -42,8 +45,7 @@ public class WaterTrail extends Actor{
         logTime = TimeUtils.nanoTime();
 
         // Fill trailPoints with blank points
-//        float parentX = parent.getOriginX();
-//        float parentY = parent.getOriginY();
+
         for (int i = 0; i < trailSize; i++){
             trailPoints.add(new Vector2(this.source.getX() + this.source.getWidth()/2, this.source.getY() + this.source.getHeight()/2));
         }
@@ -55,6 +57,9 @@ public class WaterTrail extends Actor{
         }
     }
 
+    /**
+     * Updates the trail depending on the player position, and it's length
+     */
     public void act() {
 
         // Update Trail every n nanoseconds
@@ -94,10 +99,12 @@ public class WaterTrail extends Actor{
         }
     }
 
+    /**
+     * draws each of the shapes within the trail
+     */
     public void draw() {
       Gdx.graphics.getGL20().glEnable(GL20.GL_BLEND); //needed for transparency
-//
-//        //super.draw(batch, parentAlpha);
+
         Color tCol;
         float rDiff = colorSea.r - colorTrail.r;
         float gDiff = colorSea.g - colorTrail.g;
