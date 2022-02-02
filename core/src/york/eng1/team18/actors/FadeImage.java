@@ -36,6 +36,10 @@ public class FadeImage extends Image {
 
     }
 
+    public void resize(){
+        this.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+    }
+
     public void setAlpha(float a) {
         this.setColor(1, 1, 1, a);
     }
