@@ -166,6 +166,10 @@ public class HUD extends Group {
 
     }
 
+    /**
+     * updatePointer() is used for the minimap
+     * It takes the players coordinates and sets the pointer relative to the minimap
+     */
     public void updatePointer() {
         float x = player.getX()/2 - 15 + miniMap.getX();
         float y = player.getY()/2 - 15 + miniMap.getY();
