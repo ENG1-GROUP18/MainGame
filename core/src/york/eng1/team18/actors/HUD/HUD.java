@@ -20,6 +20,9 @@ import york.eng1.team18.actors.Player;
 import york.eng1.team18.views.MainScreen;
 import com.badlogic.gdx.utils.Timer;
 
+/**
+ *  Class which represents the HUD overlay of the game
+ */
 public class HUD extends Group {
 
     private Player player;
@@ -45,7 +48,17 @@ public class HUD extends Group {
     public boolean startstatus = false;
     public boolean shootstatus = false;
 
-
+   /**
+    * The HUD() function creates and displays varies different components of the HUD
+    * These include ; creating and displaying player stats, such as health, cannonballs etc
+    *                 creating and displaying the minimap
+    *                 adding the player pointer to the minimap to represent player location
+    * It also delays the appearence of the HUD for 36 seconds, so that it does not appear until after the cutscene
+    *
+    * @param parent
+    * @param player
+    * @param mapSize float value containg the size of the map
+    */
     public HUD(MainScreen parent, Player player, float mapSize) {
         super();
 
