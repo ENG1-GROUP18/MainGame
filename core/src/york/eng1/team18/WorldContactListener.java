@@ -51,8 +51,6 @@ public class WorldContactListener implements ContactListener {
                 fa.getBody().setUserData("Hit");
             }
         }
-        System.out.println(fa.getUserData());
-        System.out.println(fb.getUserData());
     }
 
     @Override

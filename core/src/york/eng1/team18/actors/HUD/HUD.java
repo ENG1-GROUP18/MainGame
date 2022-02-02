@@ -44,6 +44,7 @@ public class HUD extends Group {
     public Label objectiveLabel2;
     public boolean startstatus = false;
     public boolean shootstatus = false;
+    public boolean objectivestatus = false;
 
 
     public HUD(MainScreen parent, Player player, float mapSize) {
@@ -97,7 +98,7 @@ public class HUD extends Group {
 
         // Reveals hud after delay on game start.
         DelayAction da = new DelayAction();
-        da.setDuration(36); // TODO Change back to 36
+        da.setDuration(15);
 
         AlphaAction aa = new AlphaAction();
         aa.setAlpha(1);
@@ -181,7 +182,7 @@ public class HUD extends Group {
     
     public void objectivePopup(boolean start_status){
         if(start_status == true){
-            startstatus = true;
+            objectivestatus = true;
         }
         Skin skin = new Skin(Gdx.files.internal("skin/customSkin.json"));
         objectiveLabel.setText("New Objective");

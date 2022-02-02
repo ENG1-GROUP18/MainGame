@@ -162,30 +162,27 @@ public class Player extends Group {
             float time = TimeUtils.timeSinceMillis(creationTime);
             currentSpeed = 5;
 
-            if (time < 19000) {
-                 // Straight ahead
-
+            if (time < 4000) {
+                // Turn Right
+                body.setAngularVelocity(-0.1f);
                 if (objPop){
-                    System.out.println("here");
                     hud.objectivePopup(true);
                     objPop = false;
                 }
 
-            } else if (time < 23000) {
-                // Turn Right
-                body.setAngularVelocity(-0.1f);
-
-            } else if(time < 33000) {
+            } else if (time < 14000) {
                 // Turn Left
                 body.setAngularVelocity(0.1f);
-            }else if(time < 34500){
-                 //Straight Ahead
+
+            } else if(time < 15000) {
+                //Straight Ahead
 
             } else {
                 inIntro = false;
                 Gdx.input.setInputProcessor(inpt);
             }
         }
+
 
         //Gdx.input.setInputProcessor(inpt); //TODO remove this line
 
@@ -252,9 +249,11 @@ public class Player extends Group {
         }
 
         //at the start
-        if(hud.startstatus == false && (body.getPosition().x > 210f && body.getPosition().x < 212f && body.getPosition().y > 199f && body.getPosition().y < 202f)) {
+        if(hud.startstatus == false && ( body.getPosition().y > 190f && body.getPosition().y < 202f)) {
+            System.out.println("here");
             hud.instructionPopup("Use WASD to move, the longer you hold W the faster you accelerate!", true, false);
         }
+        System.out.println(body.getPosition());
 
 
         //at first college

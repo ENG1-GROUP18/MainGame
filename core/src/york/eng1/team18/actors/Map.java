@@ -22,7 +22,7 @@ public class Map extends Image {
     private float sizeX;
     private float sizeY;
     private float spawnPosX = 0.222f; // As percentage of x across map to scale
-    private float spawnPosY = 0.026f; // As percentage of y across map to scale
+    private float spawnPosY = 0.12f; // As percentage of y across map to scale
 
     private float[][] enemyBasesX = {{0.16f},{0.200f,0.220f},{0.33f,0.365f},{0.28f,0.31f},{0.61f,0.63f},{0.82f,0.83f}}; //order: halifax, wentworth, james, vanbrugh, alcuin, derwent
     private float[][] enemyBasesY = {{0.24f},{0.36f,0.370f},{0.58f,0.56f},{0.64f,0.66f},{0.48f,0.48f},{0.495f,0.48f}};
