@@ -44,7 +44,7 @@ public class Map extends Image {
         mapImage.setOrigin(0,  0);
         mapImage.setScale(0.2f);
 
-        BodyEditorLoader loader = new BodyEditorLoader(Gdx.files.internal("paths/CurrentMap.json"));
+        BodyEditorLoader loader = new BodyEditorLoader(Gdx.files.internal("paths/currentMap.json"));
 
         BodyDef bd = new BodyDef();
         bd.type = BodyDef.BodyType.StaticBody;
