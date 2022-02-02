@@ -24,6 +24,11 @@ public class GameOverScreen implements Screen {
     private Stage stage;
     private FadeImage fadeImage;
 
+    /**
+     * Creates GameOverScreen object
+     * @param orchestrator an Orchestrator object to allow the switching of scenes
+     */
+
     public GameOverScreen(Orchestrator orchestrator){
         this.parent = orchestrator;
         this.stage = new Stage(new ScreenViewport());
@@ -31,6 +36,10 @@ public class GameOverScreen implements Screen {
 
 
     }
+
+    /**
+     * Creates the game over text and the return to main menu button once the game lose condition is met
+     */
     @Override
     public void show() {
 

@@ -29,11 +29,18 @@ public class MenuScreen implements Screen {
     private Stage stage;
     private FadeImage fadeImage;
 
+    /**
+     * Creates MenuScreen object
+     * @param orchestrator an Orchestrator object to allow the switching of scenes
+     */
     public MenuScreen(Orchestrator orchestrator) {
         parent = orchestrator;
         stage = new Stage(new ScreenViewport());
     }
 
+    /**
+     * Creates a table to hold a list of buttons which allow the user to swap between screens
+     */
     @Override
     public void show() {
         Table table = new Table();

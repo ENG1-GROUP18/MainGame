@@ -23,12 +23,18 @@ public class LeaderBoardScreen implements Screen {
     private Stage stage;
     private Skin skin;
 
-
+    /**
+     * Creates leader board screen object
+     * @param orchestrator an Orchestrator object to allow the switching of scenes
+     */
     public LeaderBoardScreen(Orchestrator orchestrator) {
         parent = orchestrator;
         stage = new Stage(new ScreenViewport());
     }
 
+    /**
+     * Creates the leaderboard screen to be filled with the top 5 scores, as well to return to menu
+     */
     @Override
     public void show() {
         stage.setDebugAll(parent.DEBUG_TABLES);

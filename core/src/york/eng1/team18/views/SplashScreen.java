@@ -19,6 +19,10 @@ public class SplashScreen implements Screen {
     private long startTime;
     private float logoAlpha = 0f;
 
+    /**
+     * Creates a splash screen on launch
+     * @param orchestrator an Orchestrator object to allow the switching of scenes
+     */
     public SplashScreen(Orchestrator orchestrator) {
         parent = orchestrator;
         batch = new SpriteBatch();
@@ -36,6 +40,10 @@ public class SplashScreen implements Screen {
         logoAlpha = 0f;
     }
 
+    /**
+     * Logic for how long the splash screen should last
+     * @param delta time since function last called
+     */
     @Override
     public void render(float delta) {
 

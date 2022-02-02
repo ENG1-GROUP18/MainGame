@@ -72,7 +72,13 @@ public class MainScreen implements Screen {
     OrthographicCamera hudCamera;
     ExtendViewport gameViewport;
 
-
+    /**
+     * Creates the main game screen where the objects within the game are controlled from.
+     * Creates the required game and hud objects to allow images to be rendered on screen.
+     * Creates a world object to hold the box2D objects and a Stage object to hold the actors.
+     * Creates the game objects such as player and colleges which use this as their parent.
+     * @param orchestrator an Orchestrator object to allow the switching of scenes
+     */
 
     public MainScreen(Orchestrator orchestrator) {
         parent = orchestrator;
@@ -179,6 +185,12 @@ public class MainScreen implements Screen {
     }
 
 
+    /**
+     * Calls the act function for each of the actors in each stage to update them to their correct state, then renders
+     * them using the draw function.
+     * Performs additional tasks such as movement of camera and destroying box2D bodies
+     * @param delta time since function last called
+     */
     @Override
     public void render(float delta) {
         // Clear buffers
@@ -204,7 +216,6 @@ public class MainScreen implements Screen {
         // Update HUD
         hud.updatePointer();
 
-        //TODO Tidy this mess up
 
         //debugRenderer.render(world, gameStage.getCamera().combined); // USE FOR DEBUG
 
@@ -216,7 +227,7 @@ public class MainScreen implements Screen {
         batch.end();
 
         // Draw water trail
-        gameStage.getViewport().apply(); // cant remember why this was here, doesnt seem to break anything when removed though
+        gameStage.getViewport().apply();
         waterTrail.draw();
 
         // Draw game objects
@@ -259,6 +270,11 @@ public class MainScreen implements Screen {
         hudStage.draw();
     }
 
+    /**
+     * Resizes the viewport dependent on the new size of the window
+     * @param width an int which represents the width of the window
+     * @param height an int which represents the height of the window
+     */
     @Override
     public void resize(int width, int height) {
         gameViewport.update(width, height);

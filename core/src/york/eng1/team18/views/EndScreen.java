@@ -24,13 +24,20 @@ public class EndScreen implements Screen {
     private Stage stage;
     private FadeImage fadeImage;
 
+
+    /**
+     * Creates EndScreen object for handing the game once the player has won
+     * @param orchestrator an Orchestrator object to allow the switching of scenes
+     */
     public EndScreen(Orchestrator orchestrator){
         this.parent = orchestrator;
         this.stage = new Stage(new ScreenViewport());
 
-
-
     }
+
+    /**
+     * Creates the game win text and the return to main menu button once the game win condition is met
+     */
     @Override
     public void show() {
 

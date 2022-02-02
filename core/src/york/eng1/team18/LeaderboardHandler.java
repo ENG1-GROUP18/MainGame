@@ -6,6 +6,9 @@ import com.badlogic.gdx.Preferences;
 import java.util.Map;
 
 public class LeaderboardHandler {
+    /**
+     * Not implemented
+     */
 
     private static final String PREFS_NAME = "leaderboardSave";
     private static final int max_items = 5;
@@ -30,7 +33,6 @@ public class LeaderboardHandler {
         } else {return 0;}
     }
 
-    // TODO implement function to add score to appropriate position in leaderboard
     public void addScoreToList(int score) {
         for (int i = 0; i < getPrefs().get().size(); i++) {
             if (getPrefs().getInteger(String.valueOf(i + 1)) < score){

@@ -36,6 +36,11 @@ public class Orchestrator extends Game {
 		}
 	}
 
+	/**
+	 * Handles the switching of screens dependent on the inputted int
+	 * @param screen an Int which represents the screen type
+	 */
+
 	public void changeScreen(int screen){
 		switch(screen) {
 			// Menu allows player to move through game screens

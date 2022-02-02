@@ -184,7 +184,6 @@ public class Player extends Group {
         }
 
 
-        //Gdx.input.setInputProcessor(inpt); //TODO remove this line
 
         // Update position of box2d body based on updated movement properties.
         float velX = MathUtils.cos(angle) * currentSpeed;
@@ -250,10 +249,8 @@ public class Player extends Group {
 
         //at the start
         if(hud.startstatus == false && ( body.getPosition().y > 190f && body.getPosition().y < 202f)) {
-            System.out.println("here");
             hud.instructionPopup("Use WASD to move, the longer you hold W the faster you accelerate!", true, false);
         }
-        System.out.println(body.getPosition());
 
 
         //at first college
