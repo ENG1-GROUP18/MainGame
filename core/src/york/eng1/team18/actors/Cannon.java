@@ -63,6 +63,20 @@ public class Cannon extends Image {
         this(true, parent, parent, posX, posY, leftFacing, world, camera, stage, body, inpt);
     }
 
+    /**
+     *
+     * @param belongsToPlayer a boolean stating whether the boolean is attached to the player
+     * @param player  a Player object to get the current player position
+     * @param parent a Group object which represents the parent of the cannon
+     * @param posX the x coord for placement
+     * @param posY the y coord for placement
+     * @param leftFacing states which side the cannon is on, or if it not on the ship
+     * @param world a World object which holds the Box2D body's in the game
+     * @param camera a Camera object to draw the image
+     * @param stage a Stage object to get the parent stage to add actors to
+     * @param body a Body object of the parent
+     * @param inpt an InputController object to pass into the cannon to get user inputs
+     */
     public Cannon(Boolean belongsToPlayer, Player player, Group parent, float posX, float posY, float leftFacing, World world, Camera camera, Stage stage, Body body, InputController inpt) {
         super(new Texture(Gdx.files.internal("images/cannonShape.png")));
         this.parent = parent;

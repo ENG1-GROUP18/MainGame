@@ -43,9 +43,20 @@ public class EnemyBase extends Group {
 
     private Cannon cannon;
 
-    public EnemyBase(Map map, InputController inpt, College college, Player player, World world, Stage stage, Camera camera, float pos_x, float pos_y) {
-        this(0.03f, map, inpt, college, player, world, stage, camera,pos_x, pos_y); 
-    }
+    /**
+     * A class to create and represent an enemy base, it's main function is to control a cannon
+     *
+     * @param range a float representing how far away the base can see the player
+     * @param map a Map object used to get the size of the map
+     * @param inpt an InputController object to pass into the cannon to get user inputs
+     * @param college a College object which is its parent
+     * @param player a Player object to get the current player position
+     * @param world a World object to hold the box2D objects
+     * @param stage a Stage object to get the parent stage to add actors to
+     * @param camera a Camera object to draw the image
+     * @param pos_x the x coord for the placement of the base
+     * @param pos_y the y coord for the placement of the base
+     */
     public EnemyBase(float range, Map map, InputController inpt, College college, Player player, World world, Stage stage, Camera camera, float pos_x, float pos_y){
 
         // Set image, position and world reference

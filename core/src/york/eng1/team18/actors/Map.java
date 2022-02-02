@@ -29,6 +29,12 @@ public class Map extends Image {
     private float[] collegesX = {0.15f, 0.210f, 0.34f, 0.29f, 0.62f, 0.82f};
     private float[] collegesY = {0.24f, 0.36f, 0.56f, 0.66f, 0.48f, 0.48f};
 
+    /**
+     * Creates the sprite and fixture used for the map
+     * @param world a World object to hold the box2D objects
+     * @param sizeX the width of the worlds
+     * @param sizeY the height of the world
+     */
     public Map(World world, float sizeX, float sizeY) {
         this.world = world;
         this.sizeX = sizeX;

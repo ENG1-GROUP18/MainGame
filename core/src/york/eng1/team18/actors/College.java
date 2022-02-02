@@ -27,7 +27,15 @@ public class College extends Group {
     private float health;
 
 
-
+    /**
+     *
+     * @param world a World object to hold the box2D objects
+     * @param stage a Stage object to get the parent stage to add actors to
+     * @param camera a Camera object to draw the image
+     * @param pos_x the x coord for placement
+     * @param pos_y the y coord for placement
+     * @param imagePath a string representing the path of the image for the collage sprite
+     */
     public College(World world, Stage stage, Camera camera, float pos_x, float pos_y, String imagePath){
 
 

@@ -33,7 +33,7 @@ public class CannonBall{
      * @param body_player the object Body of the player ship
      * @param angle the angle of the cannon at the time of the shot
      * @param parent the Cannon object
-     * @param leftFacing states which side the cannon is on, or if it not on the ship //TODO Change to a more relevant variable name
+     * @param leftFacing states which side the cannon is on, or if it not on the ship
      */
 
     public CannonBall(World world, Body body_player, float angle, Cannon parent, float leftFacing){
