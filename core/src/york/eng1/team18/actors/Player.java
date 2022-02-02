@@ -50,6 +50,7 @@ public class Player extends Group {
     public boolean hit = false;
     public boolean hit_enemyBase = false;
     public boolean hit_collage = false;
+    private boolean objPop = true;
 
 
 
@@ -164,6 +165,12 @@ public class Player extends Group {
             if (time < 19000) {
                  // Straight ahead
 
+                if (objPop){
+                    System.out.println("here");
+                    hud.objectivePopup(true);
+                    objPop = false;
+                }
+
             } else if (time < 23000) {
                 // Turn Right
                 body.setAngularVelocity(-0.1f);
@@ -173,6 +180,7 @@ public class Player extends Group {
                 body.setAngularVelocity(0.1f);
             }else if(time < 34500){
                  //Straight Ahead
+
             } else {
                 inIntro = false;
                 Gdx.input.setInputProcessor(inpt);

@@ -22,22 +22,23 @@ import com.badlogic.gdx.utils.Timer;
 
 public class HUD extends Group {
 
-    Player player;
-    Map map;
-    float mapSize;
+    private Player player;
+    private Map  map;
+    private float mapSize;
+    private MainScreen parent;
 
-    Group playerStatsGroup;
-    Group miniMapGroup;
+    private Group playerStatsGroup;
+    private Group miniMapGroup;
 
     // Components of the HUD all extend Actor class in some way. Useful for animation through actions.
-    BackPlate backPlate;
-    HealthBar healthBar;
-    CannonBar cannonBar;
-    MiniMap miniMap;
-    Image playerPointer;
+    private BackPlate backPlate;
+    private HealthBar healthBar;
+    private CannonBar cannonBar;
+    private MiniMap miniMap;
+    private Image playerPointer;
     //Label debugLabel1;
     //Label debugLabel2;
-    Label points;
+    private Label points;
     public Label popUp;
     public Label objectiveLabel;
     public Label objectiveLabel2;
@@ -48,8 +49,10 @@ public class HUD extends Group {
     public HUD(MainScreen parent, Player player, float mapSize) {
         super();
 
-        this. player = player;
+        this.player = player;
         this.mapSize = mapSize;
+        this.parent = parent;
+
 
         // Create and add components to display players stats.
         playerStatsGroup = new Group();
@@ -85,17 +88,6 @@ public class HUD extends Group {
         //-----------------DEBUG LABELS------------------
         Skin skin = new Skin(Gdx.files.internal("skin/customSkin.json"));
         // skin.get("default-font", BitmapFont.class).getData().markupEnabled = true;
-
-
-        //debugLabel1 = new Label("debug label 1", skin);
-        //debugLabel1.setPosition(300, 150);
-        //debugLabel1.setPosition((300f/1920f)*Gdx.graphics.getWidth(), (150f/1080f)*Gdx.graphics.getHeight());
-        //this.addActor(debugLabel1);
-
-        //debugLabel2 = new Label("debug label 2", skin);
-        //debugLabel2.setPosition(300, 50);
-        //debugLabel2.setPosition((300f/1920f)*Gdx.graphics.getWidth(), (50f/1080f)*Gdx.graphics.getHeight());
-        //this.addActor(debugLabel2);
 
         points = new Label("Points: 0", skin);
         //debugLabel2.setPosition(300, 50);
@@ -189,10 +181,14 @@ public void objectivePopup(boolean start_status){
         Skin skin = new Skin(Gdx.files.internal("skin/customSkin.json"));
         objectiveLabel = new Label("New Objective", skin);
         objectiveLabel2 = new Label("Conquer all opposing Colleges", skin);
-        objectiveLabel.setPosition((750f/1920f)*Gdx.graphics.getWidth(), (600f/1080f)*Gdx.graphics.getHeight());
-        objectiveLabel2.setPosition((550f/1920f)*Gdx.graphics.getWidth(), (500f/1080f)*Gdx.graphics.getHeight());
-        this.addActor(objectiveLabel);
-        this.addActor(objectiveLabel2);
+        objectiveLabel.setPosition(0.2f*Gdx.graphics.getWidth(), (600f/1080f)*Gdx.graphics.getHeight());
+        objectiveLabel2.setPosition(0.2f*Gdx.graphics.getWidth(), (500f/1080f)*Gdx.graphics.getHeight());
+        objectiveLabel.setColor(0,0,0,1);
+        objectiveLabel2.setColor(0,0,0,1);
+        this.getStage().addActor(objectiveLabel);
+        this.getStage().addActor(objectiveLabel2);
+//        this.addActor(objectiveLabel);
+//        this.addActor(objectiveLabel2);
         Timer.schedule(new com.badlogic.gdx.utils.Timer.Task() {
                 @Override
                 public void run() {
@@ -220,7 +216,7 @@ public void objectivePopup(boolean start_status){
         popUp = new Label(text1, skin);
         //coordinates are 400 ,300
         popUp.setPosition((50f/1920f)*Gdx.graphics.getWidth(), (400f/1920f)*Gdx.graphics.getHeight());
-        popUp.setFontScale(1f/(600f/Gdx.graphics.getWidth())*(25f/96f) , 1f/(500f/Gdx.graphics.getHeight())*(10f/27f));
+        popUp.setFontScale(1f/(600f/Gdx.graphics.getWidth())*(25f/96f), 1f/(500f/Gdx.graphics.getHeight())*(10f/27f));
         popUp.setAlignment(Align.left);
         this.addActor(popUp);
         //timed remove after popup
@@ -231,7 +227,6 @@ public void objectivePopup(boolean start_status){
                     popUp.remove();
                 }
             },4);
-            objectivePopup(start_status);
         }
     }
 
