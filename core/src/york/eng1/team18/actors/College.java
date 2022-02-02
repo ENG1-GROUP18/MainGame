@@ -69,7 +69,7 @@ public class College extends Group {
 
         // Add components to college
         building = new Building(this, imagePath);
-        this.addActor(building); //TODO remove building class. Move its code to here.
+        this.addActor(building);
 
 
         // Add college to stage

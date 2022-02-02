@@ -1,0 +1,13 @@
+
+tipsSkin.png
+size: 512, 512
+format: RGBA8888
+filter: Linear, Linear
+repeat: none
+EastSeaDokdo-Regular
+  rotate: false
+  xy: 1, 306
+  size: 506, 199
+  orig: 506, 199
+  offset: 0, 0
+  index: -1

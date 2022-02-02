@@ -33,7 +33,7 @@ public class CannonBall{
      * @param body_player the object Body of the player ship
      * @param angle the angle of the cannon at the time of the shot
      * @param parent the Cannon object
-     * @param leftFacing states which side the cannon is on, or if it not on the ship //TODO Change to a more relevant variable name
+     * @param leftFacing states which side the cannon is on, or if it not on the ship
      */
 
     public CannonBall(World world, Body body_player, float angle, Cannon parent, float leftFacing){
@@ -84,7 +84,7 @@ public class CannonBall{
 
         if (leftFacing == 2){ // If cannon on the right side of the ship
 
-            vel_x = (Math.abs (body_player.getLinearVelocity().x) + speed) * (angle_x); //TODO lots of magic numbers here
+            vel_x = (Math.abs (body_player.getLinearVelocity().x) + speed) * (angle_x);
             vel_y = (Math.abs (body_player.getLinearVelocity().y) + speed) * (angle_y); //Changed "Magic numbers" to speed"
 
         }else if (leftFacing == 1){ // If cannon on the left side of the ship
@@ -95,7 +95,7 @@ public class CannonBall{
         } else{     //if the cannon is not on the player
             angle_x = (float)Math.cos(Math.toRadians(angle));
             angle_y = (float)Math.sin(Math.toRadians(angle));
-            vel_x = (75) * (angle_x ); // adjust the value to reduce or increase speed of cannonballs //TODO make this an instance variable at top of class - easier to modify properties.
+            vel_x = (75) * (angle_x ); // adjust the value to reduce or increase speed of cannonballs
             vel_y = (75) * (angle_y);
         }
 
