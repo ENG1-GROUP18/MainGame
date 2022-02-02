@@ -117,6 +117,12 @@ public class HUD extends Group {
         super.draw(batch, parentAlpha);
     }
 
+    /**
+     * recalculatePos() ensures that the HUD fits for different aspect ratios
+     * It takes the measurements, and centres the hud relative to the aspect ratio.
+     * (ImageSize/1920)* WindowSize
+     */
+    
     public void  recalculatePos() {
         // Checks if the game is tabbed in if in fullscreen
         if (Gdx.graphics.getWidth() !=0 && Gdx.graphics.getHeight() != 0){
