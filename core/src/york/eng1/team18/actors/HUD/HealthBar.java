@@ -17,6 +17,14 @@ public class HealthBar extends Group {
     private int barHeight = 16;
     private Image bar;
 
+  /**
+   * HealthBar() method sets the values needed for the healthbar and the creates it
+   *
+   * @param posX Integer value used to set the position of the health bar, x coord
+   * @param posY Integer value used to set the position of the health bar, y coord
+   * @param maxHealth Integer value which sets the maximum value of player health displayed on the health bar
+   * @param barLength Integer value which is set to the barWidth to determine the length of the health bar.
+   */
     public HealthBar(int posX, int posY, int maxHealth, int barLength) {
         super();
         this.barCurrentValue = maxHealth;
