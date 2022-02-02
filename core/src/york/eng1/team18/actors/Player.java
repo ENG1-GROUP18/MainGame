@@ -20,11 +20,10 @@ import york.eng1.team18.views.MenuScreen;
 
 public class Player extends Group {
 
-    private InputController inpt;
+    private final InputController inpt;
     private World world;
     private HUD hud;
     private Body body;
-    private WaterTrail waterTrail;
 
     // PLAYER PROPERTIES:
     private float size_x = 6;
@@ -38,7 +37,7 @@ public class Player extends Group {
     public int points;
     public int numCollageDestroyed;
 
-    private Boolean inIntro = true; //TODO Change back to true
+    private Boolean inIntro = true;
     private long creationTime;
     private long fireLimitTimer;
     private float ammoReplenishTimer;
@@ -53,7 +52,20 @@ public class Player extends Group {
     private boolean objPop = true;
 
 
-
+    /**
+     * An object which holds the data and controls the player ship and holds the actors hull and cannons which
+     * are part of the ship.
+     * Class creates and initialises player data, bodies, fixtures and movement
+     *
+     * @param world a World object to hold the box2D objects
+     * @param inpt  an InputController object to get user inputs
+     * @param hud a HUD object to get the hud stage
+     * @param stage a Stage object to get the parent stage to add actors to
+     * @param camera a Camera object passed from parent
+     * @param pos_x the x coord for the start position of the ship
+     * @param pos_y the y coord for the start position of the ship
+     * @param orchestrator an Orchestrator object to allow the switching of scenes
+     */
     public Player(World world, InputController inpt, HUD hud , Stage stage, Camera camera, float pos_x, float pos_y,Orchestrator orchestrator){
 
        // Set image, position and world reference
@@ -125,6 +137,10 @@ public class Player extends Group {
         fireLimitTimer = TimeUtils.nanoTime();
     }
 
+    /**
+     * Handles the updating of the player speed and position, as well as shooting cannonballs, health and points.
+     * @param delta time since function last called
+     */
     @Override
     public void act(float delta) {
         float angle = body.getAngle();
@@ -273,13 +289,6 @@ public class Player extends Group {
 
         super.act(delta);
     }
-
-//    public void setPositionSync(Boolean bool) {
-//        // When positionSync is set true, the players position is synced with its body in box2d
-//        // When toggled, the box2d body is updated to the actors position.
-//        this.positionSynced = bool;
-//        body.setTransform(this.getX(), this.getY(), this.getRotation() * MathUtils.degreesToRadians);
-//    }
 
 
     @Override
