@@ -85,14 +85,15 @@ public class HUD extends Group {
 
 
 
-        //-----------------DEBUG LABELS------------------
         Skin skin = new Skin(Gdx.files.internal("skin/customSkin.json"));
-        // skin.get("default-font", BitmapFont.class).getData().markupEnabled = true;
 
         points = new Label("Points: 0", skin);
-        //debugLabel2.setPosition(300, 50);
+
         points.setPosition((300f/1920f)*Gdx.graphics.getWidth(), Gdx.graphics.getHeight() -(50f/1080f)*Gdx.graphics.getHeight());
         this.addActor(points);
+
+        objectiveLabel = new Label("", skin);
+        objectiveLabel2 = new Label("", skin);
 
         // Reveals hud after delay on game start.
         DelayAction da = new DelayAction();
@@ -105,6 +106,7 @@ public class HUD extends Group {
         this.setColor(1, 1, 1, 0);
         SequenceAction sa = new SequenceAction(da, aa);
         this.addAction(sa);
+
     }
 
     @Override
@@ -131,12 +133,15 @@ public class HUD extends Group {
             miniMapGroup.setPosition(Gdx.graphics.getWidth() - relativeMapSizeToWindow.x, Gdx.graphics.getHeight() - relativeMapSizeToWindow.y);
             miniMap.setSize(relativeMapSizeToWindow.x, relativeMapSizeToWindow.y);
             playerPointer.setSize((32f/1920f)*Gdx.graphics.getWidth(), (32f/1080f)*Gdx.graphics.getHeight());
-            //debugLabel1.setPosition((300f/1920f)*Gdx.graphics.getWidth(), (150f/1080f)*Gdx.graphics.getHeight());
-            //debugLabel2.setPosition((300f/1920f)*Gdx.graphics.getWidth(), (50f/1080f)*Gdx.graphics.getHeight());
+
             points.setPosition((50f/1920f)*Gdx.graphics.getWidth(), Gdx.graphics.getHeight() -(150f/1080f)*Gdx.graphics.getHeight());
-            //debugLabel1.setFontScale(1f/(500f/Gdx.graphics.getWidth())*(25f/96f), 1f/(400f/Gdx.graphics.getHeight())*(10f/27f));
-            //debugLabel2.setFontScale(1f/(500f/Gdx.graphics.getWidth())*(25f/96f) , 1f/(400f/Gdx.graphics.getHeight())*(10f/27f));
             points.setFontScale(1f/(500f/Gdx.graphics.getWidth())*(25f/96f) , 1f/(400f/Gdx.graphics.getHeight())*(10f/27f));
+
+            objectiveLabel.setPosition((300f/1920f)*Gdx.graphics.getWidth(), (600f/1080f)*Gdx.graphics.getHeight());
+            objectiveLabel2.setPosition((300f/1920f)*Gdx.graphics.getWidth(), (400f/1080f)*Gdx.graphics.getHeight());
+
+            objectiveLabel.setFontScale(1f/(500f/Gdx.graphics.getWidth())*(25f/96f) , 1f/(400f/Gdx.graphics.getHeight())*(10f/27f));
+            objectiveLabel2.setFontScale(1f/(500f/Gdx.graphics.getWidth())*(25f/96f) , 1f/(400f/Gdx.graphics.getHeight())*(10f/27f));
         }
 
 
@@ -174,34 +179,55 @@ public class HUD extends Group {
 
     }
     
-public void objectivePopup(boolean start_status){
+    public void objectivePopup(boolean start_status){
         if(start_status == true){
             startstatus = true;
         }
         Skin skin = new Skin(Gdx.files.internal("skin/customSkin.json"));
-        objectiveLabel = new Label("New Objective", skin);
-        objectiveLabel2 = new Label("Conquer all opposing Colleges", skin);
-        objectiveLabel.setPosition(0.2f*Gdx.graphics.getWidth(), (600f/1080f)*Gdx.graphics.getHeight());
-        objectiveLabel2.setPosition(0.2f*Gdx.graphics.getWidth(), (500f/1080f)*Gdx.graphics.getHeight());
+        objectiveLabel.setText("New Objective");
+        objectiveLabel2.setText("Conquer all opposing Colleges");
+        objectiveLabel.setPosition((300f/1920f)*Gdx.graphics.getWidth(), (600f/1080f)*Gdx.graphics.getHeight());
+        objectiveLabel2.setPosition((300f/1920f)*Gdx.graphics.getWidth(), (400f/1080f)*Gdx.graphics.getHeight());
         objectiveLabel.setColor(0,0,0,1);
         objectiveLabel2.setColor(0,0,0,1);
         this.getStage().addActor(objectiveLabel);
         this.getStage().addActor(objectiveLabel2);
-//        this.addActor(objectiveLabel);
-//        this.addActor(objectiveLabel2);
+
         Timer.schedule(new com.badlogic.gdx.utils.Timer.Task() {
                 @Override
                 public void run() {
                     objectiveLabel.remove();
+                    objectiveLabel2.remove();
+                    objectivePopup2();
                 }
             },6);
+
+    }
+
+    public void objectivePopup2(){
+        objectiveLabel.setText("To destroy cannons they need to be hit twice");
+        objectiveLabel2.setText("To conquer colleges they need to be hit 5 times");
+        this.getStage().addActor(objectiveLabel);
+        this.getStage().addActor(objectiveLabel2);
         Timer.schedule(new com.badlogic.gdx.utils.Timer.Task() {
             @Override
             public void run() {
+                objectiveLabel.remove();
+                objectiveLabel2.remove();
+                objectivePopup3();
+            }
+        },6);
+    }
+    public void objectivePopup3(){
+        objectiveLabel.setText("Good luck!");
+        this.getStage().addActor(objectiveLabel);
+        Timer.schedule(new com.badlogic.gdx.utils.Timer.Task() {
+            @Override
+            public void run() {
+                objectiveLabel.remove();
                 objectiveLabel2.remove();
             }
         },6);
-
     }
 
     public void instructionPopup(String text1, boolean start_status, boolean shoot_status){

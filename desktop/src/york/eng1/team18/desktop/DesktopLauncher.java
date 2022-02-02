@@ -10,7 +10,7 @@ public class DesktopLauncher {
 	public static void main (String[] arg) {
 
 		//----------------------------------
-		boolean FULLSCREEN = true;
+		boolean FULLSCREEN = false;
 		//----------------------------------
 
 		Graphics.Monitor primaryMonitor = Lwjgl3ApplicationConfiguration.getPrimaryMonitor();
@@ -23,9 +23,9 @@ public class DesktopLauncher {
 		if(FULLSCREEN) {
 			config.setFullscreenMode(desktopMode);
 		} else {
-			// config.setResizable(false);
+
 			config.setWindowedMode(1280, 720);
-			config.setWindowSizeLimits(720, 480, 1920,1080);
+			config.setWindowSizeLimits(720, 480, 3840,2160);
 		}
 
 		new Lwjgl3Application(new Orchestrator(), config);
